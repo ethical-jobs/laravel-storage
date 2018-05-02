@@ -1,14 +1,10 @@
 <?php
 
-namespace Tests\Integration\Storage\Repositories\Database;
+namespace Tests\Integration\Repositories\Api;
 
-use Mockery;
-use EthicalJobs\SDK\Collection;
-use EthicalJobs\SDK\Repositories\JobApiRepository;
-use EthicalJobs\Foundation\Storage\CriteriaCollection;
-use EthicalJobs\SDK\ApiClient;
+use EthicalJobs\Storage\Criteria\CriteriaCollection;
 
-class CriteriaTest extends \EthicalJobs\Tests\SDK\TestCase
+class CriteriaTest extends \Tests\Integration\Repositories\ApiTestCase
 {
     /**
      * @test
@@ -16,7 +12,7 @@ class CriteriaTest extends \EthicalJobs\Tests\SDK\TestCase
      */
     public function its_criteria_are_an_empty_collection_by_default()
     {
-        $repository = new JobApiRepository(resolve(ApiClient::class));
+        $repository = static::makeRepository();
         
         $criteria = $repository->getCriteriaCollection();
 
@@ -31,7 +27,7 @@ class CriteriaTest extends \EthicalJobs\Tests\SDK\TestCase
      */
     public function it_can_set_and_get_it_criteria_collection()
     {
-        $repository = new JobApiRepository(resolve(ApiClient::class));
+        $repository = static::makeRepository();
 
         $collection = new CriteriaCollection(['foo' => 'bar']);
         

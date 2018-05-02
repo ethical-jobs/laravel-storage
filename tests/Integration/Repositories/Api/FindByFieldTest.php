@@ -1,13 +1,12 @@
 <?php
 
-namespace EthicalJobs\Tests\SDK\Repositories\JobApiRepository;
+namespace Tests\Integration\Repositories\Api;
 
 use Mockery;
-use EthicalJobs\SDK\Collection;
-use EthicalJobs\SDK\Repositories\JobApiRepository;
 use EthicalJobs\SDK\ApiClient;
+use EthicalJobs\SDK\Collection;
 
-class FindByFieldTest extends \EthicalJobs\Tests\SDK\TestCase
+class FindByFieldTest extends \Tests\Integration\Repositories\ApiTestCase
 {
     /**
      * @test
@@ -19,11 +18,14 @@ class FindByFieldTest extends \EthicalJobs\Tests\SDK\TestCase
 
         $api = Mockery::mock(ApiClient::class)
             ->shouldReceive('get')
-            ->with("/jobs?status=APPROVED&limit=1")
+            ->with('/jobs', [
+                'limit'     => 1,
+                'status'    => 'APPROVED',
+            ])
             ->andReturn($expected)
             ->getMock();
 
-        $repository = new JobApiRepository($api);
+        $repository = static::makeRepository($api, 'jobs');
 
         $response = $repository->findByField('status', 'APPROVED');
 

@@ -2,8 +2,6 @@
 
 namespace EthicalJobs\Storage\Contracts;
 
-use Traversable;
-
 /**
  * Repository contract
  *
@@ -85,7 +83,32 @@ interface Repository
     /**
      * Return the result of the query
      *
-     * @return Traversable
+     * @return iterable
      */
-    public function find(): Traversable;
+    public function find(): iterable;
+
+    /**
+     * Update a entity by id
+     *
+     * @param mixed $id
+     * @param array $attributes
+     * @return mixed
+     */
+    public function update($id, array $attributes);
+
+    /**
+     * Update collection of entities
+     *
+     * @param iterable $entities
+     * @return mixed
+     */
+    public function updateCollection(iterable $entities);
+
+    /**
+     * Delete an entity by id
+     *
+     * @param mixed $id
+     * @return mixed
+     */
+    public function delete($id);
 }

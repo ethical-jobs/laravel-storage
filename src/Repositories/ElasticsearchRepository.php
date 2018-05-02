@@ -2,7 +2,6 @@
 
 namespace EthicalJobs\Storage\Repositories;
 
-use Traversable;
 use Elasticsearch\Client;
 use Illuminate\Database\Eloquent\Model;
 use ONGR\ElasticsearchDSL\Search;
@@ -187,7 +186,7 @@ class ElasticsearchRepository implements Contracts\Repository, Contracts\HasCrit
     /**
      * {@inheritdoc}
      */
-    public function find(): Traversable
+    public function find(): iterable
     {
         $response = $this->client->search([
             'index' => $this->indexName,

@@ -17,7 +17,8 @@
     ],
     "require": {
         "php": "^7.0",
-        "ethical-jobs/ethical-jobs-elasticsearch": "^1.5"
+        "ethical-jobs/ethical-jobs-elasticsearch": "^1.5",
+        "ethical-jobs/ethical-jobs-sdk": "^1.1"
     },
     "require-dev": {
         "phpunit/phpunit": "~6.5",

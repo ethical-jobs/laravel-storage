@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a8703c31319efb2fdb3855d36b566820",
+    "content-hash": "bfc98d253d51fbf2d082fc8fd0ac346c",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -423,6 +423,75 @@
                 "laravel"
             ],
             "time": "2018-04-30T08:12:11+00:00"
+        },
+        {
+            "name": "ethical-jobs/ethical-jobs-sdk",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ethical-jobs/ethical-jobs-sdk-php.git",
+                "reference": "c6e2f2762e56cc48032702c29872e1415a2623d4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ethical-jobs/ethical-jobs-sdk-php/zipball/c6e2f2762e56cc48032702c29872e1415a2623d4",
+                "reference": "c6e2f2762e56cc48032702c29872e1415a2623d4",
+                "shasum": ""
+            },
+            "require": {
+                "ethical-jobs/ethical-jobs-foundation": "~1.3",
+                "guzzlehttp/guzzle": "~6.0",
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "codedungeon/phpunit-result-printer": "^0.5.3",
+                "hirak/prestissimo": "^0.3.7",
+                "illuminate/support": "^5.4",
+                "mockery/mockery": "1.0.*",
+                "orchestra/testbench": "~3.4",
+                "phpunit/phpunit": "~6.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "dont-discover": [
+                        "ethical-jobs/ethical-jobs-foundation"
+                    ],
+                    "providers": [
+                        "EthicalJobs\\SDK\\Laravel\\ServiceProvider"
+                    ],
+                    "aliases": {
+                        "EthicalJobs": "EthicalJobs\\SDK\\Laravel\\ApiFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "EthicalJobs\\SDK\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "EthicalJobs.com.au",
+                    "homepage": "http://ethicaljobs.com.au"
+                },
+                {
+                    "name": "Andrew McLagan",
+                    "email": "andrew@ethicaljobs.com.au"
+                }
+            ],
+            "description": "EthicalJobs API client",
+            "homepage": "https://github.com/ethical-jobs/ethical-jobs-sdk-php",
+            "keywords": [
+                "api",
+                "ethicaljobs",
+                "sdk"
+            ],
+            "time": "2018-04-29T03:34:18+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",

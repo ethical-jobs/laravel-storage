@@ -1,13 +1,12 @@
 <?php
 
-namespace Tests\Integration\Storage\QueryAdapters\Database;
+namespace Tests\Integration\Repositories\Api;
 
 use Mockery;
-use EthicalJobs\SDK\Collection;
-use EthicalJobs\SDK\Repositories\JobApiRepository;
 use EthicalJobs\SDK\ApiClient;
+use EthicalJobs\SDK\Collection;
 
-class FindByIdTest extends \EthicalJobs\Tests\SDK\TestCase
+class FindByIdTest extends \Tests\Integration\Repositories\ApiTestCase
 {
     /**
      * @test
@@ -23,7 +22,7 @@ class FindByIdTest extends \EthicalJobs\Tests\SDK\TestCase
             ->andReturn($expected)
             ->getMock();
 
-        $repository = new JobApiRepository($api);
+        $repository = static::makeRepository($api, 'jobs');
 
         $response = $repository->findById(1337);
 

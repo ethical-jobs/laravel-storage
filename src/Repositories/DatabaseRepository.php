@@ -2,7 +2,6 @@
 
 namespace EthicalJobs\Storage\Repositories;
 
-use Traversable;
 use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use EthicalJobs\Storage\Contracts;
@@ -136,7 +135,7 @@ class DatabaseRepository implements Contracts\Repository, Contracts\HasCriteria
     /**
      * {@inheritdoc}
      */
-    public function find(): Traversable
+    public function find(): iterable
     {
         $this->applyCriteria();
 
@@ -148,4 +147,51 @@ class DatabaseRepository implements Contracts\Repository, Contracts\HasCriteria
         
         return $results;
     }   
+
+    /**
+     * {@inheritdoc}
+     */
+    public function update($id, array $attributes)
+    {
+        $entity = $this->findById($id);
+
+        $entity->fill($attributes);
+
+        $entity->save();
+
+        return $entity;
+    }        
+
+    /**
+     * {@inheritdoc}
+     */
+    public function updateCollection(iterable $entities)
+    {
+        if (! $entities instanceof \Illuminate\Support\Collection) {
+            $entities = new Collection($entities);
+        }
+
+        $updatedEntities = $entities->newCollection();
+
+        foreach ($entities as $entity) {
+
+            $udpated = $this->update($entity->id, $entity);
+
+            $updatedEntities->push($entity);
+        }
+
+        return $updatedEntities;        
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function delete($id)
+    {
+        $entity = $this->findById($id);
+
+        $entity->delete();
+
+        return $entity;
+    }        
 }

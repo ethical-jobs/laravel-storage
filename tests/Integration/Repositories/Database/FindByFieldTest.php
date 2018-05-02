@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Tests\Fixtures\Models;
 use EthicalJobs\Storage\Repositories\DatabaseRepository;
 
-class FindByFieldTest extends \Tests\TestCase
+class FindByFieldTest extends \Tests\Integration\Repositories\DatabaseTestCase
 {
     /**
      * @test
@@ -28,7 +28,7 @@ class FindByFieldTest extends \Tests\TestCase
              ->andReturn(collect([$expected]))
              ->getMock();
 
-        $repository = new DatabaseRepository(new Models\Person);             
+        $repository = static::makeRepository(new Models\Person);             
 
         $result = $repository
             ->setStorageEngine($query)
@@ -58,7 +58,7 @@ class FindByFieldTest extends \Tests\TestCase
              ->andReturn(null)
              ->getMock();
 
-        $repository = new DatabaseRepository(new Models\Person);   
+        $repository = static::makeRepository(new Models\Person);   
 
         $repository
             ->setStorageEngine($query)

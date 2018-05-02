@@ -1,13 +1,12 @@
 <?php
 
-namespace EthicalJobs\Storage\Repositories\Base;
+namespace EthicalJobs\Storage\Repositories;
 
-use Traversable;
-use Illuminate\Support\Collection;
-use EthicalJobs\Storage\Repositories\Repository;
-use EthicalJobs\Storage\Repositories\RepositoryCriteria;
+use EthicalJobs\Storage\Contracts;
 use EthicalJobs\Storage\Criteria\CriteriaCollection;
 use EthicalJobs\Storage\Criteria\HasCriteria;
+use EthicalJobs\SDK\Collection;
+use EthicalJobs\SDK\ApiClient;
 
 /**
  * Api repository
@@ -15,7 +14,7 @@ use EthicalJobs\Storage\Criteria\HasCriteria;
  * @author Andrew McLagan <andrew@ethicaljobs.com.au>
  */
 
-class ApiRepository implements Repository, RepositoryCriteria
+class ApiRepository implements Contracts\Repository, Contracts\HasCriteria
 {
     use HasCriteria;
 
@@ -62,7 +61,7 @@ class ApiRepository implements Repository, RepositoryCriteria
      * @param string $resource
      * @return $this
      */
-    public function setResource(string $resource = '/'): Repository
+    public function setResource(string $resource = '/'): Contracts\Repository
     {
         $this->resource = $resource;
 
@@ -119,7 +118,7 @@ class ApiRepository implements Repository, RepositoryCriteria
     /**
      * {@inheritdoc}
      */
-    public function where(string $field, $operator, $value = null): Repository
+    public function where(string $field, $operator, $value = null): Contracts\Repository
     {
         $this->query[$field] = $value;
 
@@ -129,7 +128,7 @@ class ApiRepository implements Repository, RepositoryCriteria
     /**
      * {@inheritdoc}
      */
-    public function whereIn(string $field, array $values): Repository
+    public function whereIn(string $field, array $values): Contracts\Repository
     {
         $this->query[$field] = $values;
 
@@ -139,7 +138,7 @@ class ApiRepository implements Repository, RepositoryCriteria
     /**
      * {@inheritdoc}
      */
-    public function orderBy(string $field, string $direction): Repository
+    public function orderBy(string $field, string $direction): Contracts\Repository
     {
         $this->query['orderBy'] = $field;
 
@@ -151,7 +150,7 @@ class ApiRepository implements Repository, RepositoryCriteria
     /**
      * {@inheritdoc}
      */
-    public function limit(int $limit): Repository
+    public function limit(int $limit): Contracts\Repository
     {
         $this->query['limit'] = $limit;
 
@@ -161,10 +160,49 @@ class ApiRepository implements Repository, RepositoryCriteria
     /**
      * {@inheritdoc}
      */
-    public function find(): Traversable
+    public function find(): iterable
     {
         $this->applyCriteria();
         
         return $this->api->get("/$this->resource", $this->query);
-    }           
+    }     
+
+    /**
+     * {@inheritdoc}
+     */
+    public function update($id, array $attributes)
+    {
+        return $this->api->patch("/$this->resource/$id", $attributes);
+    }        
+
+    /**
+     * {@inheritdoc}
+     */
+    public function updateCollection(iterable $entities)
+    {
+        if (! $entities instanceof \Illuminate\Support\Collection) {
+            $entities = new Collection($entities);
+        }
+
+        $responses = [];
+
+        foreach ($entities->chunk(50) as $chunk) {
+
+            $response = $this->api->patch("/$this->resource/collection", [
+                $this->resource => $chunk,
+            ]);
+
+            $responses = array_merge_recursive($responses, $response->toArray());
+        }
+
+        return new Collection($responses);        
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function delete($id)
+    {
+        return $this->api->delete("/$this->resource/$id");
+    }     
 }

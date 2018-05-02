@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Integration\Storage\QueryAdapters\Database;
+namespace Tests\Integration\Repositories\Api;
 
 use Mockery;
-use EthicalJobs\SDK\Collection;
-use EthicalJobs\SDK\Repositories\JobApiRepository;
 use EthicalJobs\SDK\ApiClient;
+use EthicalJobs\SDK\Collection;
+use EthicalJobs\Storage\Repositories\ApiRepository;
 
-class WhereTest extends \EthicalJobs\Tests\SDK\TestCase
+class WhereTest extends \Tests\Integration\Repositories\ApiTestCase
 {
     /**
      * @test
@@ -15,15 +15,12 @@ class WhereTest extends \EthicalJobs\Tests\SDK\TestCase
      */
     public function it_has_fluent_interface()
     {
-        $api = Mockery::mock(ApiClient::class)
-            ->shouldIgnoreMissing();
-
-        $repository = new JobApiRepository($api);
+        $repository = static::makeRepository();
 
         $isFluent = $repository
             ->where('status', '=', 'APPROVED');
 
-        $this->assertInstanceOf(JobApiRepository::class, $isFluent);
+        $this->assertInstanceOf(ApiRepository::class, $isFluent);
     }   
 
     /**
@@ -37,13 +34,15 @@ class WhereTest extends \EthicalJobs\Tests\SDK\TestCase
         $api = Mockery::mock(ApiClient::class)
             ->shouldReceive('get')
             ->once()
-            ->with('/search/jobs', [
+            ->with('/invoices', [
                 'status' => 'APPROVED',
             ])
             ->andReturn($expected)
             ->getMock();
 
-        (new JobApiRepository($api))
+        $repository = static::makeRepository($api, 'invoices');
+
+        $repository
             ->where('status', '=', 'APPROVED')
             ->find();
     } 
@@ -59,13 +58,15 @@ class WhereTest extends \EthicalJobs\Tests\SDK\TestCase
         $api = Mockery::mock(ApiClient::class)
             ->shouldReceive('get')
             ->once()
-            ->with('/search/jobs', [
+            ->with('/invoices', [
                 'status' => 'APPROVED',
             ])
             ->andReturn($expected)
             ->getMock();
 
-        (new JobApiRepository($api))
+        $repository = static::makeRepository($api, 'invoices');
+
+        $repository
             ->where('status', '>=', 'APPROVED')
             ->find();
     }         

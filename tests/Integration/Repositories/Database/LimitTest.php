@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Tests\Fixtures\Models;
 use EthicalJobs\Storage\Repositories\DatabaseRepository;
 
-class LimitTest extends \Tests\TestCase
+class LimitTest extends \Tests\Integration\Repositories\DatabaseTestCase
 {
     /**
      * @test
@@ -17,7 +17,7 @@ class LimitTest extends \Tests\TestCase
     {
         $query = Mockery::mock(Builder::class)->shouldIgnoreMissing();
 
-        $repository = new DatabaseRepository(new Models\Person);
+        $repository = static::makeRepository(new Models\Person);
 
         $isFluent = $repository
             ->setStorageEngine($query)
@@ -38,7 +38,7 @@ class LimitTest extends \Tests\TestCase
              ->with(15)
              ->getMock();
 
-        $repository = new DatabaseRepository(new Models\Person);
+        $repository = static::makeRepository(new Models\Person);
 
         $result = $repository
             ->setStorageEngine($query)

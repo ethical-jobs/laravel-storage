@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Integration\Storage\QueryAdapters\Database;
+namespace Tests\Integration\Repositories\Api;
 
 use Mockery;
-use EthicalJobs\SDK\Collection;
-use EthicalJobs\SDK\Repositories\JobApiRepository;
 use EthicalJobs\SDK\ApiClient;
+use EthicalJobs\SDK\Collection;
+use EthicalJobs\Storage\Repositories\ApiRepository;
 
-class WhereInTest extends \EthicalJobs\Tests\SDK\TestCase
+class WhereInTest extends \Tests\Integration\Repositories\ApiTestCase
 {
     /**
      * @test
@@ -15,15 +15,12 @@ class WhereInTest extends \EthicalJobs\Tests\SDK\TestCase
      */
     public function it_has_fluent_interface()
     {
-        $api = Mockery::mock(ApiClient::class)
-            ->shouldIgnoreMissing();
-
-        $repository = new JobApiRepository($api);
+        $repository = static::makeRepository();
 
         $isFluent = $repository
             ->whereIn('locations', [1,28,298,23,7]);
 
-        $this->assertInstanceOf(JobApiRepository::class, $isFluent);
+        $this->assertInstanceOf(ApiRepository::class, $isFluent);
     }   
 
     /**
@@ -37,13 +34,15 @@ class WhereInTest extends \EthicalJobs\Tests\SDK\TestCase
         $api = Mockery::mock(ApiClient::class)
             ->shouldReceive('get')
             ->once()
-            ->with('/search/jobs', [
+            ->with('/people', [
                 'status' => ['APPROVED','DRAFT'],
             ])
             ->andReturn($expected)
             ->getMock();
 
-        (new JobApiRepository($api))
+        $repository = static::makeRepository($api, 'people');
+
+        $repository
             ->whereIn('status', ['APPROVED','DRAFT'])
             ->find();
     }    

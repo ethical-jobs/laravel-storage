@@ -2,13 +2,10 @@
 
 namespace Tests;
 
-use EthicalJobs\Elasticsearch\Testing\InteractsWithElasticsearch;
 use Orchestra\Database\ConsoleServiceProvider;
 
 abstract class TestCase extends \Orchestra\Testbench\TestCase
-{
-	use InteractsWithElasticsearch;
-	
+{	
 	/**
 	 * Setup the test environment.
      *

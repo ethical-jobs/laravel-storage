@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Integration\Storage\QueryAdapters\Database;
+namespace Tests\Integration\Repositories\Api;
 
 use Mockery;
-use EthicalJobs\SDK\Collection;
-use EthicalJobs\SDK\Repositories\JobApiRepository;
 use EthicalJobs\SDK\ApiClient;
+use EthicalJobs\SDK\Collection;
+use EthicalJobs\Storage\Repositories\ApiRepository;
 
-class OrderByTest extends \EthicalJobs\Tests\SDK\TestCase
+class OrderByTest extends \Tests\Integration\Repositories\ApiTestCase
 {
     /**
      * @test
@@ -15,15 +15,12 @@ class OrderByTest extends \EthicalJobs\Tests\SDK\TestCase
      */
     public function it_has_fluent_interface()
     {
-        $api = Mockery::mock(ApiClient::class)
-            ->shouldIgnoreMissing();
-
-        $repository = new JobApiRepository($api);
+        $repository = static::makeRepository();
 
         $isFluent = $repository
             ->orderBy('approved_at', 'DESC');
 
-        $this->assertInstanceOf(JobApiRepository::class, $isFluent);
+        $this->assertInstanceOf(ApiRepository::class, $isFluent);
     }   
 
     /**
@@ -44,7 +41,9 @@ class OrderByTest extends \EthicalJobs\Tests\SDK\TestCase
             ->andReturn($expected)
             ->getMock();
 
-        (new JobApiRepository($api))
+        $repository = static::makeRepository($api, 'search/jobs');
+
+        $repository
             ->orderBy('approved_at', 'DESC')
             ->find();
     }    

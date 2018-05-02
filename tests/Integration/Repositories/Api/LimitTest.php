@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Integration\Storage\QueryAdapters\Database;
+namespace Tests\Integration\Repositories\Api;
 
 use Mockery;
-use EthicalJobs\SDK\Collection;
-use EthicalJobs\SDK\Repositories\JobApiRepository;
 use EthicalJobs\SDK\ApiClient;
+use EthicalJobs\SDK\Collection;
+use EthicalJobs\Storage\Repositories\ApiRepository;
 
-class LimitTest extends \EthicalJobs\Tests\SDK\TestCase
+class LimitTest extends \Tests\Integration\Repositories\ApiTestCase
 {
     /**
      * @test
@@ -15,15 +15,11 @@ class LimitTest extends \EthicalJobs\Tests\SDK\TestCase
      */
     public function it_has_fluent_interface()
     {
-        $api = Mockery::mock(ApiClient::class)
-            ->shouldIgnoreMissing();
+        $repository = static::makeRepository();
 
-        $repository = new JobApiRepository($api);
+        $isFluent = $repository->limit(15);
 
-        $isFluent = $repository
-            ->limit(15);
-
-        $this->assertInstanceOf(JobApiRepository::class, $isFluent);
+        $this->assertInstanceOf(ApiRepository::class, $isFluent);
     }   
 
     /**
@@ -43,7 +39,9 @@ class LimitTest extends \EthicalJobs\Tests\SDK\TestCase
             ->andReturn($expected)
             ->getMock();
 
-        (new JobApiRepository($api))
+        $repository = static::makeRepository($api, 'search/jobs');            
+
+        $repository
             ->limit(15)
             ->find();
     }    

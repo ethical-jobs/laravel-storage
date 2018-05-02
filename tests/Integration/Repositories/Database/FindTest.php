@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Tests\Fixtures\Models;
 use EthicalJobs\Storage\Repositories\DatabaseRepository;
 
-class FindTest extends \Tests\TestCase
+class FindTest extends \Tests\Integration\Repositories\DatabaseTestCase
 {
     /**
      * @test
@@ -24,7 +24,7 @@ class FindTest extends \Tests\TestCase
              ->andReturn($expected)
              ->getMock();
 
-        $repository = new DatabaseRepository(new Models\Person);
+        $repository = static::makeRepository(new Models\Person);
 
         $results = $repository
             ->setStorageEngine($query)
@@ -52,7 +52,7 @@ class FindTest extends \Tests\TestCase
              ->andReturn($expected)
              ->getMock();
 
-        $repository = new DatabaseRepository(new Models\Person);
+        $repository = static::makeRepository(new Models\Person);
 
         $result = $repository
             ->setStorageEngine($query)

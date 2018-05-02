@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Tests\Fixtures\Models;
 use EthicalJobs\Storage\Repositories\DatabaseRepository;
 
-class FindByIdTest extends \Tests\TestCase
+class FindByIdTest extends \Tests\Integration\Repositories\DatabaseTestCase
 {
     /**
      * @test
@@ -15,7 +15,7 @@ class FindByIdTest extends \Tests\TestCase
      */
     public function it_returns_a_model_if_one_is_passed_in()
     {
-        $repository = new DatabaseRepository(new Models\Person);
+        $repository = static::makeRepository(new Models\Person);
 
         $id = new Models\Person;
 
@@ -39,7 +39,7 @@ class FindByIdTest extends \Tests\TestCase
              ->andReturn($expected)
              ->getMock();
 
-        $repository = new DatabaseRepository(new Models\Person); 
+        $repository = static::makeRepository(new Models\Person); 
 
         $result = $repository
             ->setStorageEngine($query)
@@ -65,7 +65,7 @@ class FindByIdTest extends \Tests\TestCase
              ->andReturn(null)
              ->getMock();
 
-        $repository = new DatabaseRepository(new Models\Person); 
+        $repository = static::makeRepository(new Models\Person); 
 
         $repository
             ->setStorageEngine($query)
