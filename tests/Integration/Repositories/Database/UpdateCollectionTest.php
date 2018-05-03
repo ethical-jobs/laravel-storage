@@ -14,22 +14,25 @@ class UpdateCollectionTest extends \Tests\Integration\Repositories\DatabaseTestC
      */
     public function it_updates_a_collection_of_entities()
     {
-        $people = factory(Models\Person::class, 6)->create();
-
-        $repository = static::makeRepository(new Models\Person); 
-
-        $toUpdate = factory(Models\Person::class, 6)
+        $peopleToUpdate = factory(Models\Person::class, 6)
             ->create()
             ->map(function($person) {
                 return [
+                    'id'            => $person->id,
                     'first_name'    => 'Andrew',
                     'last_name'     => 'McLagan',
                 ];
-            });
+            })
+            ->keyBy('id');
 
-        $deleted = $repository->udpateCollection($toUpdate);
+        $repository = static::makeRepository(new Models\Person); 
 
-        $this->assertTrue($deleted->deleted_at !== null);
+        $updatedPeople = $repository->updateCollection($peopleToUpdate);
+
+        $updatedPeople->each(function($person) {
+            $this->assertEquals($person->first_name, 'Andrew');
+            $this->assertEquals($person->last_name, 'McLagan');
+        });
     }        
 
     /**
@@ -38,31 +41,26 @@ class UpdateCollectionTest extends \Tests\Integration\Repositories\DatabaseTestC
      */
     public function it_can_accept_arrays_when_updating()
     {
-        $jobs = [];
+         $peopleToUpdate = factory(Models\Person::class, 6)
+            ->create()
+            ->map(function($person) {
+                return [
+                    'id'            => $person->id,
+                    'first_name'    => 'Andrew',
+                    'last_name'     => 'McLagan',
+                ];
+            })
+            ->keyBy('id')
+            ->toArray();
 
-        for ($i = 0; $i < 30; $i++) {
-            $jobs[$i] = [
-                'id'    => $i, 
-                'title' => 'React Developer', 
-                'views' => 100
-            ];
-        }
+        $repository = static::makeRepository(new Models\Person); 
 
-        $api = Mockery::mock(ApiClient::class)
-            ->shouldReceive('patch')
-            ->once()
-            ->withArgs([
-                '/jobs/collection',
-                Mockery::on(function ($args) {
-                    return $args['jobs']->count() === 30;
-                }),
-            ])
-            ->andReturn(new Collection([]))
-            ->getMock();
+        $updatedPeople = $repository->updateCollection($peopleToUpdate);
 
-        $repository = static::makeRepository($api, 'jobs');     
-
-        $repository->updateCollection($jobs);
+        $updatedPeople->each(function($person) {
+            $this->assertEquals($person->first_name, 'Andrew');
+            $this->assertEquals($person->last_name, 'McLagan');
+        });
     }      
 
     /**
@@ -71,27 +69,23 @@ class UpdateCollectionTest extends \Tests\Integration\Repositories\DatabaseTestC
      */
     public function it_returns_all_updated_entities()
     {
-        $jobs = new Collection;
+         $peopleToUpdate = factory(Models\Person::class, 6)
+            ->create()
+            ->map(function($person) {
+                return [
+                    'id'            => $person->id,
+                    'first_name'    => 'Andrew',
+                    'last_name'     => 'McLagan',
+                ];
+            })
+            ->keyBy('id');
 
-        for ($i = 0; $i < 200; $i++) {
-            $jobs->put($i, [
-                'id'    => $i, 
-                'title' => 'React Developer', 
-                'views' => 100
-            ]);
-        }
+        $repository = static::makeRepository(new Models\Person); 
 
-        $api = Mockery::mock(ApiClient::class)
-            ->shouldReceive('patch')
-            ->times(4)
-            ->withAnyArgs()
-            ->andReturn(...$jobs->chunk(50))
-            ->getMock();
+        $updatedPeople = $repository->updateCollection($peopleToUpdate);
 
-        $repository = static::makeRepository($api, 'jobs');     
-
-        $updated = $repository->updateCollection($jobs);
-
-        $this->assertEquals($jobs, $updated);
+        $updatedPeople->each(function($person) use ($peopleToUpdate) {
+            $this->assertTrue($peopleToUpdate->has($person->id));
+        });
     }            
 }

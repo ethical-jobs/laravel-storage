@@ -5,9 +5,9 @@ namespace Tests\Integration\Repositories\Elasticsearch;
 use Mockery;
 use Elasticsearch\Client;
 use Tests\Fixtures\RepositoryFactory;
-use Tests\Fixtures\Person;
+use Tests\Fixtures\Models;
 
-class WhereTest extends \Tests\TestCase
+class WhereTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
 {
     /**
      * @test
@@ -15,7 +15,7 @@ class WhereTest extends \Tests\TestCase
      */
     public function it_can_find_by_range_operators()
     {
-        $people = factory(Person::class, 10)->create();
+        $people = factory(Models\Person::class, 10)->create();
 
         foreach (['<=','>=','<','>'] as $operator) {
 
@@ -31,7 +31,7 @@ class WhereTest extends \Tests\TestCase
                 ->andReturn($this->getSearchResults($people))
                 ->getMock();       
 
-            $repository = RepositoryFactory::build(new Person, $client);     
+            $repository = static::makeRepository($client, new Models\Person);     
     
             $result = $repository
                 ->where('age', $operator, 65)
@@ -47,7 +47,7 @@ class WhereTest extends \Tests\TestCase
      */
     public function it_can_find_by_wildcard_operator()
     {
-        $people = factory(Person::class, 10)->create();
+        $people = factory(Models\Person::class, 10)->create();
 
         $client = Mockery::mock(Client::class)
             ->shouldReceive('search')
@@ -61,7 +61,7 @@ class WhereTest extends \Tests\TestCase
             ->andReturn($this->getSearchResults($people))
             ->getMock();       
 
-        $repository = RepositoryFactory::build(new Person, $client);     
+        $repository = static::makeRepository($client, new Models\Person);     
 
         $result = $repository
             ->where('name', 'like', 'Andre% McL%an')
@@ -76,7 +76,7 @@ class WhereTest extends \Tests\TestCase
      */
     public function it_can_find_by_not_equals_operator()
     {
-        $people = factory(Person::class, 10)->create();
+        $people = factory(Models\Person::class, 10)->create();
 
         $client = Mockery::mock(Client::class)
             ->shouldReceive('search')
@@ -90,7 +90,7 @@ class WhereTest extends \Tests\TestCase
             ->andReturn($this->getSearchResults($people))
             ->getMock();       
 
-        $repository = RepositoryFactory::build(new Person, $client);     
+        $repository = static::makeRepository($client, new Models\Person);         
 
         $result = $repository
             ->where('age', '!=', 34)
@@ -105,7 +105,7 @@ class WhereTest extends \Tests\TestCase
      */
     public function it_can_find_by_equals_operator()
     {
-        $people = factory(Person::class, 10)->create();
+        $people = factory(Models\Person::class, 10)->create();
 
         $client = Mockery::mock(Client::class)
             ->shouldReceive('search')
@@ -119,7 +119,7 @@ class WhereTest extends \Tests\TestCase
             ->andReturn($this->getSearchResults($people))
             ->getMock();       
 
-        $repository = RepositoryFactory::build(new Person, $client);     
+        $repository = static::makeRepository($client, new Models\Person);         
 
         $result = $repository
             ->where('age', '=', 34)
@@ -134,7 +134,7 @@ class WhereTest extends \Tests\TestCase
      */
     public function it_can_find_by_equals_operator_by_default()
     {
-        $people = factory(Person::class, 10)->create();
+        $people = factory(Models\Person::class, 10)->create();
 
         $client = Mockery::mock(Client::class)
             ->shouldReceive('search')
@@ -148,7 +148,7 @@ class WhereTest extends \Tests\TestCase
             ->andReturn($this->getSearchResults($people))
             ->getMock();       
 
-        $repository = RepositoryFactory::build(new Person, $client);     
+        $repository = static::makeRepository($client, new Models\Person);         
 
         $result = $repository
             ->where('age', 37)

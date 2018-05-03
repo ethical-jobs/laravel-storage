@@ -2,9 +2,11 @@
 
 namespace Tests\Integration\Repositories;
 
+use Mockery;
 use Tests\Fixtures\Models;
 use Elasticsearch\Client;
 use ONGR\ElasticsearchDSL\Search;
+use EthicalJobs\Elasticsearch\Indexable;
 use EthicalJobs\Elasticsearch\TestingIndexable;
 use EthicalJobs\Elasticsearch\Testing\InteractsWithElasticsearch;
 use EthicalJobs\Storage\Repositories\ElasticsearchRepository;
@@ -20,7 +22,11 @@ class ElasticsearchTestCase extends \Tests\TestCase
      * @param  ...
      * @return EthicalJobs\Storage\Repositories\ElasticsearchRepository
      */
-    public static function makeRepository(Client $client = null, Indexable $indexable = null, Search $search = null): Repository
+    public static function makeRepository(
+        Client $client = null, 
+        Indexable $indexable = null, 
+        Search $search = null
+    ): Repository
     {
         if (is_null($indexable)) {
             $indexable = new Models\Person;
@@ -32,7 +38,7 @@ class ElasticsearchTestCase extends \Tests\TestCase
 
         if (is_null($client)) {
             $client = Mockery::mock(Client::class)->shouldIgnoreMissing();
-        }        
+        }            
 
         return new ElasticsearchRepository($indexable, $search, $client, 'test-index');
     }

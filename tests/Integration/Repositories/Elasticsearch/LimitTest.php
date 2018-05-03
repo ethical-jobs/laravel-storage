@@ -5,9 +5,9 @@ namespace Tests\Integration\Repositories\Elasticsearch;
 use Mockery;
 use Elasticsearch\Client;
 use Tests\Fixtures\RepositoryFactory;
-use Tests\Fixtures\Person;
+use Tests\Fixtures\Models;
 
-class LimitTest extends \Tests\TestCase
+class LimitTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
 {
     /**
      * @test
@@ -15,7 +15,7 @@ class LimitTest extends \Tests\TestCase
      */
     public function it_can_add_a_limit()
     {
-        $people = factory(Person::class, 10)->create();
+        $people = factory(Models\Person::class, 10)->create();
 
         $client = Mockery::mock(Client::class)
             ->shouldReceive('search')
@@ -29,7 +29,7 @@ class LimitTest extends \Tests\TestCase
             ->andReturn($this->getSearchResults($people))
             ->getMock();       
 
-        $repository = RepositoryFactory::build(new Person, $client);     
+        $repository = static::makeRepository($client, new Models\Person);
 
         $result = $repository
             ->limit(17)

@@ -2,9 +2,6 @@
 
 namespace EthicalJobs\Storage\Contracts;
 
-use Traversible;
-use Illuminate\Support\Collection;
-
 /**
  * Hydrator contract
  *
@@ -16,10 +13,10 @@ interface Hydrator
     /**
      * Hydrates collection of entities
      *
-     * @param Traversible $collection
-     * @return \Illuminate\Support\Collection
+     * @param iterable $collection
+     * @return iterable
      */
-    public function hydrateCollection(Traversible $collection): Collection;
+    public function hydrateCollection(iterable $collection): iterable;
 
     /**
      * Hydrates single entity

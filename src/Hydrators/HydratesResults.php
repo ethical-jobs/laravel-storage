@@ -2,6 +2,8 @@
 
 namespace EthicalJobs\Storage\Hydrators;
 
+use EthicalJobs\Storage\Contracts\Hydrator;
+
 /**
  * Adds response hydration functionality
  * 

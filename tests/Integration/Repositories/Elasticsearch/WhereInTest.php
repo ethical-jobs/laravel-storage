@@ -5,9 +5,9 @@ namespace Tests\Integration\Repositories\Elasticsearch;
 use Mockery;
 use Elasticsearch\Client;
 use Tests\Fixtures\RepositoryFactory;
-use Tests\Fixtures\Person;
+use Tests\Fixtures\Models;
 
-class WhereInTest extends \Tests\TestCase
+class WhereInTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
 {
     /**
      * @test
@@ -15,7 +15,7 @@ class WhereInTest extends \Tests\TestCase
      */
     public function it_can_find_by_a_whereIn_terms_query()
     {
-        $people = factory(Person::class, 10)->create();
+        $people = factory(Models\Person::class, 10)->create();
 
         $client = Mockery::mock(Client::class)
             ->shouldReceive('search')
@@ -30,7 +30,7 @@ class WhereInTest extends \Tests\TestCase
             ->andReturn($this->getSearchResults($people))
             ->getMock();       
 
-        $repository = RepositoryFactory::build(new Person, $client);     
+        $repository = static::makeRepository($client, new Models\Person);
 
         $result = $repository
             ->whereIn('age', [34,65,14,21])

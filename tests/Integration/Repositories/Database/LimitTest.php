@@ -15,13 +15,9 @@ class LimitTest extends \Tests\Integration\Repositories\DatabaseTestCase
      */
     public function it_has_fluent_interface()
     {
-        $query = Mockery::mock(Builder::class)->shouldIgnoreMissing();
-
         $repository = static::makeRepository(new Models\Person);
 
-        $isFluent = $repository
-            ->setStorageEngine($query)
-            ->limit(15);
+        $isFluent = $repository->limit(5);
 
         $this->assertInstanceOf(DatabaseRepository::class, $isFluent);
     }   
@@ -32,16 +28,14 @@ class LimitTest extends \Tests\Integration\Repositories\DatabaseTestCase
      */
     public function it_can_add_a_where_query()
     {
-        $query = Mockery::mock(Builder::class)
-             ->shouldReceive('limit')
-             ->once()
-             ->with(15)
-             ->getMock();
+        factory(Models\Person::class, 20)->create();
 
         $repository = static::makeRepository(new Models\Person);
 
         $result = $repository
-            ->setStorageEngine($query)
-            ->limit(15);
+            ->limit(15)
+            ->find();
+
+        $this->assertEquals(15, $result->count());
     }    
 }

@@ -15,26 +15,14 @@ class FindByFieldTest extends \Tests\Integration\Repositories\DatabaseTestCase
      */
     public function it_can_find_by_a_field()
     {
-        $expected = new Models\Person;
-
-        $query = Mockery::mock(Builder::class)
-             ->shouldReceive('where')
-             ->once()
-             ->with('first_name', 'Andrew')
-             ->andReturn(Mockery::self())
-             ->shouldReceive('get')
-             ->once()
-             ->withNoArgs()
-             ->andReturn(collect([$expected]))
-             ->getMock();
+        $person = factory(Models\Person::class)->create();
 
         $repository = static::makeRepository(new Models\Person);             
 
-        $result = $repository
-            ->setStorageEngine($query)
-            ->findByField('first_name', 'Andrew');
+        $found = $repository
+            ->findByField('first_name', $person->first_name);
 
-        $this->assertEquals($expected, $result);
+        $this->assertEquals($person->first_name, $found->first_name);
     }    
 
     /**
@@ -45,23 +33,8 @@ class FindByFieldTest extends \Tests\Integration\Repositories\DatabaseTestCase
     {
         $this->expectException(\Symfony\Component\HttpKernel\Exception\NotFoundHttpException::class);
 
-        $expected = new Models\Person;
-
-        $query = Mockery::mock(Builder::class)
-             ->shouldReceive('where')
-             ->once()
-             ->with('first_name', 'Andrew')
-             ->andReturn(Mockery::self())
-             ->shouldReceive('get')
-             ->once()
-             ->withNoArgs()
-             ->andReturn(null)
-             ->getMock();
-
         $repository = static::makeRepository(new Models\Person);   
 
-        $repository
-            ->setStorageEngine($query)
-            ->findByField('first_name', 'Andrew');
+        $repository->findByField('first_name', 'Jesus');
     }         
 }

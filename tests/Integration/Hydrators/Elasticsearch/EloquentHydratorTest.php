@@ -2,30 +2,59 @@
 
 namespace Tests\Integration\Hydrators;
 
-use ArrayObject;
-use Illuminate\Support\Collection;
-use EthicalJobs\Elasticsearch\Hydrators\ArrayObjectHydrator;
-use Tests\Fixtures;
+use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Model;
+use Tests\Fixtures\Models;
+use EthicalJobs\Storage\Hydrators\Elasticsearch\EloquentHydrator;
+use EthicalJobs\Elasticsearch\Testing\InteractsWithElasticsearch;
 
 class EloquentHydratorTest extends \Tests\TestCase
 {
+    use InteractsWithElasticsearch;
+
+    /**
+     * @test
+     * @group Integration
+     */
+    public function it_can_hydrate_a_single_entity()
+    {
+        $vehicle = factory(Models\Vehicle::class, 1)->create();
+
+        $response = $this->getSearchResults($vehicle);
+
+        $toHydrate = $response['hits']['hits'][0];
+
+        $hydrated = (new EloquentHydrator)
+            ->setIndexable(new Models\Vehicle)
+            ->hydrateEntity($toHydrate);
+
+        $this->assertInstanceOf(Model::class, $hydrated);
+
+        foreach ($toHydrate['_source'] as $property => $value) {
+            if (! $hydrated->$property instanceof Carbon) {
+                $this->assertEquals($hydrated->$property, $value);
+            }
+        }
+    }    
+
     /**
      * @test
      * @group Integration
      */
     public function it_returns_a_collection_of_array_objects()
     {
-        $vehicles = factory(Fixtures\Vehicle::class, 5)->create();
+        $vehicles = factory(Models\Vehicle::class, 5)->create();
 
         $response = $this->getSearchResults($vehicles);
 
-        $collection = (new ArrayObjectHydrator)
-            ->hydrateFromResponse($response, new Fixtures\Vehicle);
+        $collection = (new EloquentHydrator)
+            ->setIndexable(new Models\Vehicle)
+            ->hydrateCollection($response, new Models\Vehicle);
 
-        $this->assertInstanceOf(Collection::class, $collection);
+        $this->assertInstanceOf(\Illuminate\Support\Collection::class, $collection);
 
         $collection->each(function ($entity) {
-            $this->assertInstanceOf(ArrayObject::class, $entity);
+            $this->assertInstanceOf(Model::class, $entity);
         });
     }
 
@@ -35,15 +64,17 @@ class EloquentHydratorTest extends \Tests\TestCase
      */
     public function it_sets_a_score_property_on_models()
     {
-        $vehicles = factory(Fixtures\Vehicle::class, 5)->create();
+        $vehicles = factory(Models\Vehicle::class, 5)->create();
 
         $response = $this->getSearchResults($vehicles);
 
-        $collection = (new ArrayObjectHydrator)
-            ->hydrateFromResponse($response, new Fixtures\Vehicle);
+        $collection = (new EloquentHydrator)
+            ->setIndexable(new Models\Vehicle)
+            ->hydrateCollection($response, new Models\Vehicle);
 
         $collection->each(function ($entity) {
-            $this->assertEquals(1, $entity->_score);
+            $this->assertTrue(is_numeric($entity->documentScore));
+            $this->assertEquals(1, $entity->documentScore);
         });
     }
 
@@ -53,15 +84,16 @@ class EloquentHydratorTest extends \Tests\TestCase
      */
     public function it_sets_a_isDocument_property_on_models()
     {
-        $vehicles = factory(Fixtures\Vehicle::class, 5)->create();
+        $vehicles = factory(Models\Vehicle::class, 5)->create();
 
         $response = $this->getSearchResults($vehicles);
 
-        $collection = (new ArrayObjectHydrator)
-            ->hydrateFromResponse($response, new Fixtures\Vehicle);
+        $collection = (new EloquentHydrator)
+            ->setIndexable(new Models\Vehicle)
+            ->hydrateCollection($response, new Models\Vehicle);
 
         $collection->each(function ($entity) {
-            $this->assertTrue($entity->_isDocument);
+            $this->assertTrue($entity->isDocument);
         });
     }
 
@@ -73,8 +105,9 @@ class EloquentHydratorTest extends \Tests\TestCase
     {
         $response = [];
 
-        $collection = (new ArrayObjectHydrator)
-            ->hydrateFromResponse($response, new Fixtures\Vehicle);
+        $collection = (new EloquentHydrator)
+            ->setIndexable(new Models\Vehicle)
+            ->hydrateCollection($response, new Models\Vehicle);
 
         $this->assertInstanceOf(\Illuminate\Support\Collection::class, $collection);
 
@@ -90,21 +123,22 @@ class EloquentHydratorTest extends \Tests\TestCase
     {
         $expectedRelations = ['members', 'vehicles'];
 
-        $documentRelations = (new Fixtures\Family)->getDocumentRelations();
+        $documentRelations = (new Models\Family)->getDocumentRelations();
 
-        $families = factory(Fixtures\Family::class, 2)
+        $families = factory(Models\Family::class, 2)
             ->create()
             ->each(function ($family) {
-                factory(Fixtures\Person::class, rand(2, 6))->create(['family_id' => $family->id]);
-                factory(Fixtures\Vehicle::class, rand(1, 2))->create(['family_id' => $family->id]);
+                factory(Models\Person::class, rand(2, 6))->create(['family_id' => $family->id]);
+                factory(Models\Vehicle::class, rand(1, 2))->create(['family_id' => $family->id]);
             });
 
         $families->load($documentRelations);
 
         $response = $this->getSearchResults($families);
 
-        $collection = (new ArrayObjectHydrator)
-            ->hydrateFromResponse($response, new Fixtures\Family);
+        $collection = (new EloquentHydrator)
+            ->setIndexable(new Models\Family)
+            ->hydrateCollection($response, new Models\Family);
 
         // Check that document relations are built
         foreach ($collection as $family) {

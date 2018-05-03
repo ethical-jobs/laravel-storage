@@ -3,9 +3,13 @@
 namespace Tests\Fixtures\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use EthicalJobs\Elasticsearch\Indexable;
+use EthicalJobs\Elasticsearch\Document;
 
-class Family extends Model
+class Family extends Model implements Indexable
 {
+    use Document;
+    
     public function vehicles()
     {
         return $this->hasOne(Vehicle::class);
@@ -15,4 +19,9 @@ class Family extends Model
     {
         return $this->hasOne(Person::class);
     }     
+
+    public function getDocumentRelations()
+    {
+        return ['vehicles','members'];
+    }        
 }

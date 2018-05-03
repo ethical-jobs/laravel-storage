@@ -5,9 +5,9 @@ namespace Tests\Integration\Repositories\Elasticsearch;
 use Mockery;
 use Elasticsearch\Client;
 use Tests\Fixtures\RepositoryFactory;
-use Tests\Fixtures\Person;
+use Tests\Fixtures\Models;
 
-class FindByFieldTest extends \Tests\TestCase
+class FindByFieldTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
 {
     /**
      * @test
@@ -15,7 +15,7 @@ class FindByFieldTest extends \Tests\TestCase
      */
     public function it_can_find_by_a_field()
     {
-        $people = factory(Person::class, 1)->create();
+        $people = factory(Models\Person::class, 1)->create();
 
         $searchResults = $this->getSearchResults($people);
 
@@ -31,12 +31,11 @@ class FindByFieldTest extends \Tests\TestCase
             ->andReturn($searchResults)
             ->getMock();            
 
-        $repository = RepositoryFactory::build(new Person, $client);
+        $repository = static::makeRepository($client, new Models\Person);
 
         $result = $repository->findByField('first_name', 'Andrew');
 
         $this->assertEquals($result->first_name, $people->first()->first_name);
-        $this->assertInstanceOf(Person::class, $result);
     }    
 
     /**
@@ -47,14 +46,16 @@ class FindByFieldTest extends \Tests\TestCase
     {
         $this->expectException(\Symfony\Component\HttpKernel\Exception\NotFoundHttpException::class);
 
+        $searchResults = $this->getEmptySearchResults();
+
         $client = Mockery::mock(Client::class)
             ->shouldReceive('search')
             ->once()
             ->withAnyArgs()
-            ->andReturn($this->getEmptySearchResults())
+            ->andReturn($searchResults)
             ->getMock();            
 
-        $repository = RepositoryFactory::build(new Person, $client);
+        $repository = static::makeRepository($client, new Models\Person);
 
         $repository->findByField('first_name', 'Andrew');
     }         

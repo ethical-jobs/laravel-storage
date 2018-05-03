@@ -17,22 +17,15 @@ class FindTest extends \Tests\Integration\Repositories\DatabaseTestCase
     {
         $expected = factory(Models\Person::class, 10)->create();
 
-        $query = Mockery::mock(Builder::class)
-             ->shouldReceive('get')
-             ->once()
-             ->withNoArgs()
-             ->andReturn($expected)
-             ->getMock();
-
         $repository = static::makeRepository(new Models\Person);
 
-        $results = $repository
-            ->setStorageEngine($query)
-            ->find();
+        $results = $repository->find();
 
         $results->each(function($result) {
             $this->assertInstanceOf(Models\Person::class, $result);
         });
+
+        $this->assertEquals(10, $results->count());
     }  
 
     /**
@@ -42,22 +35,9 @@ class FindTest extends \Tests\Integration\Repositories\DatabaseTestCase
     public function it_throws_exception_on_empty_results()
     {
         $this->expectException(\Symfony\Component\HttpKernel\Exception\NotFoundHttpException::class);
-        
-        $expected = collect([]);
-
-        $query = Mockery::mock(Builder::class)
-             ->shouldReceive('get')
-             ->once()
-             ->withNoArgs()
-             ->andReturn($expected)
-             ->getMock();
 
         $repository = static::makeRepository(new Models\Person);
 
-        $result = $repository
-            ->setStorageEngine($query)
-            ->find();
-
-        $this->assertEquals($expected, $result);
+        $repository->find();
     }      
 }

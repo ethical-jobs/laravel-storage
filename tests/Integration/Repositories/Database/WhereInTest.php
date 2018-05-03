@@ -15,12 +15,9 @@ class WhereInTest extends \Tests\Integration\Repositories\DatabaseTestCase
      */
     public function it_has_fluent_interface()
     {
-        $query = Mockery::mock(Builder::class)->shouldIgnoreMissing();
-
         $repository = static::makeRepository(new Models\Person);
 
         $isFluent = $repository
-            ->setStorageEngine($query)
             ->whereIn('status', ['APPROVED','DRAFT']);
 
         $this->assertInstanceOf(DatabaseRepository::class, $isFluent);
@@ -32,16 +29,21 @@ class WhereInTest extends \Tests\Integration\Repositories\DatabaseTestCase
      */
     public function it_can_add_a_where_query()
     {
-        $query = Mockery::mock(Builder::class)
-             ->shouldReceive('whereIn')
-             ->once()
-             ->with('status', ['APPROVED','DRAFT'])
-             ->getMock();
+        factory(Models\Person::class)->create(['age' => 21]);
+        factory(Models\Person::class)->create(['age' => 34]);
+        factory(Models\Person::class)->create(['age' => 16]);
+        factory(Models\Person::class)->create(['age' => 34]);
 
         $repository = static::makeRepository(new Models\Person);
 
         $result = $repository
-            ->setStorageEngine($query)
-            ->whereIn('status', ['APPROVED','DRAFT']);
+            ->whereIn('age', [21,34])
+            ->find();
+
+        $agesSelected = $result->pluck('age')->toArray();
+
+        $this->assertEquals($agesSelected, [
+            '21', '34', '34',
+        ]);        
     }    
 }

@@ -11,9 +11,9 @@ $factory->define(Models\Vehicle::class, function (Faker\Generator $faker) {
 		'toyota'  => ['camry','prius','lexus'],
 	]);
 	
-    $make = $cars->random();
-	
-    $model = $cars->get($make)->random();
+    $make = $cars->keys()->random();
+
+    $model = (new Collection($cars->get($make)))->random();
 
     return [
         'year' 	=> rand(1995,2018),

@@ -4,11 +4,10 @@ namespace Tests\Integration\Repositories\Elasticsearch;
 
 use Mockery;
 use Elasticsearch\Client;
-use ONGR\ElasticsearchDSL\Search;
+use Tests\Fixtures\RepositoryFactory;
 use Tests\Fixtures\Models;
-use EthicalJobs\Storage\Repositories\ElasticsearchRepository;
 
-class FindByIdTest extends \Tests\TestCase
+class FindByIdTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
 {
     /**
      * @test
@@ -32,12 +31,11 @@ class FindByIdTest extends \Tests\TestCase
             ->andReturn($searchResults)
             ->getMock();            
 
-        $repository = new ElasticsearchRepository(new Models\Person, new Search, $client);
+        $repository = static::makeRepository($client, new Models\Person);
 
         $result = $repository->findById($people->first()->id);
 
         $this->assertEquals($result->id, $people->first()->id);
-        $this->assertInstanceOf(Person::class, $result);
     }  
 
     /**
@@ -48,14 +46,16 @@ class FindByIdTest extends \Tests\TestCase
     {
         $this->expectException(\Symfony\Component\HttpKernel\Exception\NotFoundHttpException::class);
 
+        $searchResults = $this->getEmptySearchResults();
+
         $client = Mockery::mock(Client::class)
             ->shouldReceive('search')
             ->once()
             ->withAnyArgs()
-            ->andReturn($this->getEmptySearchResults())
+            ->andReturn($searchResults)
             ->getMock();            
 
-        $repository = RepositoryFactory::build(new Person, $client);
+        $repository = static::makeRepository($client, new Models\Person);
 
         $repository->findByField('first_name', 'Andrew');
     }         

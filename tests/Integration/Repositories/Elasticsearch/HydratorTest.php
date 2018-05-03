@@ -3,13 +3,14 @@
 namespace Tests\Integration\Repositories\Elasticsearch;
 
 use Mockery;
-use ArrayObject;
 use Elasticsearch\Client;
+use ArrayObject;
 use Illuminate\Database\Eloquent\Model;
 use Tests\Fixtures\RepositoryFactory;
-use Tests\Fixtures\Person;
+use Tests\Fixtures\Models;
+use EthicalJobs\Storage\Hydrators\Elasticsearch as Hydrators;
 
-class HydratorTest extends \Tests\TestCase
+class HydratorTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
 {
     /**
      * @test
@@ -17,7 +18,7 @@ class HydratorTest extends \Tests\TestCase
      */
     public function it_can_hydrate_results_as_models()
     {
-        $people = factory(Person::class, 10)->create();
+        $people = factory(Models\Person::class, 10)->create();
 
         $client = Mockery::mock(Client::class)
             ->shouldReceive('search')
@@ -26,10 +27,10 @@ class HydratorTest extends \Tests\TestCase
             ->andReturn($this->getSearchResults($people))
             ->getMock();       
 
-        $repository = RepositoryFactory::build(new Person, $client);     
+        $repository = static::makeRepository($client, new Models\Person);
 
         $results = $repository
-            ->asModels()
+            ->setHydrator(new Hydrators\EloquentHydrator)
             ->find();
 
         $results->each(function($result) {
@@ -41,9 +42,9 @@ class HydratorTest extends \Tests\TestCase
      * @test
      * @group Unit
      */
-    public function it_can_hydrate_results_as_models_by_default()
+    public function it_can_hydrate_results_as_objects_by_default()
     {
-        $people = factory(Person::class, 10)->create();
+        $people = factory(Models\Person::class, 10)->create();
 
         $client = Mockery::mock(Client::class)
             ->shouldReceive('search')
@@ -52,12 +53,13 @@ class HydratorTest extends \Tests\TestCase
             ->andReturn($this->getSearchResults($people))
             ->getMock();       
 
-        $repository = RepositoryFactory::build(new Person, $client);     
+        $repository = static::makeRepository($client, new Models\Person);
 
-        $results = $repository->find();
+        $results = $repository
+            ->find();
 
         $results->each(function($result) {
-            $this->assertInstanceOf(Model::class, $result);
+            $this->assertInstanceOf(ArrayObject::class, $result);
         });
     }                    
 
@@ -67,7 +69,7 @@ class HydratorTest extends \Tests\TestCase
      */
     public function it_can_hydrate_results_as_objects()
     {
-        $people = factory(Person::class, 10)->create();
+        $people = factory(Models\Person::class, 10)->create();
 
         $client = Mockery::mock(Client::class)
             ->shouldReceive('search')
@@ -76,23 +78,14 @@ class HydratorTest extends \Tests\TestCase
             ->andReturn($this->getSearchResults($people))
             ->getMock();       
 
-        $repository = RepositoryFactory::build(new Person, $client);     
+        $repository = static::makeRepository($client, new Models\Person);
 
         $results = $repository
-            ->asObjects()
+            ->setHydrator(new Hydrators\ObjectHydrator)
             ->find();
 
         $results->each(function($result) {
             $this->assertInstanceOf(ArrayObject::class, $result);
         });
-    }      
-
-    /**
-     * @test
-     * @group Unit
-     */
-    public function it_can_hydrate_results_as_arrays()
-    {
-        $this->markTestSkipped('must be implemented.');
-    }               
+    }                  
 }

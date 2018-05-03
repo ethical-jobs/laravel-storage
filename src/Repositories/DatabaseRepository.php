@@ -3,6 +3,7 @@
 namespace EthicalJobs\Storage\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use EthicalJobs\Storage\Contracts;
 use EthicalJobs\Storage\Criteria\HasCriteria;
@@ -73,7 +74,7 @@ class DatabaseRepository implements Contracts\Repository, Contracts\HasCriteria
             return $id;
         }
 
-        if ($entity = $this->query->find($id)) {
+        if ($entity = $this->model->find($id)) {
             return $entity;
         }
 
@@ -85,7 +86,9 @@ class DatabaseRepository implements Contracts\Repository, Contracts\HasCriteria
      */
     public function findByField(string $field, $value)
     {
-        if ($results = $this->query->where($field, $value)->get()) {
+        $results = $this->model->where($field, '=', $value)->get();
+
+        if ($results->isNotEmpty()) {
             return $results->first();
         }
 
@@ -167,17 +170,17 @@ class DatabaseRepository implements Contracts\Repository, Contracts\HasCriteria
      */
     public function updateCollection(iterable $entities)
     {
-        if (! $entities instanceof \Illuminate\Support\Collection) {
+        if (! $entities instanceof Collection) {
             $entities = new Collection($entities);
         }
 
-        $updatedEntities = $entities->newCollection();
+        $updatedEntities = new Collection;
 
-        foreach ($entities as $entity) {
+        foreach ($entities as $id => $entity) {
 
-            $udpated = $this->update($entity->id, $entity);
+            $updated = $this->update($id, $entity);
 
-            $updatedEntities->push($entity);
+            $updatedEntities->push($updated);
         }
 
         return $updatedEntities;        

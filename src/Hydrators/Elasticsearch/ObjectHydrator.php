@@ -2,9 +2,10 @@
 
 namespace EthicalJobs\Storage\Hydrators\Elasticsearch;
 
-use Traversible;
 use ArrayObject;
 use Illuminate\Support\Collection;
+use EthicalJobs\Storage\Contracts\Hydrator;
+use EthicalJobs\Elasticsearch\Indexable;
 
 /**
  * Hydrates ArrayObjects from elasticsearch results
@@ -13,7 +14,7 @@ use Illuminate\Support\Collection;
  */
 
 class ObjectHydrator implements Hydrator
-{
+{   
     /**
      * Indexable document type
      *
@@ -24,15 +25,13 @@ class ObjectHydrator implements Hydrator
     /**
      * {@inheritdoc}
      */
-    public function hydrateCollection(Traversible $collection): Collection;
+    public function hydrateCollection(iterable $collection): iterable
     {
-        $this->indexable = $indexable;
-
-        if (empty($response)) {
+        if (empty($collection)) {
             return new Collection;
         }
 
-        $items = $response['hits']['hits'] ?? [];
+        $items = $collection['hits']['hits'] ?? [];
 
         $results = [];
 
@@ -48,8 +47,31 @@ class ObjectHydrator implements Hydrator
      */
     public function hydrateEntity($entity)
     {
-        return new ArrayObject($hit, ArrayObject::ARRAY_AS_PROPS);
+        return new ArrayObject($entity, ArrayObject::ARRAY_AS_PROPS);
     }
+
+    /**
+     * Set indexable instance
+     *
+     * @param EthicalJobs\Elasticsearch\Indexable $indexable
+     * @return EthicalJobs\Storage\Contracts\Hydrator
+     */
+    public function setIndexable(Indexable $indexable): Hydrator
+    {    
+        $this->indexable = $indexable;
+
+        return $this;
+    }
+
+    /**
+     * Returns the indexable instance
+     * 
+     * @return EthicalJobs\Elasticsearch\Indexable
+     */
+    public function getIndexable(): Indexable
+    {    
+        return $this->indexable;
+    }        
 
     /**
      * Hydrates a elastic hit
@@ -63,8 +85,8 @@ class ObjectHydrator implements Hydrator
 
         $hit = $item['_source'] ?? [];
 
-        $hit['_score'] = $item['_score'] ?? 0;
-        $hit['_isDocument'] = true;
+        $hit['documentScore'] = $item['_score'] ?? 0;
+        $hit['isDocument'] = true;
 
         $relationHits = [];
 
@@ -76,6 +98,6 @@ class ObjectHydrator implements Hydrator
 
         $hit = array_merge($hit, $relationHits);
 
-        return new ArrayObject($hit, ArrayObject::ARRAY_AS_PROPS);
+        return $this->hydrateEntity($hit);
     }
 }

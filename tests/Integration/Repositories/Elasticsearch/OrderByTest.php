@@ -5,9 +5,9 @@ namespace Tests\Integration\Repositories\Elasticsearch;
 use Mockery;
 use Elasticsearch\Client;
 use Tests\Fixtures\RepositoryFactory;
-use Tests\Fixtures\Person;
+use Tests\Fixtures\Models;
 
-class OrderByTest extends \Tests\TestCase
+class OrderByTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
 {
     /**
      * @test
@@ -15,7 +15,7 @@ class OrderByTest extends \Tests\TestCase
      */
     public function it_can_add_a_orderBy_filter()
     {
-        $people = factory(Person::class, 10)->create();
+        $people = factory(Models\Person::class, 10)->create();
 
         $client = Mockery::mock(Client::class)
             ->shouldReceive('search')
@@ -32,7 +32,7 @@ class OrderByTest extends \Tests\TestCase
             ->andReturn($this->getSearchResults($people))
             ->getMock();       
 
-        $repository = RepositoryFactory::build(new Person, $client);     
+        $repository = static::makeRepository($client, new Models\Person);   
 
         $result = $repository
             ->orderBy('age', 'DESC')

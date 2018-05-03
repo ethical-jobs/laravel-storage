@@ -1,6 +1,6 @@
 <?php
 
-namespace EthicalJobs\Elasticsearch\Hydrators;
+namespace EthicalJobs\Storage\Hydrators\Elasticsearch;
 
 use Carbon\Carbon;
 use ReflectionMethod;
@@ -28,7 +28,7 @@ class EloquentHydrator implements Hydrator
     /**
      * {@inheritdoc}
      */
-    public function hydrateCollection(Traversible $collection): Collection;
+    public function hydrateCollection(iterable $collection): iterable
     {
         $indexables = [];
 
@@ -52,11 +52,11 @@ class EloquentHydrator implements Hydrator
     {
         $instance = $this->indexable->newInstance([], true);
 
-        $instance->_isDocument = true;
+        $instance->isDocument = true;
 
-        $instance->_score = (int) $enity['_score'];        
+        $instance->documentScore = (int) $entity['_score'];        
 
-        $instance->setRawAttributes((array) $enity['_source'], true);
+        $instance->setRawAttributes((array) $entity['_source'], true);
 
         $instance = $this->parseDateFields($instance);
 
@@ -69,7 +69,7 @@ class EloquentHydrator implements Hydrator
      * @param EthicalJobs\Elasticsearch\Indexable $indexable
      * @return EthicalJobs\Storage\Contracts\Hydrator
      */
-    public function setIndexable(Indexable $indexable): Hydrator;
+    public function setIndexable(Indexable $indexable): Hydrator
     {    
         $this->indexable = $indexable;
 
@@ -81,7 +81,7 @@ class EloquentHydrator implements Hydrator
      * 
      * @return EthicalJobs\Elasticsearch\Indexable
      */
-    public function getIndexable(): Indexable;
+    public function getIndexable(): Indexable
     {    
         return $this->indexable;
     }    

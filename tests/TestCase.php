@@ -2,6 +2,8 @@
 
 namespace Tests;
 
+use Tests\Fixtures\Models;
+use EthicalJobs\Elasticsearch\ServiceProvider;
 use Orchestra\Database\ConsoleServiceProvider;
 
 abstract class TestCase extends \Orchestra\Testbench\TestCase
@@ -21,6 +23,23 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
 	}	
 
 	/**
+	 * Define environment setup.
+	 *
+	 * @param  \Illuminate\Foundation\Application  $app
+	 * @return void
+	 */
+	protected function getEnvironmentSetUp($app)
+	{
+	    $app['config']->set('elasticsearch.index', 'testing');
+
+	    $app['config']->set('elasticsearch.indexables', [
+	        Models\Person::class,
+	        Models\Family::class,
+	        Models\Vehicle::class,
+	    ]);
+	}	
+
+	/**
 	 * Inject package service provider
 	 * 
 	 * @param  Application $app
@@ -29,6 +48,7 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
 	protected function getPackageProviders($app)
 	{
 	    return [
+	    	ServiceProvider::class,
 	    	ConsoleServiceProvider::class,
 	   	];
 	}	

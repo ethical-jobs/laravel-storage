@@ -2,12 +2,13 @@
 
 namespace Tests\Integration\Repositories\Elasticsearch;
 
+use Mockery;
 use Tests\Fixtures\Models;
 use Tests\Fixtures\Criteria;
 use EthicalJobs\Storage\Criteria\CriteriaCollection;
 use EthicalJobs\Storage\Repositories\ElasticsearchRepository;
 
-class CriteriaTest extends \Tests\TestCase
+class CriteriaTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
 {
     /**
      * @test
@@ -15,7 +16,7 @@ class CriteriaTest extends \Tests\TestCase
      */
     public function its_criteria_are_an_empty_collection_by_default()
     {
-        $repository = new DatabaseRepository(new Models\Person);
+        $repository = static::makeRepository();  
         
         $criteria = $repository->getCriteriaCollection();
 
@@ -30,7 +31,7 @@ class CriteriaTest extends \Tests\TestCase
      */
     public function it_can_set_and_get_it_criteria_collection()
     {
-        $repository = new DatabaseRepository(new Models\Person);
+        $repository = static::makeRepository();  
 
         $collection = new CriteriaCollection([
             Criteria\Males::class,
@@ -48,7 +49,7 @@ class CriteriaTest extends \Tests\TestCase
      */
     public function it_can_add_criteria_items()
     {
-        $repository = new DatabaseRepository(new Models\Person);
+        $repository = static::makeRepository();  
         
         $expected = $repository->addCriteria(Criteria\OverFifity::class)
             ->getCriteriaCollection()
@@ -63,15 +64,22 @@ class CriteriaTest extends \Tests\TestCase
      */
     public function it_can_apply_criteria()
     {
-        factory(Models\Person::class, 5)
-            ->create(['age' => 29]);
+        $overFifties = factory(Models\Person::class, 5)
+            ->create(['age' => 55]);        
 
-        factory(Models\Person::class, 5)
-            ->create(['age' => 55]);            
+        $searchResults = $this->getSearchResults($overFifties);
 
-        $repository = new DatabaseRepository(new Models\Person);
+        $client = Mockery::mock(Client::class)
+            ->shouldReceive('search')
+            ->once()
+            ->withAnyArgs()
+            ->andReturn($searchResults)
+            ->getMock();
+
+        $repository = static::makeRepository();  
         
         $people = $repository
+            ->setStorageEngine($client)
             ->addCriteria(Criteria\OverFifity::class)
             ->find();
 

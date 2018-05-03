@@ -10,8 +10,10 @@ use ONGR\ElasticsearchDSL\Query\TermLevel;
 use ONGR\ElasticsearchDSL\Query\Compound\BoolQuery;
 use EthicalJobs\Storage\Contracts;
 use EthicalJobs\Storage\Criteria\HasCriteria;
+use EthicalJobs\Storage\Criteria\CriteriaCollection;
 use EthicalJobs\Storage\Hydrators\HydratesResults;
 use EthicalJobs\Storage\Hydrators\Elasticsearch\ObjectHydrator;
+use EthicalJobs\Elasticsearch\Indexable;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -61,7 +63,12 @@ class ElasticsearchRepository implements Contracts\Repository, Contracts\HasCrit
      * @param string $indexName
      * @return void
      */
-    public function __construct(Indexable $indexable, Search $search, Client $client, string $indexName = 'test-index')
+    public function __construct(
+        Indexable $indexable, 
+        Search $search, 
+        Client $client, 
+        string $indexName = 'test-index'
+    )
     {
         $this->indexable = $indexable;
 
@@ -69,7 +76,9 @@ class ElasticsearchRepository implements Contracts\Repository, Contracts\HasCrit
 
         $this->indexName = $indexName;
 
-        $this->client = $this->setStorageEngine($client);
+        $this->setStorageEngine($client);
+
+        $this->criteria = new CriteriaCollection;
 
         $this->setHydrator(new ObjectHydrator);
     }
@@ -101,7 +110,7 @@ class ElasticsearchRepository implements Contracts\Repository, Contracts\HasCrit
 
         $this->search->addQuery($query, BoolQuery::FILTER);        
 
-        return $this->asModels()->find()->first();
+        return $this->find()->first();
     }  
 
     /**
@@ -113,13 +122,13 @@ class ElasticsearchRepository implements Contracts\Repository, Contracts\HasCrit
 
         $this->search->addQuery($query, BoolQuery::FILTER);        
 
-        return $this->asModels()->find()->first();
+        return $this->find()->first();
     }     
 
     /**
      * {@inheritdoc}
      */
-    public function where(string $field, $operator, $value = null): Repository
+    public function where(string $field, $operator, $value = null): Contracts\Repository
     {
         switch ($operator) {
             case '<=':
@@ -152,7 +161,7 @@ class ElasticsearchRepository implements Contracts\Repository, Contracts\HasCrit
     /**
      * {@inheritdoc}
      */
-    public function whereIn(string $field, array $values): Repository
+    public function whereIn(string $field, array $values): Contracts\Repository
     {
         $query = new TermLevel\TermsQuery($field, $values);
 
@@ -164,7 +173,7 @@ class ElasticsearchRepository implements Contracts\Repository, Contracts\HasCrit
     /**
      * {@inheritdoc}
      */
-    public function orderBy(string $field, $direction = 'asc'): Repository
+    public function orderBy(string $field, $direction = 'asc'): Contracts\Repository
     {
         $this->search->addSort(new FieldSort($field, $direction));
 
@@ -176,7 +185,7 @@ class ElasticsearchRepository implements Contracts\Repository, Contracts\HasCrit
     /**
      * {@inheritdoc}
      */
-    public function limit(int $limit): Repository
+    public function limit(int $limit): Contracts\Repository
     {
         $this->search->setSize($limit);
 
@@ -201,5 +210,29 @@ class ElasticsearchRepository implements Contracts\Repository, Contracts\HasCrit
         return $this->getHydrator()
             ->setIndexable($this->indexable)
             ->hydrateCollection($response);
-    }   
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function update($id, array $attributes)
+    {
+        throw new \Exception('Use EthicalJobs\Elasticsearch\Indexing service.');
+    }        
+
+    /**
+     * {@inheritdoc}
+     */
+    public function updateCollection(iterable $entities)
+    {
+        throw new \Exception('Use EthicalJobs\Elasticsearch\Indexing service.');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function delete($id)
+    {
+        throw new \Exception('Use EthicalJobs\Elasticsearch\Indexing service.');
+    }       
 }

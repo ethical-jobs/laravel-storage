@@ -15,13 +15,14 @@ class FindByIdTest extends \Tests\Integration\Repositories\DatabaseTestCase
      */
     public function it_returns_a_model_if_one_is_passed_in()
     {
+        $person = factory(Models\Person::class)->create();
+
         $repository = static::makeRepository(new Models\Person);
 
-        $id = new Models\Person;
+        $result = $repository->findById($person);
 
-        $result = $repository->findById($id);
-
-        $this->assertEquals($id, $result);
+        $this->assertEquals($person->id, $result->id);
+        $this->assertEquals($person->first_name, $result->first_name);
     }  
 
     /**
@@ -30,22 +31,14 @@ class FindByIdTest extends \Tests\Integration\Repositories\DatabaseTestCase
      */
     public function it_can_find_by_id()
     {
-        $expected = new Models\Person;
+        $person = factory(Models\Person::class)->create();
 
-        $query = Mockery::mock(Builder::class)
-             ->shouldReceive('find')
-             ->once()
-             ->with(1337)
-             ->andReturn($expected)
-             ->getMock();
+        $repository = static::makeRepository(new Models\Person);
 
-        $repository = static::makeRepository(new Models\Person); 
+        $result = $repository->findById($person->id);
 
-        $result = $repository
-            ->setStorageEngine($query)
-            ->findById(1337);
-
-        $this->assertEquals($expected, $result);
+        $this->assertEquals($person->id, $result->id);
+        $this->assertEquals($person->first_name, $result->first_name);
     }    
 
     /**
@@ -56,19 +49,8 @@ class FindByIdTest extends \Tests\Integration\Repositories\DatabaseTestCase
     {
         $this->expectException(\Symfony\Component\HttpKernel\Exception\NotFoundHttpException::class);
 
-        $expected = new Models\Person;
-
-        $query = Mockery::mock(Builder::class)
-             ->shouldReceive('find')
-             ->once()
-             ->with(1337)
-             ->andReturn(null)
-             ->getMock();
-
         $repository = static::makeRepository(new Models\Person); 
 
-        $repository
-            ->setStorageEngine($query)
-            ->findById(1337);
+        $repository->findById(1337);
     }         
 }
