@@ -31,7 +31,7 @@ class WhereTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
                 ->andReturn($this->getSearchResults($people))
                 ->getMock();       
 
-            $repository = static::makeRepository($client, new Models\Person);     
+            $repository = RepositoryFactory::makeElasticsearch($client, new Models\Person);     
     
             $result = $repository
                 ->where('age', $operator, 65)
@@ -61,7 +61,7 @@ class WhereTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
             ->andReturn($this->getSearchResults($people))
             ->getMock();       
 
-        $repository = static::makeRepository($client, new Models\Person);     
+        $repository = RepositoryFactory::makeElasticsearch($client, new Models\Person);     
 
         $result = $repository
             ->where('name', 'like', 'Andre% McL%an')
@@ -90,7 +90,7 @@ class WhereTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
             ->andReturn($this->getSearchResults($people))
             ->getMock();       
 
-        $repository = static::makeRepository($client, new Models\Person);         
+        $repository = RepositoryFactory::makeElasticsearch($client, new Models\Person);         
 
         $result = $repository
             ->where('age', '!=', 34)
@@ -119,7 +119,7 @@ class WhereTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
             ->andReturn($this->getSearchResults($people))
             ->getMock();       
 
-        $repository = static::makeRepository($client, new Models\Person);         
+        $repository = RepositoryFactory::makeElasticsearch($client, new Models\Person);         
 
         $result = $repository
             ->where('age', '=', 34)
@@ -148,7 +148,7 @@ class WhereTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
             ->andReturn($this->getSearchResults($people))
             ->getMock();       
 
-        $repository = static::makeRepository($client, new Models\Person);         
+        $repository = RepositoryFactory::makeElasticsearch($client, new Models\Person);         
 
         $result = $repository
             ->where('age', 37)

@@ -3,6 +3,7 @@
 namespace Tests\Integration\Repositories\Api;
 
 use EthicalJobs\Storage\Criteria\CriteriaCollection;
+use Tests\Fixtures\RepositoryFactory;
 
 class CriteriaTest extends \Tests\Integration\Repositories\ApiTestCase
 {
@@ -12,7 +13,7 @@ class CriteriaTest extends \Tests\Integration\Repositories\ApiTestCase
      */
     public function its_criteria_are_an_empty_collection_by_default()
     {
-        $repository = static::makeRepository();
+        $repository = RepositoryFactory::makeApi();
         
         $criteria = $repository->getCriteriaCollection();
 
@@ -27,7 +28,7 @@ class CriteriaTest extends \Tests\Integration\Repositories\ApiTestCase
      */
     public function it_can_set_and_get_it_criteria_collection()
     {
-        $repository = static::makeRepository();
+        $repository = RepositoryFactory::makeApi();
 
         $collection = new CriteriaCollection(['foo' => 'bar']);
         

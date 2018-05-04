@@ -2,6 +2,8 @@
 
 namespace Tests\Integration\Repositories\Elasticsearch;
 
+use Tests\Fixtures\RepositoryFactory;
+
 class UpdateTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
 {
     /**

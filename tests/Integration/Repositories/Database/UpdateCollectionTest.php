@@ -4,6 +4,7 @@ namespace Tests\Integration\Repositories\Database;
 
 use Mockery;
 use Tests\Fixtures\Models;
+use Tests\Fixtures\RepositoryFactory;
 use EthicalJobs\Storage\Repositories\DatabaseRepository;
 
 class UpdateCollectionTest extends \Tests\Integration\Repositories\DatabaseTestCase
@@ -25,7 +26,7 @@ class UpdateCollectionTest extends \Tests\Integration\Repositories\DatabaseTestC
             })
             ->keyBy('id');
 
-        $repository = static::makeRepository(new Models\Person); 
+        $repository = RepositoryFactory::makeDatabase(new Models\Person); 
 
         $updatedPeople = $repository->updateCollection($peopleToUpdate);
 
@@ -53,7 +54,7 @@ class UpdateCollectionTest extends \Tests\Integration\Repositories\DatabaseTestC
             ->keyBy('id')
             ->toArray();
 
-        $repository = static::makeRepository(new Models\Person); 
+        $repository = RepositoryFactory::makeDatabase(new Models\Person); 
 
         $updatedPeople = $repository->updateCollection($peopleToUpdate);
 
@@ -80,7 +81,7 @@ class UpdateCollectionTest extends \Tests\Integration\Repositories\DatabaseTestC
             })
             ->keyBy('id');
 
-        $repository = static::makeRepository(new Models\Person); 
+        $repository = RepositoryFactory::makeDatabase(new Models\Person); 
 
         $updatedPeople = $repository->updateCollection($peopleToUpdate);
 

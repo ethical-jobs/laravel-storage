@@ -6,6 +6,7 @@ use Mockery;
 use EthicalJobs\SDK\ApiClient;
 use EthicalJobs\SDK\Collection;
 use EthicalJobs\Storage\Repositories\ApiRepository;
+use Tests\Fixtures\RepositoryFactory;
 
 class WhereTest extends \Tests\Integration\Repositories\ApiTestCase
 {
@@ -15,7 +16,7 @@ class WhereTest extends \Tests\Integration\Repositories\ApiTestCase
      */
     public function it_has_fluent_interface()
     {
-        $repository = static::makeRepository();
+        $repository = RepositoryFactory::makeApi();
 
         $isFluent = $repository
             ->where('status', '=', 'APPROVED');
@@ -40,7 +41,7 @@ class WhereTest extends \Tests\Integration\Repositories\ApiTestCase
             ->andReturn($expected)
             ->getMock();
 
-        $repository = static::makeRepository($api, 'invoices');
+        $repository = RepositoryFactory::makeApi($api, 'invoices');
 
         $repository
             ->where('status', '=', 'APPROVED')
@@ -64,7 +65,7 @@ class WhereTest extends \Tests\Integration\Repositories\ApiTestCase
             ->andReturn($expected)
             ->getMock();
 
-        $repository = static::makeRepository($api, 'invoices');
+        $repository = RepositoryFactory::makeApi($api, 'invoices');
 
         $repository
             ->where('status', '>=', 'APPROVED')

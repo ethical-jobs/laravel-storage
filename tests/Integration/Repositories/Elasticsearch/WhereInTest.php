@@ -30,7 +30,7 @@ class WhereInTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
             ->andReturn($this->getSearchResults($people))
             ->getMock();       
 
-        $repository = static::makeRepository($client, new Models\Person);
+        $repository = RepositoryFactory::makeElasticsearch($client, new Models\Person);
 
         $result = $repository
             ->whereIn('age', [34,65,14,21])

@@ -5,6 +5,7 @@ namespace Tests\Integration\Repositories\Database;
 use Mockery;
 use Illuminate\Database\Eloquent\Builder;
 use Tests\Fixtures\Models;
+use Tests\Fixtures\RepositoryFactory;
 use EthicalJobs\Storage\Repositories\DatabaseRepository;
 
 class FindByFieldTest extends \Tests\Integration\Repositories\DatabaseTestCase
@@ -17,7 +18,7 @@ class FindByFieldTest extends \Tests\Integration\Repositories\DatabaseTestCase
     {
         $person = factory(Models\Person::class)->create();
 
-        $repository = static::makeRepository(new Models\Person);             
+        $repository = RepositoryFactory::makeDatabase(new Models\Person);             
 
         $found = $repository
             ->findByField('first_name', $person->first_name);
@@ -33,7 +34,7 @@ class FindByFieldTest extends \Tests\Integration\Repositories\DatabaseTestCase
     {
         $this->expectException(\Symfony\Component\HttpKernel\Exception\NotFoundHttpException::class);
 
-        $repository = static::makeRepository(new Models\Person);   
+        $repository = RepositoryFactory::makeDatabase(new Models\Person);   
 
         $repository->findByField('first_name', 'Jesus');
     }         

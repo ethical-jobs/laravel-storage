@@ -5,6 +5,7 @@ namespace Tests\Integration\Repositories\Database;
 use Mockery;
 use Illuminate\Database\Eloquent\Builder;
 use Tests\Fixtures\Models;
+use Tests\Fixtures\RepositoryFactory;
 use EthicalJobs\Storage\Repositories\DatabaseRepository;
 
 class OrderByTest extends \Tests\Integration\Repositories\DatabaseTestCase
@@ -15,7 +16,7 @@ class OrderByTest extends \Tests\Integration\Repositories\DatabaseTestCase
      */
     public function it_has_fluent_interface()
     {
-        $repository = static::makeRepository(new Models\Person);
+        $repository = RepositoryFactory::makeDatabase(new Models\Person);
 
         $isFluent = $repository
             ->orderBy('status', 'asc');
@@ -35,7 +36,7 @@ class OrderByTest extends \Tests\Integration\Repositories\DatabaseTestCase
         factory(Models\Person::class)->create(['age' => 70]);
         factory(Models\Person::class)->create(['age' => 60]);
 
-        $repository = static::makeRepository(new Models\Person);
+        $repository = RepositoryFactory::makeDatabase(new Models\Person);
 
         $result = $repository
             ->orderBy('age', 'asc')

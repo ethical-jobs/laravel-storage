@@ -31,7 +31,7 @@ class FindByIdTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
             ->andReturn($searchResults)
             ->getMock();            
 
-        $repository = static::makeRepository($client, new Models\Person);
+        $repository = RepositoryFactory::makeElasticsearch($client, new Models\Person);
 
         $result = $repository->findById($people->first()->id);
 
@@ -55,7 +55,7 @@ class FindByIdTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
             ->andReturn($searchResults)
             ->getMock();            
 
-        $repository = static::makeRepository($client, new Models\Person);
+        $repository = RepositoryFactory::makeElasticsearch($client, new Models\Person);
 
         $repository->findByField('first_name', 'Andrew');
     }         

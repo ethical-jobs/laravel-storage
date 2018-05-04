@@ -5,6 +5,7 @@ namespace Tests\Integration\Repositories\Api;
 use Mockery;
 use EthicalJobs\SDK\ApiClient;
 use EthicalJobs\SDK\Collection;
+use Tests\Fixtures\RepositoryFactory;
 
 class FindByFieldTest extends \Tests\Integration\Repositories\ApiTestCase
 {
@@ -25,7 +26,7 @@ class FindByFieldTest extends \Tests\Integration\Repositories\ApiTestCase
             ->andReturn($expected)
             ->getMock();
 
-        $repository = static::makeRepository($api, 'jobs');
+        $repository = RepositoryFactory::makeApi($api, 'jobs');
 
         $response = $repository->findByField('status', 'APPROVED');
 

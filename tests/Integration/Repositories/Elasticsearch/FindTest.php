@@ -27,7 +27,7 @@ class FindTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
             ->andReturn($this->getSearchResults($people))
             ->getMock();       
 
-        $repository = static::makeRepository($client, new Models\Person);
+        $repository = RepositoryFactory::makeElasticsearch($client, new Models\Person);
 
         $results = $repository->find();
     }      
@@ -50,7 +50,7 @@ class FindTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
             ->andReturn($this->getSearchResults($people))
             ->getMock();       
 
-        $repository = static::makeRepository($client, new Models\Person);  
+        $repository = RepositoryFactory::makeElasticsearch($client, new Models\Person);  
 
         $results = $repository->find();
     }    
@@ -70,7 +70,7 @@ class FindTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
             ->andReturn($this->getEmptySearchResults())
             ->getMock();       
 
-        $repository = static::makeRepository($client, new Models\Person);    
+        $repository = RepositoryFactory::makeElasticsearch($client, new Models\Person);    
 
         $results = $repository->find();
     }                        

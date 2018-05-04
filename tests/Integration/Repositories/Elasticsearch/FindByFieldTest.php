@@ -31,7 +31,7 @@ class FindByFieldTest extends \Tests\Integration\Repositories\ElasticsearchTestC
             ->andReturn($searchResults)
             ->getMock();            
 
-        $repository = static::makeRepository($client, new Models\Person);
+        $repository = RepositoryFactory::makeElasticsearch($client, new Models\Person);
 
         $result = $repository->findByField('first_name', 'Andrew');
 
@@ -55,7 +55,7 @@ class FindByFieldTest extends \Tests\Integration\Repositories\ElasticsearchTestC
             ->andReturn($searchResults)
             ->getMock();            
 
-        $repository = static::makeRepository($client, new Models\Person);
+        $repository = RepositoryFactory::makeElasticsearch($client, new Models\Person);
 
         $repository->findByField('first_name', 'Andrew');
     }         

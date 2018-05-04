@@ -27,7 +27,7 @@ class HydratorTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
             ->andReturn($this->getSearchResults($people))
             ->getMock();       
 
-        $repository = static::makeRepository($client, new Models\Person);
+        $repository = RepositoryFactory::makeElasticsearch($client, new Models\Person);
 
         $results = $repository
             ->setHydrator(new Hydrators\EloquentHydrator)
@@ -53,7 +53,7 @@ class HydratorTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
             ->andReturn($this->getSearchResults($people))
             ->getMock();       
 
-        $repository = static::makeRepository($client, new Models\Person);
+        $repository = RepositoryFactory::makeElasticsearch($client, new Models\Person);
 
         $results = $repository
             ->find();
@@ -78,7 +78,7 @@ class HydratorTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
             ->andReturn($this->getSearchResults($people))
             ->getMock();       
 
-        $repository = static::makeRepository($client, new Models\Person);
+        $repository = RepositoryFactory::makeElasticsearch($client, new Models\Person);
 
         $results = $repository
             ->setHydrator(new Hydrators\ObjectHydrator)

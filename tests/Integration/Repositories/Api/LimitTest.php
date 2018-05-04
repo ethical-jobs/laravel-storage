@@ -6,6 +6,7 @@ use Mockery;
 use EthicalJobs\SDK\ApiClient;
 use EthicalJobs\SDK\Collection;
 use EthicalJobs\Storage\Repositories\ApiRepository;
+use Tests\Fixtures\RepositoryFactory;
 
 class LimitTest extends \Tests\Integration\Repositories\ApiTestCase
 {
@@ -15,7 +16,7 @@ class LimitTest extends \Tests\Integration\Repositories\ApiTestCase
      */
     public function it_has_fluent_interface()
     {
-        $repository = static::makeRepository();
+        $repository = RepositoryFactory::makeApi();
 
         $isFluent = $repository->limit(15);
 
@@ -39,7 +40,7 @@ class LimitTest extends \Tests\Integration\Repositories\ApiTestCase
             ->andReturn($expected)
             ->getMock();
 
-        $repository = static::makeRepository($api, 'search/jobs');            
+        $repository = RepositoryFactory::makeApi($api, 'search/jobs');            
 
         $repository
             ->limit(15)

@@ -4,6 +4,7 @@ namespace Tests\Integration\Repositories\Database;
 
 use Mockery;
 use Tests\Fixtures\Models;
+use Tests\Fixtures\RepositoryFactory;
 use EthicalJobs\Storage\Repositories\DatabaseRepository;
 
 class DeleteTest extends \Tests\Integration\Repositories\DatabaseTestCase
@@ -18,7 +19,7 @@ class DeleteTest extends \Tests\Integration\Repositories\DatabaseTestCase
 
         $this->assertTrue($person->deleted_at === null);
 
-        $repository = static::makeRepository(new Models\Person); 
+        $repository = RepositoryFactory::makeDatabase(new Models\Person); 
 
         $deleted = $repository->delete($person->id);
 

@@ -5,6 +5,7 @@ namespace Tests\Integration\Repositories\Api;
 use Mockery;
 use EthicalJobs\SDK\ApiClient;
 use EthicalJobs\SDK\Collection;
+use Tests\Fixtures\RepositoryFactory;
 
 class UpdateTest extends \Tests\Integration\Repositories\ApiTestCase
 {
@@ -26,7 +27,7 @@ class UpdateTest extends \Tests\Integration\Repositories\ApiTestCase
             ->andReturn($expected)
             ->getMock();
 
-        $repository = static::makeRepository($api, 'invoices');           
+        $repository = RepositoryFactory::makeApi($api, 'invoices');           
 
         $result = $repository->update(245, [
             'amount'    => 123.34,

@@ -4,6 +4,7 @@ namespace Tests\Integration\Repositories\Elasticsearch;
 
 use Mockery;
 use Elasticsearch\Client;
+use Tests\Fixtures\RepositoryFactory;
 use Tests\Fixtures\Models;
 use EthicalJobs\Storage\Repositories\ElasticsearchRepository;
 
@@ -17,7 +18,7 @@ class ElasticsearchRepositoryTest extends \Tests\Integration\Repositories\Elasti
     {
         $client = Mockery::mock(Client::class);
 
-        $repository = static::makeRepository();  
+        $repository = RepositoryFactory::makeElasticsearch();  
 
         $repository->setStorageEngine($client);
 

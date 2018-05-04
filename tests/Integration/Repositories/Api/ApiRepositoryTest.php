@@ -4,6 +4,7 @@ namespace Tests\Integration\Repositories\Api;
 
 use Mockery;
 use EthicalJobs\SDK\ApiClient;
+use Tests\Fixtures\RepositoryFactory;
 
 class ApiRepositoryTest extends \Tests\Integration\Repositories\ApiTestCase
 {
@@ -15,7 +16,7 @@ class ApiRepositoryTest extends \Tests\Integration\Repositories\ApiTestCase
     {
         $api = Mockery::mock(ApiClient::class);
 
-        $repository = static::makeRepository($api);
+        $repository = RepositoryFactory::makeApi($api);
 
         $this->assertEquals($repository->getStorageEngine(), $api);             
     }    
@@ -26,7 +27,7 @@ class ApiRepositoryTest extends \Tests\Integration\Repositories\ApiTestCase
      */
     public function it_can_set_and_get_its_storage_engine_via_methods()
     {
-        $repository = static::makeRepository();
+        $repository = RepositoryFactory::makeApi();
 
         $api = Mockery::mock(ApiClient::class);
 
@@ -43,11 +44,11 @@ class ApiRepositoryTest extends \Tests\Integration\Repositories\ApiTestCase
     {
         $api = Mockery::mock(ApiClient::class);
 
-        $repository = static::makeRepository($api, 'people');
+        $repository = RepositoryFactory::makeApi($api, 'people');
 
         $this->assertEquals($repository->getResource(), 'people');    
 
-        $repository = static::makeRepository($api, 'people');
+        $repository = RepositoryFactory::makeApi($api, 'people');
 
         $repository->setResource('vehicles');
 

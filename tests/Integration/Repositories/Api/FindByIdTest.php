@@ -5,6 +5,7 @@ namespace Tests\Integration\Repositories\Api;
 use Mockery;
 use EthicalJobs\SDK\ApiClient;
 use EthicalJobs\SDK\Collection;
+use Tests\Fixtures\RepositoryFactory;
 
 class FindByIdTest extends \Tests\Integration\Repositories\ApiTestCase
 {
@@ -22,7 +23,7 @@ class FindByIdTest extends \Tests\Integration\Repositories\ApiTestCase
             ->andReturn($expected)
             ->getMock();
 
-        $repository = static::makeRepository($api, 'jobs');
+        $repository = RepositoryFactory::makeApi($api, 'jobs');
 
         $response = $repository->findById(1337);
 

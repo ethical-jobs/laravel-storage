@@ -4,12 +4,12 @@ namespace EthicalJobs\Storage\Criteria;
 use EthicalJobs\Storage\Contracts;
 
 /**
- * Base request criteria class
+ * Request criteria class
  * 
  * @author Andrew McLagan <andrew@ethicaljobs.com.au>
  */
 
-abstract ParameterQuery implements Contracts\Criteria
+abstract ParameterQuery implements Contract\QueriesByParameters
 {
     /**
      * Request instance
@@ -35,20 +35,21 @@ abstract ParameterQuery implements Contracts\Criteria
     /**
      * Object constructor
      * 
-     * @var \Illuminate\Http\Request
+     * @var \Illuminate\Http\Request $request
+     * @var \EthicalJobs\Storage\Contracts\Repository $repository
      * @return void
      */
     public function __construct(Request $request, Repository $repository)
     {
-        $this->request = $request;
+        $this->setRequest($request);
 
-        $this->repository = $repository;
+        $this->setRepository($repository);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function find()
+    public function find(): iterable
     {
         foreach ($this->parameters as $parameter) {
             if ($this->request->has($parameter)) {
@@ -60,5 +61,43 @@ abstract ParameterQuery implements Contracts\Criteria
         }
 
         return $this->repository->find();
+    }
+
+    /**
+    /**
+     * {@inheritdoc}
+     */
+    public function setRepository(Repository $repository): ParameterQuery
+    {
+        $this->repository = $repository;
+        
+        return $this;    
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRepository(): Repository; 
+    {
+        return $this->repository;
+    }
+
+    /**
+    /**
+     * {@inheritdoc}
+     */
+    public function setRequest(Request $request): ParameterQuery
+    {
+        $this->request = $request;
+        
+        return $this;    
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRequest(): Request;        
+    {
+        return $this->request;
     }
 }
