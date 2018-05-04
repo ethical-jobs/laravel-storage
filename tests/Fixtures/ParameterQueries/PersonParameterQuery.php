@@ -1,7 +1,7 @@
 <?php
 namespace Tests\Fixtures\ParameterQueries;
 
-use EthicalJobs\Storage\ParameterQueries\ParameterQuery;
+use EthicalJobs\Storage\ParameterQuery;
 
 /**
  * Parameter query test fixture.

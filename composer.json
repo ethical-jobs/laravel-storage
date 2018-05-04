@@ -16,9 +16,7 @@
         }
     ],
     "require": {
-        "php": "^7.0",
-        "ethical-jobs/laravel-elasticsearch": "^1.6",
-        "ethical-jobs/ethical-jobs-sdk": "^1.1"
+        "php": "^7.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~6.5",

@@ -2,7 +2,7 @@
 
 namespace EthicalJobs\Storage\Contracts;
 
-use EthicalJobs\Storage\Criteria\CriteriaCollection;
+use EthicalJobs\Storage\CriteriaCollection;
 
 /**
  * Has criteria interface
