@@ -39,12 +39,5 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "extra": {
-        "laravel": {     
-            "providers": [
-                "EthicalJobs\\Storage\\Laravel\\ServiceProvider"
-            ]      
-        }
-    } 
+    "prefer-stable": true
 }
