@@ -4,12 +4,10 @@ namespace Tests\Fixtures\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use EthicalJobs\Elasticsearch\Indexable;
-use EthicalJobs\Elasticsearch\Document;
 
-class Person extends Model implements Indexable
+class Person extends Model
 {
-    use SoftDeletes, Document;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -27,9 +25,4 @@ class Person extends Model implements Indexable
     {
         return $this->belongsTo(Family::class);
     }     
-
-    public function getDocumentRelations()
-    {
-        return ['family'];
-    }      
 }

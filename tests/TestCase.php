@@ -3,7 +3,6 @@
 namespace Tests;
 
 use Tests\Fixtures\Models;
-use EthicalJobs\Elasticsearch\ServiceProvider;
 use Orchestra\Database\ConsoleServiceProvider;
 
 abstract class TestCase extends \Orchestra\Testbench\TestCase
@@ -48,7 +47,6 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
 	protected function getPackageProviders($app)
 	{
 	    return [
-	    	ServiceProvider::class,
 	    	ConsoleServiceProvider::class,
 	   	];
 	}	
