@@ -1,7 +1,9 @@
 <?php
-namespace EthicalJobs\Storage\Criteria;
+namespace EthicalJobs\Storage\ParameterQueries;
 
-use EthicalJobs\Storage\Contracts;
+use Illuminate\Http\Request;
+use EthicalJobs\Storage\Contracts\QueriesByParameters;
+use EthicalJobs\Storage\Contracts\Repository;
 
 /**
  * Request criteria class
@@ -9,7 +11,7 @@ use EthicalJobs\Storage\Contracts;
  * @author Andrew McLagan <andrew@ethicaljobs.com.au>
  */
 
-abstract ParameterQuery implements Contract\QueriesByParameters
+abstract class ParameterQuery implements QueriesByParameters
 {
     /**
      * Request instance
@@ -67,7 +69,7 @@ abstract ParameterQuery implements Contract\QueriesByParameters
     /**
      * {@inheritdoc}
      */
-    public function setRepository(Repository $repository): ParameterQuery
+    public function setRepository(Repository $repository): QueriesByParameters
     {
         $this->repository = $repository;
         
@@ -77,7 +79,7 @@ abstract ParameterQuery implements Contract\QueriesByParameters
     /**
      * {@inheritdoc}
      */
-    public function getRepository(): Repository; 
+    public function getRepository(): Repository
     {
         return $this->repository;
     }
@@ -86,7 +88,7 @@ abstract ParameterQuery implements Contract\QueriesByParameters
     /**
      * {@inheritdoc}
      */
-    public function setRequest(Request $request): ParameterQuery
+    public function setRequest(Request $request): QueriesByParameters
     {
         $this->request = $request;
         
@@ -96,7 +98,7 @@ abstract ParameterQuery implements Contract\QueriesByParameters
     /**
      * {@inheritdoc}
      */
-    public function getRequest(): Request;        
+    public function getRequest(): Request       
     {
         return $this->request;
     }

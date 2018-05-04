@@ -4,10 +4,11 @@ namespace Tests\Integration\Repositories\Elasticsearch;
 
 use Mockery;
 use Elasticsearch\Client;
-use Tests\Fixtures\RepositoryFactory;
+use EthicalJobs\Storage\Testing\RepositoryFactory;
 use Tests\Fixtures\Models;
+use EthicalJobs\Elasticsearch\Testing\SearchResultsFactory;
 
-class FindTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
+class FindTest extends \Tests\TestCase
 {
     /**
      * @test
@@ -24,7 +25,7 @@ class FindTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
                 $this->assertEquals('test-index', $query['index']);
                 return true;
             })
-            ->andReturn($this->getSearchResults($people))
+            ->andReturn(SearchResultsFactory::getSearchResults($people))
             ->getMock();       
 
         $repository = RepositoryFactory::makeElasticsearch($client, new Models\Person);
@@ -47,7 +48,7 @@ class FindTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
                 $this->assertEquals('people', $query['type']);
                 return true;
             })
-            ->andReturn($this->getSearchResults($people))
+            ->andReturn(SearchResultsFactory::getSearchResults($people))
             ->getMock();       
 
         $repository = RepositoryFactory::makeElasticsearch($client, new Models\Person);  
@@ -63,11 +64,13 @@ class FindTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
     {
         $this->expectException(\Symfony\Component\HttpKernel\Exception\NotFoundHttpException::class);
 
+        $searchResults = SearchResultsFactory::getEmptySearchResults();
+
         $client = Mockery::mock(Client::class)
             ->shouldReceive('search')
             ->once()
             ->withAnyArgs()
-            ->andReturn($this->getEmptySearchResults())
+            ->andReturn($searchResults)
             ->getMock();       
 
         $repository = RepositoryFactory::makeElasticsearch($client, new Models\Person);    

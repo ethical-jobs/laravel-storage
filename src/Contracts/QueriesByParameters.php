@@ -3,6 +3,8 @@
 namespace EthicalJobs\Storage\Contracts;
 
 use Illuminate\Http\Request;
+use EthicalJobs\Storage\Contracts\QueriesByParameters;
+use EthicalJobs\Storage\Contracts\Repository;
 
 /**
  * Parameter query contract
@@ -16,9 +18,9 @@ interface QueriesByParameters
      * Sets the repository
      *
      * @param EthicalJobs\Storage\Contracts\Repository
-     * @return ParameterQuery
+     * @return EthicalJobs\Storage\Contracts\QueriesByParameters
      */
-    public function setRepository(Repository $repository): ParameterQuery;
+    public function setRepository(Repository $repository): QueriesByParameters;
 
     /**
      * Returns the repository
@@ -31,9 +33,9 @@ interface QueriesByParameters
      * Sets the request
      *
      * @param Illuminate\Http\Request
-     * @return ParameterQuery
+     * @return EthicalJobs\Storage\Contracts\QueriesByParameters
      */
-    public function setRequest(Request $request): ParameterQuery;
+    public function setRequest(Request $request): QueriesByParameters;
 
     /**
      * Returns the request

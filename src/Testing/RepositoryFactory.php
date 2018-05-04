@@ -1,7 +1,8 @@
 <?php
 
-namespace Tests\Fixtures;
+namespace EthicalJobs\Storage\Testing;
 
+use Mockery;
 use Tests\Fixtures\Models;
 use Illuminate\Database\Eloquent\Model;
 use EthicalJobs\Storage\Repositories;

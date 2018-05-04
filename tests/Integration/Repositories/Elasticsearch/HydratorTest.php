@@ -6,11 +6,12 @@ use Mockery;
 use Elasticsearch\Client;
 use ArrayObject;
 use Illuminate\Database\Eloquent\Model;
-use Tests\Fixtures\RepositoryFactory;
+use EthicalJobs\Storage\Testing\RepositoryFactory;
 use Tests\Fixtures\Models;
 use EthicalJobs\Storage\Hydrators\Elasticsearch as Hydrators;
+use EthicalJobs\Elasticsearch\Testing\SearchResultsFactory;
 
-class HydratorTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
+class HydratorTest extends \Tests\TestCase
 {
     /**
      * @test
@@ -24,7 +25,7 @@ class HydratorTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
             ->shouldReceive('search')
             ->once()
             ->withAnyArgs()
-            ->andReturn($this->getSearchResults($people))
+            ->andReturn(SearchResultsFactory::getSearchResults($people))
             ->getMock();       
 
         $repository = RepositoryFactory::makeElasticsearch($client, new Models\Person);
@@ -50,7 +51,7 @@ class HydratorTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
             ->shouldReceive('search')
             ->once()
             ->withAnyArgs()
-            ->andReturn($this->getSearchResults($people))
+            ->andReturn(SearchResultsFactory::getSearchResults($people))
             ->getMock();       
 
         $repository = RepositoryFactory::makeElasticsearch($client, new Models\Person);
@@ -75,7 +76,7 @@ class HydratorTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
             ->shouldReceive('search')
             ->once()
             ->withAnyArgs()
-            ->andReturn($this->getSearchResults($people))
+            ->andReturn(SearchResultsFactory::getSearchResults($people))
             ->getMock();       
 
         $repository = RepositoryFactory::makeElasticsearch($client, new Models\Person);

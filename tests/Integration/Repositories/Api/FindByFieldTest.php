@@ -5,9 +5,9 @@ namespace Tests\Integration\Repositories\Api;
 use Mockery;
 use EthicalJobs\SDK\ApiClient;
 use EthicalJobs\SDK\Collection;
-use Tests\Fixtures\RepositoryFactory;
+use EthicalJobs\Storage\Testing\RepositoryFactory;
 
-class FindByFieldTest extends \Tests\Integration\Repositories\ApiTestCase
+class FindByFieldTest extends \Tests\TestCase
 {
     /**
      * @test

@@ -3,9 +3,9 @@
 namespace Tests\Integration\Repositories\Api;
 
 use EthicalJobs\Storage\Criteria\CriteriaCollection;
-use Tests\Fixtures\RepositoryFactory;
+use EthicalJobs\Storage\Testing\RepositoryFactory;
 
-class CriteriaTest extends \Tests\Integration\Repositories\ApiTestCase
+class CriteriaTest extends \Tests\TestCase
 {
     /**
      * @test

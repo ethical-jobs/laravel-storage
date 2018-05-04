@@ -4,12 +4,13 @@ namespace Tests\Integration\Repositories\Elasticsearch;
 
 use Mockery;
 use Tests\Fixtures\Models;
-use Tests\Fixtures\RepositoryFactory;
+use EthicalJobs\Storage\Testing\RepositoryFactory;
 use Tests\Fixtures\Criteria;
 use EthicalJobs\Storage\Criteria\CriteriaCollection;
 use EthicalJobs\Storage\Repositories\ElasticsearchRepository;
+use EthicalJobs\Elasticsearch\Testing\SearchResultsFactory;
 
-class CriteriaTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
+class CriteriaTest extends \Tests\TestCase
 {
     /**
      * @test
@@ -68,7 +69,7 @@ class CriteriaTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
         $overFifties = factory(Models\Person::class, 5)
             ->create(['age' => 55]);        
 
-        $searchResults = $this->getSearchResults($overFifties);
+        $searchResults = SearchResultsFactory::getSearchResults($overFifties);
 
         $client = Mockery::mock(Client::class)
             ->shouldReceive('search')

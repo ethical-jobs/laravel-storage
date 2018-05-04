@@ -4,10 +4,11 @@ namespace Tests\Integration\Repositories\Elasticsearch;
 
 use Mockery;
 use Elasticsearch\Client;
-use Tests\Fixtures\RepositoryFactory;
+use EthicalJobs\Storage\Testing\RepositoryFactory;
 use Tests\Fixtures\Models;
+use EthicalJobs\Elasticsearch\Testing\SearchResultsFactory;
 
-class WhereInTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
+class WhereInTest extends \Tests\TestCase
 {
     /**
      * @test
@@ -27,7 +28,7 @@ class WhereInTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
                 ));
                 return true;
             })
-            ->andReturn($this->getSearchResults($people))
+            ->andReturn(SearchResultsFactory::getSearchResults($people))
             ->getMock();       
 
         $repository = RepositoryFactory::makeElasticsearch($client, new Models\Person);

@@ -4,10 +4,10 @@ namespace Tests\Integration\Repositories\Database;
 
 use Mockery;
 use Tests\Fixtures\Models;
-use Tests\Fixtures\RepositoryFactory;
+use EthicalJobs\Storage\Testing\RepositoryFactory;
 use EthicalJobs\Storage\Repositories\DatabaseRepository;
 
-class UpdateCollectionTest extends \Tests\Integration\Repositories\DatabaseTestCase
+class UpdateCollectionTest extends \Tests\TestCase
 {
     /**
      * @test

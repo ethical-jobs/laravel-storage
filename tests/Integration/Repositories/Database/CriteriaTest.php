@@ -3,12 +3,12 @@
 namespace Tests\Integration\Repositories\Database;
 
 use Tests\Fixtures\Models;
-use Tests\Fixtures\RepositoryFactory;
+use EthicalJobs\Storage\Testing\RepositoryFactory;
 use Tests\Fixtures\Criteria;
 use EthicalJobs\Storage\Criteria\CriteriaCollection;
 use EthicalJobs\Storage\Repositories\DatabaseRepository;
 
-class CriteriaTest extends \Tests\Integration\Repositories\DatabaseTestCase
+class CriteriaTest extends \Tests\TestCase
 {
     /**
      * @test

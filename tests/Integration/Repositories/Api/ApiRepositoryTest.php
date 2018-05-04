@@ -4,9 +4,9 @@ namespace Tests\Integration\Repositories\Api;
 
 use Mockery;
 use EthicalJobs\SDK\ApiClient;
-use Tests\Fixtures\RepositoryFactory;
+use EthicalJobs\Storage\Testing\RepositoryFactory;
 
-class ApiRepositoryTest extends \Tests\Integration\Repositories\ApiTestCase
+class ApiRepositoryTest extends \Tests\TestCase
 {
     /**
      * @test

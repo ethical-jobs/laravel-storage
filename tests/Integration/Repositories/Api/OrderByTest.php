@@ -6,9 +6,9 @@ use Mockery;
 use EthicalJobs\SDK\ApiClient;
 use EthicalJobs\SDK\Collection;
 use EthicalJobs\Storage\Repositories\ApiRepository;
-use Tests\Fixtures\RepositoryFactory;
+use EthicalJobs\Storage\Testing\RepositoryFactory;
 
-class OrderByTest extends \Tests\Integration\Repositories\ApiTestCase
+class OrderByTest extends \Tests\TestCase
 {
     /**
      * @test

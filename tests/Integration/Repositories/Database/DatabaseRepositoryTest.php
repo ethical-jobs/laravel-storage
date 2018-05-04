@@ -3,10 +3,10 @@
 namespace Tests\Integration\Repositories\Database;
 
 use Tests\Fixtures\Models;
-use Tests\Fixtures\RepositoryFactory;
+use EthicalJobs\Storage\Testing\RepositoryFactory;
 use EthicalJobs\Storage\Repositories\DatabaseRepository;
 
-class DatabaseRepositoryTest extends \Tests\Integration\Repositories\DatabaseTestCase
+class DatabaseRepositoryTest extends \Tests\TestCase
 {
     /**
      * @test

@@ -5,10 +5,10 @@ namespace Tests\Integration\Repositories\Database;
 use Mockery;
 use Illuminate\Database\Eloquent\Builder;
 use Tests\Fixtures\Models;
-use Tests\Fixtures\RepositoryFactory;
+use EthicalJobs\Storage\Testing\RepositoryFactory;
 use EthicalJobs\Storage\Repositories\DatabaseRepository;
 
-class FindByIdTest extends \Tests\Integration\Repositories\DatabaseTestCase
+class FindByIdTest extends \Tests\TestCase
 {
     /**
      * @test

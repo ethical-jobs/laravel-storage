@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "bfc98d253d51fbf2d082fc8fd0ac346c",
+    "content-hash": "f5c57db72d6b9c519f74f75715cddf8d",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -286,73 +286,6 @@
             "time": "2018-03-08T01:11:30+00:00"
         },
         {
-            "name": "ethical-jobs/ethical-jobs-elasticsearch",
-            "version": "v1.5.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ethical-jobs/ethical-jobs-elasticsearch.git",
-                "reference": "147eec0af91d33ffdf6fbfeb4423b12114313f1b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ethical-jobs/ethical-jobs-elasticsearch/zipball/147eec0af91d33ffdf6fbfeb4423b12114313f1b",
-                "reference": "147eec0af91d33ffdf6fbfeb4423b12114313f1b",
-                "shasum": ""
-            },
-            "require": {
-                "elasticsearch/elasticsearch": "^5.3",
-                "ethical-jobs/ethical-jobs-foundation": ">=1.0 <2.0",
-                "m6web/elasticsearch-mock": "^5.0",
-                "maknz/slack": "^1.7",
-                "ongr/elasticsearch-dsl": "^5.0",
-                "php": ">=7.1"
-            },
-            "require-dev": {
-                "codedungeon/phpunit-result-printer": "^0.5.3",
-                "hirak/prestissimo": "^0.3.7",
-                "mockery/mockery": "1.0.*",
-                "orchestra/database": "~3.5",
-                "orchestra/testbench": "~3.5",
-                "phpunit/phpunit": "~6.5"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "EthicalJobs\\Elasticsearch\\ServiceProvider"
-                    ],
-                    "aliases": []
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "EthicalJobs\\Elasticsearch\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "EthicalJobs.com.au",
-                    "homepage": "http://ethicaljobs.com.au"
-                },
-                {
-                    "name": "Andrew McLagan",
-                    "email": "andrew@ethicaljobs.com.au"
-                }
-            ],
-            "description": "EthicalJobs application elasticsearch",
-            "homepage": "https://github.com/ethical-jobs/ethical-jobs-elasticsearch-php",
-            "keywords": [
-                "elasticsearch",
-                "ethicaljobs",
-                "laravel"
-            ],
-            "time": "2018-04-10T08:00:24+00:00"
-        },
-        {
             "name": "ethical-jobs/ethical-jobs-foundation",
             "version": "v1.4.0",
             "source": {
@@ -492,6 +425,145 @@
                 "sdk"
             ],
             "time": "2018-04-29T03:34:18+00:00"
+        },
+        {
+            "name": "ethical-jobs/laravel-elasticsearch",
+            "version": "v1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ethical-jobs/laravel-elasticsearch.git",
+                "reference": "f2ed279310c4addd577bb3ad574bfbada072e1f2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ethical-jobs/laravel-elasticsearch/zipball/f2ed279310c4addd577bb3ad574bfbada072e1f2",
+                "reference": "f2ed279310c4addd577bb3ad574bfbada072e1f2",
+                "shasum": ""
+            },
+            "require": {
+                "elasticsearch/elasticsearch": "^5.3",
+                "ethical-jobs/laravel-foundation": ">=1.0 <2.0",
+                "m6web/elasticsearch-mock": "^5.0",
+                "maknz/slack": "^1.7",
+                "ongr/elasticsearch-dsl": "^5.0",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "codedungeon/phpunit-result-printer": "^0.5.3",
+                "hirak/prestissimo": "^0.3.7",
+                "mockery/mockery": "1.0.*",
+                "orchestra/database": "~3.5",
+                "orchestra/testbench": "~3.5",
+                "phpunit/phpunit": "~6.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "EthicalJobs\\Elasticsearch\\ServiceProvider"
+                    ],
+                    "aliases": []
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "EthicalJobs\\Elasticsearch\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "EthicalJobs.com.au",
+                    "homepage": "http://ethicaljobs.com.au"
+                },
+                {
+                    "name": "Andrew McLagan",
+                    "email": "andrew@ethicaljobs.com.au"
+                }
+            ],
+            "description": "Laravel elasticsearch",
+            "homepage": "https://github.com/ethical-jobs/laravel-elasticsearch",
+            "keywords": [
+                "elasticsearch",
+                "ethicaljobs",
+                "laravel"
+            ],
+            "time": "2018-05-04T02:02:31+00:00"
+        },
+        {
+            "name": "ethical-jobs/laravel-foundation",
+            "version": "v1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ethical-jobs/laravel-foundation.git",
+                "reference": "69206f75d567b50111c7b5321a5f9b58d0456eb2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ethical-jobs/laravel-foundation/zipball/69206f75d567b50111c7b5321a5f9b58d0456eb2",
+                "reference": "69206f75d567b50111c7b5321a5f9b58d0456eb2",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0",
+                "rollbar/rollbar-laravel": "^2.2",
+                "spatie/laravel-fractal": "^5.3"
+            },
+            "require-dev": {
+                "codedungeon/phpunit-result-printer": "^0.5.3",
+                "hirak/prestissimo": "^0.3.7",
+                "mockery/mockery": "1.0.*",
+                "orchestra/database": "~3.5",
+                "orchestra/testbench": "~3.5",
+                "phpunit/phpunit": "~6.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "EthicalJobs\\Foundation\\Laravel\\LoggingServiceProvider",
+                        "EthicalJobs\\Foundation\\Laravel\\FractalServiceProvider",
+                        "EthicalJobs\\Foundation\\Laravel\\QueueServiceProvider"
+                    ],
+                    "aliases": {
+                        "Fractal": "Spatie\\Fractal\\FractalFacade"
+                    },
+                    "dont-discover": [
+                        "rollbar/rollbar-laravel",
+                        "spatie/laravel-fractal"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "EthicalJobs\\Foundation\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "EthicalJobs.com.au",
+                    "homepage": "http://ethicaljobs.com.au"
+                },
+                {
+                    "name": "Andrew McLagan",
+                    "email": "andrew@ethicaljobs.com.au"
+                }
+            ],
+            "description": "EthicalJobs application foundation",
+            "homepage": "https://github.com/ethical-jobs/laravel-foundation",
+            "keywords": [
+                "ethicaljobs",
+                "foundation",
+                "laravel"
+            ],
+            "time": "2018-05-04T01:36:09+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1325,28 +1397,31 @@
         },
         {
             "name": "ongr/elasticsearch-dsl",
-            "version": "v5.0.2",
+            "version": "v5.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ongr-io/ElasticsearchDSL.git",
-                "reference": "6a08bfa57d0c088c8fc44cde637a1feca145c660"
+                "reference": "83c47322c09b47c35e3a9db2a8941cdc761b56e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ongr-io/ElasticsearchDSL/zipball/6a08bfa57d0c088c8fc44cde637a1feca145c660",
-                "reference": "6a08bfa57d0c088c8fc44cde637a1feca145c660",
+                "url": "https://api.github.com/repos/ongr-io/ElasticsearchDSL/zipball/83c47322c09b47c35e3a9db2a8941cdc761b56e6",
+                "reference": "83c47322c09b47c35e3a9db2a8941cdc761b56e6",
                 "shasum": ""
             },
             "require": {
                 "elasticsearch/elasticsearch": "~5.0",
                 "paragonie/random_compat": "^1.0|^2.0",
                 "php": ">=5.6",
-                "symfony/serializer": "~2.7|~3.0"
+                "symfony/serializer": "~2.7|~3.0|~4.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "~5.6",
-                "satooshi/php-coveralls": "~1.0",
+                "satooshi/php-coveralls": "~1.0|~2.0",
                 "squizlabs/php_codesniffer": "~2.0"
+            },
+            "suggest": {
+                "elasticsearch/elasticsearch": "This library is for elasticsearch/elasticsearch client to enhance it with DSL functionality."
             },
             "type": "library",
             "extra": {
@@ -1371,7 +1446,7 @@
             ],
             "description": "Elasticsearch DSL library",
             "homepage": "http://ongr.io",
-            "time": "2017-04-04T12:09:42+00:00"
+            "time": "2018-05-03T09:55:27+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -2722,38 +2797,38 @@
         },
         {
             "name": "symfony/serializer",
-            "version": "v3.4.9",
+            "version": "v4.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/serializer.git",
-                "reference": "d4dc1551da627273230fe16511f4bb4844c02399"
+                "reference": "d0e9269101ccd978af971fd4d7a892848672bfa1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/serializer/zipball/d4dc1551da627273230fe16511f4bb4844c02399",
-                "reference": "d4dc1551da627273230fe16511f4bb4844c02399",
+                "url": "https://api.github.com/repos/symfony/serializer/zipball/d0e9269101ccd978af971fd4d7a892848672bfa1",
+                "reference": "d0e9269101ccd978af971fd4d7a892848672bfa1",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5.9|>=7.0.8"
+                "php": "^7.1.3"
             },
             "conflict": {
                 "phpdocumentor/type-resolver": "<0.2.1",
-                "symfony/dependency-injection": "<3.2",
-                "symfony/property-access": ">=3.0,<3.0.4|>=2.8,<2.8.4",
-                "symfony/property-info": "<3.1",
+                "symfony/dependency-injection": "<3.4",
+                "symfony/property-access": "<3.4",
+                "symfony/property-info": "<3.4",
                 "symfony/yaml": "<3.4"
             },
             "require-dev": {
                 "doctrine/annotations": "~1.0",
                 "doctrine/cache": "~1.0",
                 "phpdocumentor/reflection-docblock": "^3.0|^4.0",
-                "symfony/cache": "~3.1|~4.0",
-                "symfony/config": "~2.8|~3.0|~4.0",
-                "symfony/dependency-injection": "~3.2|~4.0",
-                "symfony/http-foundation": "~2.8|~3.0|~4.0",
-                "symfony/property-access": "~2.8|~3.0|~4.0",
-                "symfony/property-info": "~3.1|~4.0",
+                "symfony/cache": "~3.4|~4.0",
+                "symfony/config": "~3.4|~4.0",
+                "symfony/dependency-injection": "~3.4|~4.0",
+                "symfony/http-foundation": "~3.4|~4.0",
+                "symfony/property-access": "~3.4|~4.0",
+                "symfony/property-info": "~3.4|~4.0",
                 "symfony/yaml": "~3.4|~4.0"
             },
             "suggest": {
@@ -2769,7 +2844,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.4-dev"
+                    "dev-master": "4.0-dev"
                 }
             },
             "autoload": {
@@ -2796,7 +2871,7 @@
             ],
             "description": "Symfony Serializer Component",
             "homepage": "https://symfony.com",
-            "time": "2018-03-15T19:08:29+00:00"
+            "time": "2018-03-19T17:30:36+00:00"
         },
         {
             "name": "symfony/translation",

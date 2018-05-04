@@ -4,10 +4,11 @@ namespace Tests\Integration\Repositories\Elasticsearch;
 
 use Mockery;
 use Elasticsearch\Client;
-use Tests\Fixtures\RepositoryFactory;
+use EthicalJobs\Storage\Testing\RepositoryFactory;
 use Tests\Fixtures\Models;
+use EthicalJobs\Elasticsearch\Testing\SearchResultsFactory;
 
-class FindByIdTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
+class FindByIdTest extends \Tests\TestCase
 {
     /**
      * @test
@@ -17,7 +18,7 @@ class FindByIdTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
     {
         $people = factory(Models\Person::class, 1)->create();
 
-        $searchResults = $this->getSearchResults($people);
+        $searchResults = SearchResultsFactory::getSearchResults($people);
 
         $client = Mockery::mock(Client::class)
             ->shouldReceive('search')
@@ -46,7 +47,7 @@ class FindByIdTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
     {
         $this->expectException(\Symfony\Component\HttpKernel\Exception\NotFoundHttpException::class);
 
-        $searchResults = $this->getEmptySearchResults();
+        $searchResults = SearchResultsFactory::getEmptySearchResults();
 
         $client = Mockery::mock(Client::class)
             ->shouldReceive('search')

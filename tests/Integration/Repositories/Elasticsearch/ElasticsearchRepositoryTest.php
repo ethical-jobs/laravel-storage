@@ -4,11 +4,11 @@ namespace Tests\Integration\Repositories\Elasticsearch;
 
 use Mockery;
 use Elasticsearch\Client;
-use Tests\Fixtures\RepositoryFactory;
+use EthicalJobs\Storage\Testing\RepositoryFactory;
 use Tests\Fixtures\Models;
 use EthicalJobs\Storage\Repositories\ElasticsearchRepository;
 
-class ElasticsearchRepositoryTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
+class ElasticsearchRepositoryTest extends \Tests\TestCase
 {
     /**
      * @test

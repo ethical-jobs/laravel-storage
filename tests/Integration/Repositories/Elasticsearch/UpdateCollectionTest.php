@@ -2,9 +2,9 @@
 
 namespace Tests\Integration\Repositories\Elasticsearch;
 
-use Tests\Fixtures\RepositoryFactory;
+use EthicalJobs\Storage\Testing\RepositoryFactory;
 
-class UpdateCollectionTest extends \Tests\Integration\Repositories\ElasticsearchTestCase
+class UpdateCollectionTest extends \Tests\TestCase
 {
     /**
      * @test

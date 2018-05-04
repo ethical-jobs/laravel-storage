@@ -6,12 +6,10 @@ use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Tests\Fixtures\Models;
 use EthicalJobs\Storage\Hydrators\Elasticsearch\EloquentHydrator;
-use EthicalJobs\Elasticsearch\Testing\InteractsWithElasticsearch;
+use EthicalJobs\Elasticsearch\Testing\SearchResultsFactory;
 
 class EloquentHydratorTest extends \Tests\TestCase
 {
-    use InteractsWithElasticsearch;
-
     /**
      * @test
      * @group Integration
@@ -20,7 +18,7 @@ class EloquentHydratorTest extends \Tests\TestCase
     {
         $vehicle = factory(Models\Vehicle::class, 1)->create();
 
-        $response = $this->getSearchResults($vehicle);
+        $response = SearchResultsFactory::getSearchResults($vehicle);
 
         $toHydrate = $response['hits']['hits'][0];
 
@@ -45,7 +43,7 @@ class EloquentHydratorTest extends \Tests\TestCase
     {
         $vehicles = factory(Models\Vehicle::class, 5)->create();
 
-        $response = $this->getSearchResults($vehicles);
+        $response = SearchResultsFactory::getSearchResults($vehicles);
 
         $collection = (new EloquentHydrator)
             ->setIndexable(new Models\Vehicle)
@@ -66,7 +64,7 @@ class EloquentHydratorTest extends \Tests\TestCase
     {
         $vehicles = factory(Models\Vehicle::class, 5)->create();
 
-        $response = $this->getSearchResults($vehicles);
+        $response = SearchResultsFactory::getSearchResults($vehicles);
 
         $collection = (new EloquentHydrator)
             ->setIndexable(new Models\Vehicle)
@@ -86,7 +84,7 @@ class EloquentHydratorTest extends \Tests\TestCase
     {
         $vehicles = factory(Models\Vehicle::class, 5)->create();
 
-        $response = $this->getSearchResults($vehicles);
+        $response = SearchResultsFactory::getSearchResults($vehicles);
 
         $collection = (new EloquentHydrator)
             ->setIndexable(new Models\Vehicle)
@@ -134,7 +132,7 @@ class EloquentHydratorTest extends \Tests\TestCase
 
         $families->load($documentRelations);
 
-        $response = $this->getSearchResults($families);
+        $response = SearchResultsFactory::getSearchResults($families);
 
         $collection = (new EloquentHydrator)
             ->setIndexable(new Models\Family)
