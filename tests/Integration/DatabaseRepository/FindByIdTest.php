@@ -40,18 +40,19 @@ class FindByIdTest extends \Tests\TestCase
 
         $this->assertEquals($person->id, $result->id);
         $this->assertEquals($person->first_name, $result->first_name);
-    }    
+    }
 
     /**
      * @test
      * @group Unit
      */
-    public function it_throws_http_404_exception_when_no_model_found()
+    public function it_returns_null_when_no_model_found()
     {
-        $this->expectException(\Symfony\Component\HttpKernel\Exception\NotFoundHttpException::class);
+        $repository = new PersonDatabaseRepository;
 
-        $repository = new PersonDatabaseRepository; 
-
-        $repository->findById(1337);
-    }         
+        $this->assertEquals(
+            $repository->findById(1337),
+            null
+        );
+    }               
 }

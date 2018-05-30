@@ -33,12 +33,12 @@ class FindTest extends \Tests\TestCase
      * @test
      * @group Unit
      */
-    public function it_throws_exception_on_empty_results()
+    public function it_returns_empty_iterable_if_results_empty()
     {
-        $this->expectException(\Symfony\Component\HttpKernel\Exception\NotFoundHttpException::class);
-
         $repository = new PersonDatabaseRepository;
 
-        $repository->find();
+        $results = $repository->find();
+
+        $this->assertEquals(0, $results->count());
     }      
 }

@@ -5,7 +5,6 @@ namespace EthicalJobs\Storage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use EthicalJobs\Storage\Contracts;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Database repository
@@ -76,7 +75,7 @@ abstract class DatabaseRepository implements Contracts\Repository, Contracts\Has
             return $entity;
         }
 
-        throw new NotFoundHttpException("Entity with id: $id not found");
+        return null;
     }  
 
     /**
@@ -90,7 +89,7 @@ abstract class DatabaseRepository implements Contracts\Repository, Contracts\Has
             return $results->first();
         }
 
-        throw new NotFoundHttpException("Entity with field $field and value $value not found");
+        return null;
     }     
 
     /**
@@ -140,13 +139,7 @@ abstract class DatabaseRepository implements Contracts\Repository, Contracts\Has
     {
         $this->applyCriteria();
 
-        $results = $this->query->get();
-
-        if ($results->isEmpty()) {
-            throw new NotFoundHttpException;
-        }
-        
-        return $results;
+        return $this->query->get();
     }   
 
     /**

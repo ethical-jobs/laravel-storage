@@ -30,12 +30,13 @@ class FindByFieldTest extends \Tests\TestCase
      * @test
      * @group Unit
      */
-    public function it_throws_http_404_exception_when_no_model_found()
+    public function it_returns_null_when_no_model_found()
     {
-        $this->expectException(\Symfony\Component\HttpKernel\Exception\NotFoundHttpException::class);
+        $repository = new PersonDatabaseRepository;
 
-        $repository = new PersonDatabaseRepository;   
-
-        $repository->findByField('first_name', 'Jesus');
-    }         
+        $this->assertEquals(
+            $repository->findByField('first_name', 'Jesus'),
+            null
+        );
+    }          
 }
