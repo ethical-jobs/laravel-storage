@@ -1,3 +1,7 @@
+# v1.2.0
+
+- Adding search function to repository contract
+
 # v1.1.0
 
 - Repositories no loger throw exceptions
