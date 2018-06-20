@@ -78,7 +78,15 @@ interface Repository
      * @param int $limit
      * @return $this
      */
-    public function limit(int $limit): Repository;                    
+    public function limit(int $limit): Repository;       
+    
+    /**
+     * Add key-word search to query
+     *
+     * @param string $term
+     * @return $this
+     */
+    public function search(string $term = ''): Repository;       
 
     /**
      * Return the result of the query

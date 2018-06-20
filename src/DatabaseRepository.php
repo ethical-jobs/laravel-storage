@@ -135,6 +135,16 @@ abstract class DatabaseRepository implements Contracts\Repository, Contracts\Has
     /**
      * {@inheritdoc}
      */
+    public function search($term = '')
+    {
+        // must be implemented by child
+
+        return $this;
+    }       
+
+    /**
+     * {@inheritdoc}
+     */
     public function find(): iterable
     {
         $this->applyCriteria();
