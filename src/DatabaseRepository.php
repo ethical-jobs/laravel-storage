@@ -95,7 +95,7 @@ abstract class DatabaseRepository implements Contracts\Repository, Contracts\Has
     /**
      * {@inheritdoc}
      */
-    public function where(string $field, $operator, $value = null): Contracts\Repository
+    public function where(string $field, $operator, $value = null) : Contracts\Repository
     {
         $this->query->where($field, $operator, $value);
 
@@ -105,7 +105,7 @@ abstract class DatabaseRepository implements Contracts\Repository, Contracts\Has
     /**
      * {@inheritdoc}
      */
-    public function whereIn(string $field, array $values): Contracts\Repository
+    public function whereIn(string $field, array $values) : Contracts\Repository
     {
         $this->query->whereIn($field, $values);
 
@@ -115,7 +115,7 @@ abstract class DatabaseRepository implements Contracts\Repository, Contracts\Has
     /**
      * {@inheritdoc}
      */
-    public function orderBy(string $field, $direction = 'asc'): Contracts\Repository
+    public function orderBy(string $field, $direction = 'asc') : Contracts\Repository
     {
         $this->query->orderBy($field, $direction);
 
@@ -125,12 +125,22 @@ abstract class DatabaseRepository implements Contracts\Repository, Contracts\Has
     /**
      * {@inheritdoc}
      */
-    public function limit(int $limit): Contracts\Repository
+    public function limit(int $limit) : Contracts\Repository
     {
         $this->query->limit($limit);
 
         return $this;
     }  
+
+    /**
+     * {@inheritdoc}
+     */
+    public function search(string $term = '') : Contracts\Repository
+    {
+        // must be implemented by child
+
+        return $this;
+    }       
 
     /**
      * {@inheritdoc}
