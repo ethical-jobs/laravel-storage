@@ -1,3 +1,7 @@
+# v1.3.0
+
+- Adding repository restore functionality
+
 # v1.2.0
 
 - Adding search function to repository contract
