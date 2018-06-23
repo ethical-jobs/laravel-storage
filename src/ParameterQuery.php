@@ -1,7 +1,8 @@
 <?php
 namespace EthicalJobs\Storage;
 
-use Illuminate\Http\Request;
+use Carbon\Carbon;
+use EthicalJobs\Utilities\Timestamp;
 use EthicalJobs\Storage\Contracts\QueriesByParameters;
 use EthicalJobs\Storage\Contracts\Repository;
 
@@ -14,13 +15,6 @@ use EthicalJobs\Storage\Contracts\Repository;
 abstract class ParameterQuery implements QueriesByParameters
 {
     /**
-     * Request instance
-     * 
-     * @var \Illuminate\Http\Request
-     */
-    protected $request;
-
-    /**
      * Repository instance
      * 
      * @var \EthicalJobs\Storage\Contracts\Repository
@@ -30,42 +24,39 @@ abstract class ParameterQuery implements QueriesByParameters
     /**
      * Available parameters
      *
-     * @var Array
+     * @var array
      */
-    protected $parameters = [];    
+    protected $parameters = [
+        'q',
+        'orderBy',
+        'limit',
+        'dateFrom',
+        'dateTo',
+    ];   
 
     /**
      * Object constructor
      * 
-     * @var \Illuminate\Http\Request $request
      * @var \EthicalJobs\Storage\Contracts\Repository $repository
      * @return void
      */
-    public function __construct(Request $request, Repository $repository)
+    public function __construct(Repository $repository)
     {
-        $this->setRequest($request);
-
         $this->setRepository($repository);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function find(): iterable
+    public function find(array $parameters): iterable
     {
-        foreach ($this->parameters as $parameter) {
-            if ($this->request->has($parameter)) {
-
-                $value = $this->request->get($parameter);
-
-                $this->$parameter($value);
-            }
+        foreach ($parameters as $parameter => $value) {
+            $this->$parameter($value);
         }
 
         return $this->repository->find();
     }
 
-    /**
     /**
      * {@inheritdoc}
      */
@@ -85,7 +76,6 @@ abstract class ParameterQuery implements QueriesByParameters
     }
 
     /**
-    /**
      * {@inheritdoc}
      */
     public function setRequest(Request $request): QueriesByParameters
@@ -102,4 +92,59 @@ abstract class ParameterQuery implements QueriesByParameters
     {
         return $this->request;
     }
+
+    /**
+     * Filter by search term
+     *
+     * @param mixed $value
+     * @return void
+     */
+    public function q($value)
+    {
+       $this->repository->search((string) $value);
+    }    
+
+    /**
+     * Order by field
+     *
+     * @param mixed $value
+     * @return void
+     */
+    public function orderBy($value)
+    {
+       $this->repository->orderBy($value);
+    }    
+
+    /**
+     * Limit query
+     *
+     * @param mixed $value
+     * @return void
+     */
+    public function limit($value)
+    {
+       $this->repository->limit($value);
+    } 
+    
+    /**
+     * Filter by dateFrom
+     *
+     * @param mixed $value
+     * @return void
+     */
+    public function dateFrom($value)
+    {
+       $this->repository->where('created_at', '>=', Timestamp::parse($value));
+    } 
+    
+    /**
+     * Filter by dateTo
+     *
+     * @param mixed $value
+     * @return void
+     */
+    public function dateTo($value)
+    {
+       $this->repository->where('created_at', '<=', Timestamp::parse($value));
+    } 
 }
