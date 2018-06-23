@@ -1,3 +1,7 @@
+# 1.5.0
+
+- Adding default param query methods
+
 # v1.4.0
 
 - Adding whereHas to contact and DbRepo
