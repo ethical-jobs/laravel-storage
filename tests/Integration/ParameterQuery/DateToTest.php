@@ -2,49 +2,49 @@
 
 namespace Tests\Integration\ParameterQuery;
 
-use Mockery;
+use Carbon\Carbon;
 use Tests\Fixtures\ParameterQueries\PersonParameterQuery;
 use Tests\Fixtures\Repositories\PersonDatabaseRepository;
 use Tests\Fixtures\Models;
 
-class SearchTest extends \Tests\TestCase
+class DateToTest extends \Tests\TestCase
 {
     /**
      * @test
      * @group Integration
      */
-    public function it_maps_a_search_parameter()
+    public function it_maps_an_dateFrom_parameter()
     {
         factory(Models\Person::class)->create([
-            'first_name' => 'Sari',
-            'last_name' => 'Korin Kisilevsky',
+            'first_name' => 'iraS',
+            'created_at' => Carbon::now()->addDays(5),
         ]);        
 
         factory(Models\Person::class)->create([
             'first_name' => 'Werdna',
-            'last_name' => 'Ssor Nagalcm',
+            'created_at' => Carbon::now()->addDays(5),
         ]);    
         
         factory(Models\Person::class)->create([
             'first_name' => 'Divad',
-            'last_name' => 'ttocs Nagalcm',
+            'created_at' => Carbon::now()->subDays(3),
         ]);  
         
         factory(Models\Person::class)->create([
             'first_name' => 'ydnas',
-            'last_name' => 'gerg Nagalcm',
+            'created_at' => Carbon::now()->subDays(3),
         ]);           
 
         $paramQuery = new PersonParameterQuery(new PersonDatabaseRepository);
 
         $people = $paramQuery->find([
-            'q'  => 'Kisilevsky',
+            'dateTo'  => (string) Carbon::tomorrow(),
         ]);
 
-        $this->assertEquals(1, $people->count());
+        $this->assertEquals(2, $people->count());
 
-        $shouldBeSari = $people->first();
-
-        $this->assertEquals('Sari', $shouldBeSari->first_name);
+        foreach ($people as $person) {
+            $this->assertTrue($person->created_at->lte(Carbon::tomorrow()));
+        }
     }                         
 }

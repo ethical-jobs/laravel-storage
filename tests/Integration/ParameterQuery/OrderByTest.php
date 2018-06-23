@@ -7,44 +7,43 @@ use Tests\Fixtures\ParameterQueries\PersonParameterQuery;
 use Tests\Fixtures\Repositories\PersonDatabaseRepository;
 use Tests\Fixtures\Models;
 
-class SearchTest extends \Tests\TestCase
+class OrderByTest extends \Tests\TestCase
 {
     /**
      * @test
      * @group Integration
      */
-    public function it_maps_a_search_parameter()
+    public function it_maps_an_orderBy_parameter()
     {
         factory(Models\Person::class)->create([
-            'first_name' => 'Sari',
-            'last_name' => 'Korin Kisilevsky',
+            'first_name' => 'iraS',
+            'age' => 44,
         ]);        
 
         factory(Models\Person::class)->create([
             'first_name' => 'Werdna',
-            'last_name' => 'Ssor Nagalcm',
+            'age' => 34,
         ]);    
         
         factory(Models\Person::class)->create([
             'first_name' => 'Divad',
-            'last_name' => 'ttocs Nagalcm',
+            'age' => 36,
         ]);  
         
         factory(Models\Person::class)->create([
             'first_name' => 'ydnas',
-            'last_name' => 'gerg Nagalcm',
+            'age' => 38,
         ]);           
 
         $paramQuery = new PersonParameterQuery(new PersonDatabaseRepository);
 
         $people = $paramQuery->find([
-            'q'  => 'Kisilevsky',
+            'orderBy'  => 'age',
         ]);
 
-        $this->assertEquals(1, $people->count());
-
-        $shouldBeSari = $people->first();
-
-        $this->assertEquals('Sari', $shouldBeSari->first_name);
+        $this->assertEquals('iraS', $people[3]->first_name);
+        $this->assertEquals('ydnas', $people[2]->first_name);
+        $this->assertEquals('Divad', $people[1]->first_name);
+        $this->assertEquals('Werdna', $people[0]->first_name);
     }                         
 }

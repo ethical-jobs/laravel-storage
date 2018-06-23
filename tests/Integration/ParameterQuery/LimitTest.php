@@ -7,44 +7,40 @@ use Tests\Fixtures\ParameterQueries\PersonParameterQuery;
 use Tests\Fixtures\Repositories\PersonDatabaseRepository;
 use Tests\Fixtures\Models;
 
-class SearchTest extends \Tests\TestCase
+class LimitTest extends \Tests\TestCase
 {
     /**
      * @test
      * @group Integration
      */
-    public function it_maps_a_search_parameter()
+    public function it_maps_a_limit_parameter()
     {
         factory(Models\Person::class)->create([
-            'first_name' => 'Sari',
-            'last_name' => 'Korin Kisilevsky',
+            'first_name' => 'iraS',
+            'age' => 44,
         ]);        
 
         factory(Models\Person::class)->create([
             'first_name' => 'Werdna',
-            'last_name' => 'Ssor Nagalcm',
+            'age' => 34,
         ]);    
         
         factory(Models\Person::class)->create([
             'first_name' => 'Divad',
-            'last_name' => 'ttocs Nagalcm',
+            'age' => 36,
         ]);  
         
         factory(Models\Person::class)->create([
             'first_name' => 'ydnas',
-            'last_name' => 'gerg Nagalcm',
+            'age' => 38,
         ]);           
 
         $paramQuery = new PersonParameterQuery(new PersonDatabaseRepository);
 
         $people = $paramQuery->find([
-            'q'  => 'Kisilevsky',
+            'limit'  => 2,
         ]);
 
-        $this->assertEquals(1, $people->count());
-
-        $shouldBeSari = $people->first();
-
-        $this->assertEquals('Sari', $shouldBeSari->first_name);
+        $this->assertEquals(2, $people->count());
     }                         
 }
