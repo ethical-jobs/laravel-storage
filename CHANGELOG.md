@@ -1,3 +1,7 @@
+# v1.4.0
+
+- Adding whereHas to contact and DbRepo
+
 # v1.3.0
 
 - Adding repository restore functionality
