@@ -1,3 +1,7 @@
+# 1.5.1
+
+- Validating parameter methods
+
 # 1.5.0
 
 - Adding default param query methods

@@ -51,7 +51,9 @@ abstract class ParameterQuery implements QueriesByParameters
     public function find(array $parameters): iterable
     {
         foreach ($parameters as $parameter => $value) {
-            $this->$parameter($value);
+            if (method_exists($this, $parameter)) {
+                $this->$parameter($value);
+            }
         }
 
         return $this->repository->find();
