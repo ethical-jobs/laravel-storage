@@ -64,6 +64,15 @@ interface Repository
     public function whereIn(string $field, array $values) : Repository;
 
     /**
+     * Executes a whereHasIn query matching an array of values on a related field
+     *
+     * @param string $field
+     * @param array $values
+     * @return $this
+     */
+    public function whereHasIn(string $field, array $values) : Repository;
+
+    /**
      * Execute an order by query
      *
      * @param string $field
