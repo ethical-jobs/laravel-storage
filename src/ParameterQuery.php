@@ -22,19 +22,6 @@ abstract class ParameterQuery implements QueriesByParameters
     protected $repository; 
 
     /**
-     * Available parameters
-     *
-     * @var array
-     */
-    protected $parameters = [
-        'q',
-        'orderBy',
-        'limit',
-        'dateFrom',
-        'dateTo',
-    ];   
-
-    /**
      * Object constructor
      * 
      * @var \EthicalJobs\Storage\Contracts\Repository $repository
@@ -52,7 +39,7 @@ abstract class ParameterQuery implements QueriesByParameters
     {
         foreach ($parameters as $parameter => $value) {
             if (method_exists($this, $parameter)) {
-                $this->$parameter($value);
+                $this->repository->$parameter($value);
             }
         }
 
@@ -75,24 +62,6 @@ abstract class ParameterQuery implements QueriesByParameters
     public function getRepository(): Repository
     {
         return $this->repository;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setRequest(Request $request): QueriesByParameters
-    {
-        $this->request = $request;
-        
-        return $this;    
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getRequest(): Request       
-    {
-        return $this->request;
     }
 
     /**
