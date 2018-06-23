@@ -27,27 +27,13 @@ interface QueriesByParameters
      *
      * @return EthicalJobs\Storage\Contracts\Repository
      */
-    public function getRepository(): Repository;  
-
-    /**
-     * Sets the request
-     *
-     * @param Illuminate\Http\Request
-     * @return EthicalJobs\Storage\Contracts\QueriesByParameters
-     */
-    public function setRequest(Request $request): QueriesByParameters;
-
-    /**
-     * Returns the request
-     *
-     * @return Illuminate\Http\Request
-     */
-    public function getRequest(): Request;        
+    public function getRepository(): Repository;       
 
     /**
      * Returns results from the parameter query
      *
+     * @param array $parameters
      * @return iterable
      */
-    public function find(): iterable; 
+    public function find(array $parameters): iterable; 
 }
