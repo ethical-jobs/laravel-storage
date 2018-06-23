@@ -39,7 +39,7 @@ abstract class ParameterQuery implements QueriesByParameters
     {
         foreach ($parameters as $parameter => $value) {
             if (method_exists($this, $parameter)) {
-                $this->repository->$parameter($value);
+                $this->$parameter($value);
             }
         }
 
