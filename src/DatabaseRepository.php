@@ -119,7 +119,7 @@ abstract class DatabaseRepository implements Contracts\Repository, Contracts\Has
         $fields = explode('.', $relation);
 
         $this->query->whereHas($fields[0], function ($query) use ($relation, $values) {
-            $query->whereIn($relation, $values);
+            $query->whereIn(snake_case($relation), $values);
         });   
         
         return $this;
