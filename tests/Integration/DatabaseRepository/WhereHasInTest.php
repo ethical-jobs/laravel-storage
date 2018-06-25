@@ -103,5 +103,5 @@ class WhereHasInTest extends \Tests\TestCase
                 $agesOfMembers->contains(42) || $agesOfMembers->contains(8)
             );
         }
-    }     
+    }      
 }

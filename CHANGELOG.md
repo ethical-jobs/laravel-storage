@@ -1,7 +1,8 @@
-# 1.5.2
+# 1.5.3
 
 - Validating parameter methods
 - Snake casing relation whereHasIn query
+- Snake/camel casing param query functions
 
 # 1.5.0
 

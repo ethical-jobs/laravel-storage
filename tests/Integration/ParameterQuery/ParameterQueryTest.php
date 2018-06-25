@@ -49,5 +49,40 @@ class ParameterQueryTest extends \Tests\TestCase
 
         $this->assertEquals($expectedPerson->id, $person->id);
         $this->assertEquals($expectedPerson->first_name, $person->first_name);
-    }             
+    }       
+    
+    /**
+     * @test
+     * @group Integration
+     */
+    public function it_can_call_snake_or_camel_case_param_funcs()
+    {
+        factory(Models\Person::class)->create([
+            'last_name' => 'mclagan',
+        ]);
+
+        factory(Models\Person::class)->create([
+            'last_name' => 'kisilevsky',
+        ]);        
+
+        $paramQuery = new PersonParameterQuery(new PersonDatabaseRepository);
+
+        $people = $paramQuery->find([
+            'last_name'  => 'mclagan',
+        ]);
+
+        foreach ($people as $person) {
+            $this->assertEquals($person->last_name, 'mclagan');
+        }
+
+        $paramQuery = new PersonParameterQuery(new PersonDatabaseRepository);
+
+        $people = $paramQuery->find([
+            'lastName'  => 'mclagan',
+        ]);
+
+        foreach ($people as $person) {
+            $this->assertEquals($person->last_name, 'mclagan');
+        }        
+    }     
 }
