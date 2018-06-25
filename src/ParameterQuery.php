@@ -38,8 +38,13 @@ abstract class ParameterQuery implements QueriesByParameters
     public function find(array $parameters): iterable
     {
         foreach ($parameters as $parameter => $value) {
+
+            $snakeCased = snake_case($parameter);
+
             if (method_exists($this, $parameter)) {
                 $this->$parameter($value);
+            } else if (method_exists($this, $snakeCased)) {
+                $this->$snakeCased($value);
             }
         }
 
