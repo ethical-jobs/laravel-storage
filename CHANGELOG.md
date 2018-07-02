@@ -1,3 +1,7 @@
+# 1.6.1
+
+- Resolving collection instances from the container
+
 # 1.6.0
 
 - Adding in static collections feature
