@@ -8,7 +8,7 @@ namespace EthicalJobs\Storage;
  * @author Andrew McLagan <andrew@ethicaljobs.com.au>
  */
 
-class CriteriaCollection extends \Illuminate\Support\Collection
+class CriteriaCollection extends Collection
 {
     /**
      * Push a criteria class

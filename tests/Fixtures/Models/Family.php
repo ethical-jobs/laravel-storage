@@ -11,8 +11,8 @@ class Family extends Model
         return $this->hasOne(Vehicle::class);
     }
 
-    public function members()
+    public function people()
     {
-        return $this->hasOne(Person::class);
+        return $this->hasMany(Person::class);
     }         
 }

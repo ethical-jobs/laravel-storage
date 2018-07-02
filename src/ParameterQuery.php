@@ -1,7 +1,8 @@
 <?php
 namespace EthicalJobs\Storage;
 
-use Illuminate\Http\Request;
+use Carbon\Carbon;
+use EthicalJobs\Utilities\Timestamp;
 use EthicalJobs\Storage\Contracts\QueriesByParameters;
 use EthicalJobs\Storage\Contracts\Repository;
 
@@ -14,13 +15,6 @@ use EthicalJobs\Storage\Contracts\Repository;
 abstract class ParameterQuery implements QueriesByParameters
 {
     /**
-     * Request instance
-     * 
-     * @var \Illuminate\Http\Request
-     */
-    protected $request;
-
-    /**
      * Repository instance
      * 
      * @var \EthicalJobs\Storage\Contracts\Repository
@@ -28,44 +22,35 @@ abstract class ParameterQuery implements QueriesByParameters
     protected $repository; 
 
     /**
-     * Available parameters
-     *
-     * @var Array
-     */
-    protected $parameters = [];    
-
-    /**
      * Object constructor
      * 
-     * @var \Illuminate\Http\Request $request
      * @var \EthicalJobs\Storage\Contracts\Repository $repository
      * @return void
      */
-    public function __construct(Request $request, Repository $repository)
+    public function __construct(Repository $repository)
     {
-        $this->setRequest($request);
-
         $this->setRepository($repository);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function find(): iterable
+    public function find(array $parameters): iterable
     {
-        foreach ($this->parameters as $parameter) {
-            if ($this->request->has($parameter)) {
+        foreach ($parameters as $parameter => $value) {
 
-                $value = $this->request->get($parameter);
+            $snakeCased = snake_case($parameter);
 
+            if (method_exists($this, $parameter)) {
                 $this->$parameter($value);
+            } else if (method_exists($this, $snakeCased)) {
+                $this->$snakeCased($value);
             }
         }
 
         return $this->repository->find();
     }
 
-    /**
     /**
      * {@inheritdoc}
      */
@@ -85,21 +70,57 @@ abstract class ParameterQuery implements QueriesByParameters
     }
 
     /**
-    /**
-     * {@inheritdoc}
+     * Filter by search term
+     *
+     * @param mixed $value
+     * @return void
      */
-    public function setRequest(Request $request): QueriesByParameters
+    public function q($value)
     {
-        $this->request = $request;
-        
-        return $this;    
-    }
+       $this->repository->search((string) $value);
+    }    
 
     /**
-     * {@inheritdoc}
+     * Order by field
+     *
+     * @param mixed $value
+     * @return void
      */
-    public function getRequest(): Request       
+    public function orderBy($value)
     {
-        return $this->request;
-    }
+       $this->repository->orderBy($value);
+    }    
+
+    /**
+     * Limit query
+     *
+     * @param mixed $value
+     * @return void
+     */
+    public function limit($value)
+    {
+       $this->repository->limit($value);
+    } 
+    
+    /**
+     * Filter by dateFrom
+     *
+     * @param mixed $value
+     * @return void
+     */
+    public function dateFrom($value)
+    {
+       $this->repository->where('created_at', '>=', Timestamp::parse($value));
+    } 
+    
+    /**
+     * Filter by dateTo
+     *
+     * @param mixed $value
+     * @return void
+     */
+    public function dateTo($value)
+    {
+       $this->repository->where('created_at', '<=', Timestamp::parse($value));
+    } 
 }

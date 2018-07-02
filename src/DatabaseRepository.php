@@ -111,6 +111,19 @@ abstract class DatabaseRepository implements Contracts\Repository, Contracts\Has
 
         return $this;
     }
+    /**
+     * {@inheritdoc}
+     */
+    public function whereHasIn(string $relation, array $values) : Contracts\Repository
+    {
+        $fields = explode('.', $relation);
+
+        $this->query->whereHas($fields[0], function ($query) use ($relation, $values) {
+            $query->whereIn(snake_case($relation), $values);
+        });   
+        
+        return $this;
+    }    
 
     /**
      * {@inheritdoc}
