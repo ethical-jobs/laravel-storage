@@ -1,0 +1,64 @@
+<?php
+
+namespace Tests\Integration\Repositories\Database;
+
+use Tests\Fixtures\Collections;
+use Tests\Fixtures\Models;
+use Illuminate\Database\Eloquent\Collection;
+
+class CollectionTest extends \Tests\TestCase
+{
+    /**
+     * @test
+     * @group Unit
+     */
+    public function it_can_create_an_instance_of_an_item()
+    {
+        $this->assertInstanceOf(
+            Models\Person::class, 
+            Collections\ModelsCollection::instance('people')
+        );
+
+        $this->assertInstanceOf(
+            Models\Family::class, 
+            Collections\ModelsCollection::instance('families')
+        );
+        
+        $this->assertInstanceOf(
+            Models\Vehicle::class, 
+            Collections\ModelsCollection::instance('vehicles')
+        );        
+    }    
+
+    /**
+     * @test
+     * @group Unit
+     */
+    public function it_returns_null_if_instance_does_not_exist()
+    {
+        $this->assertEquals(
+            null, 
+            Collections\ModelsCollection::instance('animals')
+        );
+
+        $this->assertEquals(
+            null, 
+            Collections\ModelsCollection::instance('planets')
+        );   
+    }        
+
+    /**
+     * @test
+     * @group Unit
+     */
+    public function it_is_arrayable()
+    {
+        $collection = new Collections\ModelsCollection;
+
+        $this->assertEquals($collection->all(), [
+            'families' => Models\Family::class,
+            'people' => Models\Person::class,
+            'vehicles' => Models\Vehicle::class,            
+        ]);
+    }         
+}

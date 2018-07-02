@@ -1,3 +1,8 @@
+# 1.6.0
+
+- Adding in static collections feature
+- Static collections are a way to hold collections of classes and other items.
+
 # 1.5.3
 
 - Validating parameter methods
