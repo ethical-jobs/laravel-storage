@@ -32,7 +32,7 @@ abstract class Collection extends \Illuminate\Support\Collection
         $class = $collection->get($key);
 
         if (class_exists($class)) {
-            return new $class;
+            return resolve($class);
         }
 
         return null;
