@@ -1,6 +1,7 @@
-# 1.6.1
+# 1.6.2
 
 - Resolving collection instances from the container
+- Adding Collection::instances() functionality
 
 # 1.6.0
 
