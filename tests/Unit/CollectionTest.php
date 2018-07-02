@@ -2,9 +2,9 @@
 
 namespace Tests\Integration\Repositories\Database;
 
+use Illuminate\Support\Collection;
 use Tests\Fixtures\Collections;
 use Tests\Fixtures\Models;
-use Illuminate\Database\Eloquent\Collection;
 
 class CollectionTest extends \Tests\TestCase
 {
@@ -46,6 +46,23 @@ class CollectionTest extends \Tests\TestCase
             Collections\ModelsCollection::instance('planets')
         );   
     }        
+
+    /**
+     * @test
+     * @group Unit
+     */
+    public function it_can_return_a_collection_of_instances()
+    {
+        $instances = Collections\ModelsCollection::instances();
+
+        $expected = new Collection([
+            'families' => new Models\Family,
+            'people' => new Models\Person,
+            'vehicles' => new Models\Vehicle,
+        ]);
+
+        $this->assertEquals($expected, $instances);
+    }      
 
     /**
      * @test

@@ -2,6 +2,8 @@
 
 namespace EthicalJobs\Storage;
 
+use Illuminate\Support\Collection as BaseCollection;
+
 /**
  * Collection abstract
  *
@@ -23,6 +25,7 @@ abstract class Collection extends \Illuminate\Support\Collection
     /**
      * Create an instance of a collection item
      *
+     * @param string $key
      * @return mixed
      */
     public static function instance(string $key)
@@ -37,4 +40,22 @@ abstract class Collection extends \Illuminate\Support\Collection
 
         return null;
     }
+
+    /**
+     * Returns a collection of item instances
+     *
+     * @return Illuminate\Support\Collection
+     */
+    public static function instances() : BaseCollection
+    {
+        $instances = new BaseCollection;
+
+        foreach (static::make()->all() as $key => $value) {
+            if ($instance = static::instance($key)) {
+                $instances->put($key, $instance);
+            }
+        }
+
+        return $instances;
+    }    
 }
