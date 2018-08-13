@@ -1,6 +1,7 @@
-# 1.6.5
+# 1.6.6
 
 - Applying criteria is public method
+- Addressing issue with return value of applyCriteria
 
 # 1.6.4
 
