@@ -46,11 +46,9 @@ trait HasCriteria
     }   
 
     /**
-     * Applies the criterion to the repository query
-     *
-     * @return void
+     * {@inheritdoc}
      */
-    protected function applyCriteria(): void
+    public function applyCriteria() : void
     {    
         foreach ($this->criteria as $criteria) {
             $criteria->apply($this);
