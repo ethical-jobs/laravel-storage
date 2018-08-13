@@ -15,10 +15,9 @@ use Tests\Fixtures\Models;
     /**
      * Create a new collection.
      *
-     * @param  mixed  $items
      * @return array
      */
-    public static function items($items = [])
+    public static function items()
     {
         return [
             'families' => Models\Family::class,
