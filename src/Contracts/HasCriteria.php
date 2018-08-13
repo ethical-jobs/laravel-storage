@@ -38,7 +38,7 @@ interface HasCriteria
     /**
      * Applies the criterion to the repository query
      *
-     * @return void
+     * @return $this
      */
-    public function applyCriteria() : void;    
+    public function applyCriteria();    
 }

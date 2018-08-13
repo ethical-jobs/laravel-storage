@@ -48,10 +48,12 @@ trait HasCriteria
     /**
      * {@inheritdoc}
      */
-    public function applyCriteria() : void
+    public function applyCriteria()
     {    
         foreach ($this->criteria as $criteria) {
             $criteria->apply($this);
         }
+
+        return $this;
     }      
 }
