@@ -34,4 +34,11 @@ interface HasCriteria
      * @return $this
      */
     public function addCriteria(string $criteria);
+
+    /**
+     * Applies the criterion to the repository query
+     *
+     * @return void
+     */
+    public function applyCriteria() : void;    
 }

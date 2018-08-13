@@ -1,3 +1,7 @@
+# 1.6.5
+
+- Applying criteria is public method
+
 # 1.6.4
 
 - Addressing issues in collection instantiation (backwards compatible)
