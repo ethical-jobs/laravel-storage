@@ -30,10 +30,9 @@ class Collection extends \Illuminate\Support\Collection
     /**
      * Create a new collection.
      *
-     * @param  mixed  $items
      * @return array
      */
-    public static function items($items = [])
+    public static function items()
     {
         return [];
     }      
