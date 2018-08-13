@@ -78,4 +78,34 @@ class CollectionTest extends \Tests\TestCase
             'vehicles' => Models\Vehicle::class,            
         ]);
     }         
+
+    /**
+     * @test
+     * @group Unit
+     */
+    public function it_can_return_collection_keys()
+    {
+        $collection = new Collections\ModelsCollection;
+
+        $this->assertEquals($collection->keys()->toArray(), [
+            'families',
+            'people',
+            'vehicles',
+        ]);
+    }    
+    
+    /**
+     * @test
+     * @group Unit
+     */
+    public function it_is_backwards_compatible_with_previous_instantiation()
+    {
+        $collection = new Collections\BackWardsCompatible;
+
+        $this->assertEquals($collection->all(), [
+            'families' => Models\Family::class,
+            'people' => Models\Person::class,
+            'vehicles' => Models\Vehicle::class,            
+        ]);
+    }         
 }
