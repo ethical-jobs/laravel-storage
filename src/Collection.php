@@ -10,17 +10,33 @@ use Illuminate\Support\Collection as BaseCollection;
  * @author Andrew McLagan <andrew@ethicaljobs.com.au>
  */
 
-abstract class Collection extends \Illuminate\Support\Collection
+class Collection extends \Illuminate\Support\Collection
 {
     /**
-     * Create a new collection instance if the value isn't one already.
+     * Create a new collection.
      *
-     * @return static
+     * @param  mixed  $items
+     * @return void
      */
-    public static function make($items = [])
+    public function __construct($items = [])
     {
-        return new static;
+        if (count($items)) {
+            parent::__construct($items);
+        } else {
+            parent::__construct(static::items());
+        }
     }
+
+    /**
+     * Create a new collection.
+     *
+     * @param  mixed  $items
+     * @return array
+     */
+    public static function items($items = [])
+    {
+        return [];
+    }      
 
     /**
      * Create an instance of a collection item
@@ -51,7 +67,7 @@ abstract class Collection extends \Illuminate\Support\Collection
         $instances = new BaseCollection;
 
         foreach (static::make()->all() as $key => $value) {
-            if ($instance = static::instance($key)) {
+            if ($instance = self::instance($key)) {
                 $instances->put($key, $instance);
             }
         }
