@@ -1,3 +1,7 @@
+# 1.6.3
+
+- Addressing issues in collection instantiation (backwards compatible)
+
 # 1.6.2
 
 - Resolving collection instances from the container
