@@ -1,3 +1,8 @@
+# 1.6.7
+
+- Code cleanup 
+- Drone config changes
+
 # 1.6.6
 
 - Applying criteria is public method
