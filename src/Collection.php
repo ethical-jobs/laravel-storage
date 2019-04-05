@@ -9,13 +9,12 @@ use Illuminate\Support\Collection as BaseCollection;
  *
  * @author Andrew McLagan <andrew@ethicaljobs.com.au>
  */
-
-class Collection extends \Illuminate\Support\Collection
+class Collection extends BaseCollection
 {
     /**
      * Create a new collection.
      *
-     * @param  mixed  $items
+     * @param mixed $items
      * @return void
      */
     public function __construct($items = [])
@@ -35,7 +34,25 @@ class Collection extends \Illuminate\Support\Collection
     public static function items()
     {
         return [];
-    }      
+    }
+
+    /**
+     * Returns a collection of item instances
+     *
+     * @return BaseCollection
+     */
+    public static function instances(): BaseCollection
+    {
+        $instances = new BaseCollection;
+
+        foreach (static::make()->all() as $key => $value) {
+            if ($instance = self::instance($key)) {
+                $instances->put($key, $instance);
+            }
+        }
+
+        return $instances;
+    }
 
     /**
      * Create an instance of a collection item
@@ -55,22 +72,4 @@ class Collection extends \Illuminate\Support\Collection
 
         return null;
     }
-
-    /**
-     * Returns a collection of item instances
-     *
-     * @return Illuminate\Support\Collection
-     */
-    public static function instances() : BaseCollection
-    {
-        $instances = new BaseCollection;
-
-        foreach (static::make()->all() as $key => $value) {
-            if ($instance = self::instance($key)) {
-                $instances->put($key, $instance);
-            }
-        }
-
-        return $instances;
-    }    
 }

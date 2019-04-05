@@ -2,13 +2,11 @@
 
 namespace Tests\Integration\Repositories\Database;
 
-use Mockery;
-use Illuminate\Database\Eloquent\Builder;
 use Tests\Fixtures\Models;
-use EthicalJobs\Storage\Testing\RepositoryFactory;
 use Tests\Fixtures\Repositories\PersonDatabaseRepository;
+use Tests\TestCase;
 
-class LimitTest extends \Tests\TestCase
+class LimitTest extends TestCase
 {
     /**
      * @test
@@ -21,7 +19,7 @@ class LimitTest extends \Tests\TestCase
         $isFluent = $repository->limit(5);
 
         $this->assertInstanceOf(PersonDatabaseRepository::class, $isFluent);
-    }   
+    }
 
     /**
      * @test
@@ -38,5 +36,5 @@ class LimitTest extends \Tests\TestCase
             ->find();
 
         $this->assertEquals(15, $result->count());
-    }    
+    }
 }

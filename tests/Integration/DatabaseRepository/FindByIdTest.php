@@ -2,13 +2,11 @@
 
 namespace Tests\Integration\Repositories\Database;
 
-use Mockery;
-use Illuminate\Database\Eloquent\Builder;
 use Tests\Fixtures\Models;
-use EthicalJobs\Storage\Testing\RepositoryFactory;
 use Tests\Fixtures\Repositories\PersonDatabaseRepository;
+use Tests\TestCase;
 
-class FindByIdTest extends \Tests\TestCase
+class FindByIdTest extends TestCase
 {
     /**
      * @test
@@ -24,7 +22,7 @@ class FindByIdTest extends \Tests\TestCase
 
         $this->assertEquals($person->id, $result->id);
         $this->assertEquals($person->first_name, $result->first_name);
-    }  
+    }
 
     /**
      * @test
@@ -54,5 +52,5 @@ class FindByIdTest extends \Tests\TestCase
             $repository->findById(1337),
             null
         );
-    }               
+    }
 }

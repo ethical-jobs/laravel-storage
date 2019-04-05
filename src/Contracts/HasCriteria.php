@@ -9,21 +9,20 @@ use EthicalJobs\Storage\CriteriaCollection;
  *
  * @author Andrew McLagan <andrew@ethicaljobs.com.au>
  */
-
 interface HasCriteria
 {
     /**
      * Sets the criteria collection
-     * 
-     * @param EthicalJobs\Storage\Criteria\CriteriaCollection $collection
+     *
+     * @param CriteriaCollection $collection
      * @return $this
      */
     public function setCriteriaCollection(CriteriaCollection $collection);
 
     /**
      * Gets the criteria collection
-     * 
-     * @return EthicalJobs\Storage\Criteria\CriteriaCollection
+     *
+     * @return CriteriaCollection
      */
     public function getCriteriaCollection(): CriteriaCollection;
 
@@ -40,5 +39,5 @@ interface HasCriteria
      *
      * @return $this
      */
-    public function applyCriteria();    
+    public function applyCriteria();
 }

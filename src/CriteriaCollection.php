@@ -3,11 +3,10 @@
 namespace EthicalJobs\Storage;
 
 /**
- * Collection of criteria 
- * 
+ * Collection of criteria
+ *
  * @author Andrew McLagan <andrew@ethicaljobs.com.au>
  */
-
 class CriteriaCollection extends Collection
 {
     /**
@@ -21,5 +20,5 @@ class CriteriaCollection extends Collection
         $instance = new $criteria;
 
         return $this->put($criteria, $instance);
-    }  
+    }
 }

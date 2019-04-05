@@ -2,12 +2,11 @@
 
 namespace Tests\Integration\Repositories\Database;
 
-use Mockery;
 use Tests\Fixtures\Models;
-use EthicalJobs\Storage\Testing\RepositoryFactory;
 use Tests\Fixtures\Repositories\PersonDatabaseRepository;
+use Tests\TestCase;
 
-class UpdateTest extends \Tests\TestCase
+class UpdateTest extends TestCase
 {
     /**
      * @test
@@ -17,14 +16,14 @@ class UpdateTest extends \Tests\TestCase
     {
         $person = factory(Models\Person::class)->create();
 
-        $repository = new PersonDatabaseRepository; 
+        $repository = new PersonDatabaseRepository;
 
         $updated = $repository->update($person, [
-            'first_name'    => 'Andrew',
-            'last_name'     => 'McLagan',
+            'first_name' => 'Andrew',
+            'last_name' => 'McLagan',
         ]);
 
         $this->assertTrue($updated->first_name === 'Andrew');
         $this->assertTrue($updated->last_name === 'McLagan');
-    }    
+    }
 }

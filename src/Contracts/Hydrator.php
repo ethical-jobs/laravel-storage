@@ -7,7 +7,6 @@ namespace EthicalJobs\Storage\Contracts;
  *
  * @author Andrew McLagan <andrew@ethicaljobs.com.au>
  */
-
 interface Hydrator
 {
     /**
@@ -24,5 +23,5 @@ interface Hydrator
      * @param mixed $entity
      * @return mixed
      */
-    public function hydrateEntity($entity);    
+    public function hydrateEntity($entity);
 }

@@ -4,27 +4,26 @@ namespace EthicalJobs\Storage;
 
 /**
  * Non specific criteria functionality
- * 
+ *
  * @author Andrew McLagan <andrew@ethicaljobs.com.au>
  */
-
 trait HasCriteria
 {
     /**
      * Criteria collection
      *
-     * @var EthicalJobs\Storage\Criteria\CriteriaCollection
+     * @var CriteriaCollection
      */
-    protected $criteria;    
+    protected $criteria;
 
     /**
      * {@inheritdoc}
      */
     public function setCriteriaCollection(CriteriaCollection $collection)
     {
-    	$this->criteria = $collection;
+        $this->criteria = $collection;
 
-    	return $this;
+        return $this;
     }
 
     /**
@@ -32,7 +31,7 @@ trait HasCriteria
      */
     public function getCriteriaCollection(): CriteriaCollection
     {
-    	return $this->criteria;
+        return $this->criteria;
     }
 
     /**
@@ -40,20 +39,20 @@ trait HasCriteria
      */
     public function addCriteria(string $criteria)
     {
-    	$this->criteria->push($criteria);
+        $this->criteria->push($criteria);
 
-    	return $this;
-    }   
+        return $this;
+    }
 
     /**
      * {@inheritdoc}
      */
     public function applyCriteria()
-    {    
+    {
         foreach ($this->criteria as $criteria) {
             $criteria->apply($this);
         }
 
         return $this;
-    }      
+    }
 }

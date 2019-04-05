@@ -3,10 +3,10 @@
 namespace Tests\Integration\Repositories\Database;
 
 use Tests\Fixtures\Models;
-use EthicalJobs\Storage\Testing\RepositoryFactory;
 use Tests\Fixtures\Repositories\PersonDatabaseRepository;
+use Tests\TestCase;
 
-class PersonDatabaseRepositoryTest extends \Tests\TestCase
+class PersonDatabaseRepositoryTest extends TestCase
 {
     /**
      * @test
@@ -16,11 +16,11 @@ class PersonDatabaseRepositoryTest extends \Tests\TestCase
     {
         // Via constructor
         $repository = new PersonDatabaseRepository;
-        $this->assertEquals($repository->getStorageEngine(), (new Models\Person)->query());    
+        $this->assertEquals($repository->getStorageEngine(), (new Models\Person)->query());
 
         // Via method
         $repository = new PersonDatabaseRepository;
         $repository->setStorageEngine((new Models\Family)->query());
-        $this->assertEquals($repository->getStorageEngine(), (new Models\Family)->query());            
-    }    
+        $this->assertEquals($repository->getStorageEngine(), (new Models\Family)->query());
+    }
 }
