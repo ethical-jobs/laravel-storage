@@ -2,12 +2,12 @@
 
 namespace Tests\Integration\ParameterQuery;
 
-use Mockery;
+use Tests\Fixtures\Models;
 use Tests\Fixtures\ParameterQueries\PersonParameterQuery;
 use Tests\Fixtures\Repositories\PersonDatabaseRepository;
-use Tests\Fixtures\Models;
+use Tests\TestCase;
 
-class ParameterQueryTest extends \Tests\TestCase
+class ParameterQueryTest extends TestCase
 {
     /**
      * @test
@@ -20,7 +20,7 @@ class ParameterQueryTest extends \Tests\TestCase
         $paramQuery = new PersonParameterQuery($personRepository);
 
         $this->assertEquals($personRepository, $paramQuery->getRepository());
-    }       
+    }
 
     /**
      * @test
@@ -28,20 +28,20 @@ class ParameterQueryTest extends \Tests\TestCase
      */
     public function it_queries_by_parameters()
     {
-        $expectedPerson= factory(Models\Person::class)->create([
-            'age'   => 65,
+        $expectedPerson = factory(Models\Person::class)->create([
+            'age' => 65,
             'email' => 'andrew@ethicaljobs.com.au',
         ]);
 
         factory(Models\Person::class)->create([
-            'age'   => 45,
+            'age' => 45,
             'email' => 'andrew@ethicaljobs.com.au',
-        ]);        
+        ]);
 
         $paramQuery = new PersonParameterQuery(new PersonDatabaseRepository);
 
         $people = $paramQuery->find([
-            'ages'  => [23,65,55,18],
+            'ages' => [23, 65, 55, 18],
             'email' => 'andrew@ethicaljobs.com.au',
         ]);
 
@@ -49,8 +49,8 @@ class ParameterQueryTest extends \Tests\TestCase
 
         $this->assertEquals($expectedPerson->id, $person->id);
         $this->assertEquals($expectedPerson->first_name, $person->first_name);
-    }       
-    
+    }
+
     /**
      * @test
      * @group Integration
@@ -63,12 +63,12 @@ class ParameterQueryTest extends \Tests\TestCase
 
         factory(Models\Person::class)->create([
             'last_name' => 'kisilevsky',
-        ]);        
+        ]);
 
         $paramQuery = new PersonParameterQuery(new PersonDatabaseRepository);
 
         $people = $paramQuery->find([
-            'last_name'  => 'mclagan',
+            'last_name' => 'mclagan',
         ]);
 
         foreach ($people as $person) {
@@ -78,11 +78,11 @@ class ParameterQueryTest extends \Tests\TestCase
         $paramQuery = new PersonParameterQuery(new PersonDatabaseRepository);
 
         $people = $paramQuery->find([
-            'lastName'  => 'mclagan',
+            'lastName' => 'mclagan',
         ]);
 
         foreach ($people as $person) {
             $this->assertEquals($person->last_name, 'mclagan');
-        }        
-    }     
+        }
+    }
 }

@@ -1,31 +1,30 @@
 <?php
+
 namespace EthicalJobs\Storage;
 
-use Carbon\Carbon;
-use EthicalJobs\Utilities\Timestamp;
 use EthicalJobs\Storage\Contracts\QueriesByParameters;
 use EthicalJobs\Storage\Contracts\Repository;
+use EthicalJobs\Utilities\Timestamp;
 
 /**
  * Request criteria class
- * 
+ *
  * @author Andrew McLagan <andrew@ethicaljobs.com.au>
  */
-
 abstract class ParameterQuery implements QueriesByParameters
 {
     /**
      * Repository instance
-     * 
-     * @var \EthicalJobs\Storage\Contracts\Repository
+     *
+     * @var Repository
      */
-    protected $repository; 
+    protected $repository;
 
     /**
      * Object constructor
-     * 
-     * @var \EthicalJobs\Storage\Contracts\Repository $repository
+     *
      * @return void
+     * @var Repository $repository
      */
     public function __construct(Repository $repository)
     {
@@ -43,22 +42,14 @@ abstract class ParameterQuery implements QueriesByParameters
 
             if (method_exists($this, $parameter)) {
                 $this->$parameter($value);
-            } else if (method_exists($this, $snakeCased)) {
-                $this->$snakeCased($value);
+            } else {
+                if (method_exists($this, $snakeCased)) {
+                    $this->$snakeCased($value);
+                }
             }
         }
 
         return $this->repository->find();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setRepository(Repository $repository): QueriesByParameters
-    {
-        $this->repository = $repository;
-        
-        return $this;    
     }
 
     /**
@@ -70,6 +61,16 @@ abstract class ParameterQuery implements QueriesByParameters
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function setRepository(Repository $repository): QueriesByParameters
+    {
+        $this->repository = $repository;
+
+        return $this;
+    }
+
+    /**
      * Filter by search term
      *
      * @param mixed $value
@@ -77,8 +78,8 @@ abstract class ParameterQuery implements QueriesByParameters
      */
     public function q($value)
     {
-       $this->repository->search((string) $value);
-    }    
+        $this->repository->search((string)$value);
+    }
 
     /**
      * Order by field
@@ -88,8 +89,8 @@ abstract class ParameterQuery implements QueriesByParameters
      */
     public function orderBy($value)
     {
-       $this->repository->orderBy($value);
-    }    
+        $this->repository->orderBy($value, 'asc');
+    }
 
     /**
      * Limit query
@@ -99,9 +100,9 @@ abstract class ParameterQuery implements QueriesByParameters
      */
     public function limit($value)
     {
-       $this->repository->limit($value);
-    } 
-    
+        $this->repository->limit($value);
+    }
+
     /**
      * Filter by dateFrom
      *
@@ -110,9 +111,9 @@ abstract class ParameterQuery implements QueriesByParameters
      */
     public function dateFrom($value)
     {
-       $this->repository->where('created_at', '>=', Timestamp::parse($value));
-    } 
-    
+        $this->repository->where('created_at', '>=', Timestamp::parse($value));
+    }
+
     /**
      * Filter by dateTo
      *
@@ -121,6 +122,6 @@ abstract class ParameterQuery implements QueriesByParameters
      */
     public function dateTo($value)
     {
-       $this->repository->where('created_at', '<=', Timestamp::parse($value));
-    } 
+        $this->repository->where('created_at', '<=', Timestamp::parse($value));
+    }
 }

@@ -4,6 +4,7 @@ node_modules/
 storage/logs/
 bootstrap/cache/
 .data
+.idea/
 
 # file types
 *.bak

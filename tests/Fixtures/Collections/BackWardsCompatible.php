@@ -2,16 +2,16 @@
 
 namespace Tests\Fixtures\Collections;
 
+use EthicalJobs\Storage\Collection;
 use Tests\Fixtures\Models;
 
 /**
  * Collections test fixture
- * 
+ *
  * @author Andrew McLagan <andrew@ethicaljobs.com.au>
  */
-
- class BackWardsCompatible extends \EthicalJobs\Storage\Collection
- {
+class BackWardsCompatible extends Collection
+{
     /**
      * Create a new collection.
      *
@@ -24,5 +24,5 @@ use Tests\Fixtures\Models;
             'people' => Models\Person::class,
             'vehicles' => Models\Vehicle::class,
         ]);
-    }     
- }
+    }
+}

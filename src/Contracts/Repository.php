@@ -7,9 +7,8 @@ namespace EthicalJobs\Storage\Contracts;
  *
  * @author Andrew McLagan <andrew@ethicaljobs.com.au>
  */
-
 interface Repository
-{ 
+{
     /**
      * Get the current storage engine instance
      *
@@ -31,7 +30,7 @@ interface Repository
      * @param string|int $id
      * @return mixed
      */
-    public function findById($id);   
+    public function findById($id);
 
     /**
      * Find a model by a field
@@ -40,7 +39,7 @@ interface Repository
      * @param mixed $value
      * @return mixed
      */
-    public function findByField(string $field, $value);      
+    public function findByField(string $field, $value);
 
     /**
      * Executes a where query on a field.
@@ -52,7 +51,7 @@ interface Repository
      * @param mixed $value
      * @return $this
      */
-    public function where(string $field, $operator, $value = null) : Repository;  
+    public function where(string $field, $operator, $value = null): Repository;
 
     /**
      * Executes a whereIn query matching an array of values.
@@ -61,7 +60,7 @@ interface Repository
      * @param array $values
      * @return $this
      */
-    public function whereIn(string $field, array $values) : Repository;
+    public function whereIn(string $field, array $values): Repository;
 
     /**
      * Executes a whereHasIn query matching an array of values on a related field
@@ -70,16 +69,16 @@ interface Repository
      * @param array $values
      * @return $this
      */
-    public function whereHasIn(string $field, array $values) : Repository;
+    public function whereHasIn(string $field, array $values): Repository;
 
     /**
      * Execute an order by query
      *
      * @param string $field
-     * @param  string $direction
+     * @param string $direction
      * @return $this
      */
-    public function orderBy(string $field, string $direction) : Repository;             
+    public function orderBy(string $field, string $direction): Repository;
 
     /**
      * Limit the current query
@@ -87,15 +86,15 @@ interface Repository
      * @param int $limit
      * @return $this
      */
-    public function limit(int $limit) : Repository;       
-    
+    public function limit(int $limit): Repository;
+
     /**
      * Add key-word search to query
      *
      * @param string $term
      * @return $this
      */
-    public function search(string $term = '') : Repository;       
+    public function search(string $term = ''): Repository;
 
     /**
      * Return the result of the query

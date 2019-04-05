@@ -2,13 +2,11 @@
 
 namespace Tests\Integration\Repositories\Database;
 
-use Mockery;
-use Illuminate\Database\Eloquent\Builder;
 use Tests\Fixtures\Models;
-use EthicalJobs\Storage\Testing\RepositoryFactory;
 use Tests\Fixtures\Repositories\FamilyDatabaseRepository;
+use Tests\TestCase;
 
-class WhereHasInTest extends \Tests\TestCase
+class WhereHasInTest extends TestCase
 {
     /**
      * @test
@@ -18,10 +16,10 @@ class WhereHasInTest extends \Tests\TestCase
     {
         $repository = new FamilyDatabaseRepository;
 
-        $isFluent = $repository->whereHasIn('people.id', [12,22]);
+        $isFluent = $repository->whereHasIn('people.id', [12, 22]);
 
         $this->assertInstanceOf(FamilyDatabaseRepository::class, $isFluent);
-    }   
+    }
 
     /**
      * @test
@@ -58,9 +56,9 @@ class WhereHasInTest extends \Tests\TestCase
             );
             $this->assertFalse(
                 $obamas->people->contains($shouldBeATrump->id)
-            );            
+            );
         }
-    }    
+    }
 
     /**
      * @test
@@ -77,23 +75,23 @@ class WhereHasInTest extends \Tests\TestCase
         factory(Models\Person::class)->create([
             'family_id' => $trumps->id,
             'age' => 42,
-        ]); 
+        ]);
 
         $obamas = factory(Models\Family::class)->create();
-        
+
         factory(Models\Person::class)->create([
             'family_id' => $obamas->id,
             'age' => 32,
-        ]);   
+        ]);
         factory(Models\Person::class)->create([
             'family_id' => $obamas->id,
             'age' => 8,
-        ]);                      
+        ]);
 
         $repository = new FamilyDatabaseRepository;
 
         $result = $repository
-            ->whereHasIn('people.age', [42,8])
+            ->whereHasIn('people.age', [42, 8])
             ->find();
 
         foreach ($result as $family) {
@@ -103,5 +101,5 @@ class WhereHasInTest extends \Tests\TestCase
                 $agesOfMembers->contains(42) || $agesOfMembers->contains(8)
             );
         }
-    }      
+    }
 }

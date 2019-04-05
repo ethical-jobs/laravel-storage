@@ -10,16 +10,15 @@ use Tests\Fixtures\Models;
  *
  * @author Andrew McLagan <andrew@ethicaljobs.com.au>
  */
-
 class FamilyDatabaseRepository extends DatabaseRepository
 {
-	/**
-	 * Object constructor
-	 * 
-	 * @return void
-	 */
-	public function __construct()
-	{
-		parent::__construct(new Models\Family);
-	}
+    /**
+     * Object constructor
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct(new Models\Family);
+    }
 }

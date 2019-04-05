@@ -6,18 +6,25 @@ use EthicalJobs\Storage\Contracts\Hydrator;
 
 /**
  * Adds response hydration functionality
- * 
+ *
  * @author Andrew McLagan <andrew@ethicaljobs.com.au>
  */
-
 trait HydratesResults
 {
     /**
      * Hydrator instance
      *
-     * @var EthicalJobs\Storage\Contracts\Hydrator
+     * @var Hydrator
      */
-    protected $hydrator;    
+    protected $hydrator;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getHydrator(): Hydrator
+    {
+        return $this->hydrator;
+    }
 
     /**
      * {@inheritdoc}
@@ -28,12 +35,4 @@ trait HydratesResults
 
         return $this;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getHydrator(): Hydrator
-    {
-        return $this->hydrator;
-    }   
 }
