@@ -2,13 +2,11 @@
 
 namespace Tests\Integration\Repositories\Database;
 
-use Mockery;
-use Illuminate\Database\Eloquent\Builder;
 use Tests\Fixtures\Models;
-use EthicalJobs\Storage\Testing\RepositoryFactory;
 use Tests\Fixtures\Repositories\PersonDatabaseRepository;
+use Tests\TestCase;
 
-class FindTest extends \Tests\TestCase
+class FindTest extends TestCase
 {
     /**
      * @test
@@ -22,12 +20,12 @@ class FindTest extends \Tests\TestCase
 
         $results = $repository->find();
 
-        $results->each(function($result) {
+        $results->each(function ($result) {
             $this->assertInstanceOf(Models\Person::class, $result);
         });
 
         $this->assertEquals(10, $results->count());
-    }  
+    }
 
     /**
      * @test
@@ -40,5 +38,5 @@ class FindTest extends \Tests\TestCase
         $results = $repository->find();
 
         $this->assertEquals(0, $results->count());
-    }      
+    }
 }

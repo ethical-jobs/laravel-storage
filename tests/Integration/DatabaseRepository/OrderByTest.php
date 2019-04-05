@@ -2,13 +2,11 @@
 
 namespace Tests\Integration\Repositories\Database;
 
-use Mockery;
-use Illuminate\Database\Eloquent\Builder;
 use Tests\Fixtures\Models;
-use EthicalJobs\Storage\Testing\RepositoryFactory;
 use Tests\Fixtures\Repositories\PersonDatabaseRepository;
+use Tests\TestCase;
 
-class OrderByTest extends \Tests\TestCase
+class OrderByTest extends TestCase
 {
     /**
      * @test
@@ -22,7 +20,7 @@ class OrderByTest extends \Tests\TestCase
             ->orderBy('status', 'asc');
 
         $this->assertInstanceOf(PersonDatabaseRepository::class, $isFluent);
-    }   
+    }
 
     /**
      * @test
@@ -45,7 +43,11 @@ class OrderByTest extends \Tests\TestCase
         $agesInOrder = $result->pluck('age')->toArray();
 
         $this->assertEquals($agesInOrder, [
-            '15', '15', '31', '60', '70',
+            '15',
+            '15',
+            '31',
+            '60',
+            '70',
         ]);
-    }    
+    }
 }

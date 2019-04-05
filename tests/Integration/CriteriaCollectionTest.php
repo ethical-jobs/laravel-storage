@@ -2,10 +2,11 @@
 
 namespace Tests\Integration;
 
-use Tests\Fixtures\Criteria;
 use EthicalJobs\Storage\CriteriaCollection;
+use Tests\Fixtures\Criteria;
+use Tests\TestCase;
 
-class CriteriaCollectionTest extends \Tests\TestCase
+class CriteriaCollectionTest extends TestCase
 {
     /**
      * @test
@@ -16,12 +17,12 @@ class CriteriaCollectionTest extends \Tests\TestCase
         $collection = new CriteriaCollection;
 
         $collection
-            ->push(Criteria\OverFifity::class)
+            ->push(Criteria\OverFifty::class)
             ->push(Criteria\Males::class);
 
         $this->assertEquals($collection->toArray(), [
-            Criteria\OverFifity::class   => $collection->first(),
-            Criteria\Males::class        => $collection->last(),
+            Criteria\OverFifty::class => $collection->first(),
+            Criteria\Males::class => $collection->last(),
         ]);
-    }    
+    }
 }

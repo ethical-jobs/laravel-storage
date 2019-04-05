@@ -14,15 +14,15 @@ class Person extends Model
      *
      * @var array
      */
-    protected $fillable = [ 
-        'first_name',    
-        'last_name',     
+    protected $fillable = [
+        'first_name',
+        'last_name',
         'age',
-        'email',         
-    ];    
+        'email',
+    ];
 
     public function family()
     {
         return $this->belongsTo(Family::class);
-    }       
+    }
 }

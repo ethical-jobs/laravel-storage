@@ -2,12 +2,11 @@
 
 namespace Tests\Integration\Repositories\Database;
 
-use Mockery;
 use Tests\Fixtures\Models;
-use EthicalJobs\Storage\Testing\RepositoryFactory;
 use Tests\Fixtures\Repositories\PersonDatabaseRepository;
+use Tests\TestCase;
 
-class DeleteTest extends \Tests\TestCase
+class DeleteTest extends TestCase
 {
     /**
      * @test
@@ -19,10 +18,10 @@ class DeleteTest extends \Tests\TestCase
 
         $this->assertTrue($person->deleted_at === null);
 
-        $repository = new PersonDatabaseRepository; 
+        $repository = new PersonDatabaseRepository;
 
         $deleted = $repository->delete($person->id);
 
         $this->assertTrue($deleted->deleted_at !== null);
-    }    
+    }
 }

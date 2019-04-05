@@ -2,13 +2,11 @@
 
 namespace Tests\Integration\Repositories\Database;
 
-use Mockery;
-use Illuminate\Database\Eloquent\Builder;
 use Tests\Fixtures\Models;
-use EthicalJobs\Storage\Testing\RepositoryFactory;
 use Tests\Fixtures\Repositories\PersonDatabaseRepository;
+use Tests\TestCase;
 
-class WhereTest extends \Tests\TestCase
+class WhereTest extends TestCase
 {
     /**
      * @test
@@ -22,7 +20,7 @@ class WhereTest extends \Tests\TestCase
             ->where('first_name', '!=', 'Andrew');
 
         $this->assertInstanceOf(PersonDatabaseRepository::class, $isFluent);
-    }   
+    }
 
     /**
      * @test
@@ -43,7 +41,8 @@ class WhereTest extends \Tests\TestCase
         $selectedPeople = $result->pluck('age')->toArray();
 
         $this->assertEquals($selectedPeople, [
-            '21', '23',
-        ]);        
-    }    
+            '21',
+            '23',
+        ]);
+    }
 }
