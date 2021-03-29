@@ -5,6 +5,7 @@ Storage Concepts:
 - `Criteria` (Specific domain based queries e.g. `Approved` `Draft`)
 - `ParameterQueries` (maps url params to repository queries)
 
-Requirements:
-v2.0.0 - Laravel 8+
-v1.* - Laravel 5.6, 5.7, 5.8, 5.9
+Support/requirements:
+
+ - `v2.*` - Laravel 8 or higher
+ - `v1.*` - Laravel 5.6 to 5.9. Laravel 7 support unknown
