@@ -39,6 +39,13 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
             Models\Family::class,
             Models\Vehicle::class,
         ]);
+
+        $app['config']->set('database.default', 'testbench');
+        $app['config']->set('database.connections.testbench', [
+            'driver'   => 'sqlite',
+            'database' => ':memory:',
+            'prefix'   => '',
+        ]);
     }
 
     /**

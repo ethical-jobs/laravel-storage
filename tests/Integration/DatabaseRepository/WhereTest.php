@@ -2,6 +2,7 @@
 
 namespace Tests\Integration\Repositories\Database;
 
+use Tests\Fixtures\ModelMock;
 use Tests\Fixtures\Models;
 use Tests\Fixtures\Repositories\PersonDatabaseRepository;
 use Tests\TestCase;
@@ -28,9 +29,9 @@ class WhereTest extends TestCase
      */
     public function it_can_add_a_where_query()
     {
-        factory(Models\Person::class)->create(['age' => 21]);
-        factory(Models\Person::class)->create(['age' => 22]);
-        factory(Models\Person::class)->create(['age' => 23]);
+        (new ModelMock(Models\Person::class))->create(['age' => 21]);
+        (new ModelMock(Models\Person::class))->create(['age' => 22]);
+        (new ModelMock(Models\Person::class))->create(['age' => 23]);
 
         $repository = new PersonDatabaseRepository;
 

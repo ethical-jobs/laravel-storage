@@ -2,6 +2,7 @@
 
 namespace Tests\Integration\ParameterQuery;
 
+use Tests\Fixtures\ModelMock;
 use Tests\Fixtures\Models;
 use Tests\Fixtures\ParameterQueries\PersonParameterQuery;
 use Tests\Fixtures\Repositories\PersonDatabaseRepository;
@@ -15,22 +16,22 @@ class LimitTest extends TestCase
      */
     public function it_maps_a_limit_parameter()
     {
-        factory(Models\Person::class)->create([
+        (new ModelMock(Models\Person::class))->create([
             'first_name' => 'iraS',
             'age' => 44,
         ]);
 
-        factory(Models\Person::class)->create([
+        (new ModelMock(Models\Person::class))->create([
             'first_name' => 'Werdna',
             'age' => 34,
         ]);
 
-        factory(Models\Person::class)->create([
+        (new ModelMock(Models\Person::class))->create([
             'first_name' => 'Divad',
             'age' => 36,
         ]);
 
-        factory(Models\Person::class)->create([
+        (new ModelMock(Models\Person::class))->create([
             'first_name' => 'ydnas',
             'age' => 38,
         ]);

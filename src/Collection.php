@@ -4,11 +4,6 @@ namespace EthicalJobs\Storage;
 
 use Illuminate\Support\Collection as BaseCollection;
 
-/**
- * Collection abstract
- *
- * @author Andrew McLagan <andrew@ethicaljobs.com.au>
- */
 class Collection extends BaseCollection
 {
     /**

@@ -2,6 +2,8 @@
 
 namespace Tests\Integration\Repositories\Database;
 
+use Illuminate\Support\Collection;
+use Tests\Fixtures\ModelMock;
 use Tests\Fixtures\Models;
 use Tests\Fixtures\Repositories\PersonDatabaseRepository;
 use Tests\TestCase;
@@ -14,16 +16,19 @@ class UpdateCollectionTest extends TestCase
      */
     public function it_updates_a_collection_of_entities()
     {
-        $peopleToUpdate = factory(Models\Person::class, 6)
-            ->create()
-            ->map(function ($person) {
-                return [
-                    'id' => $person->id,
-                    'first_name' => 'Andrew',
-                    'last_name' => 'McLagan',
-                ];
-            })
-            ->keyBy('id');
+        $firstCount = 1;
+        $peopleToUpdate = new Collection();
+        while($firstCount <= 6) {
+            $peopleToUpdate->push((new ModelMock(Models\Person::class))->create());
+            $firstCount++;
+        }
+        $peopleToUpdate = $peopleToUpdate->map(function ($person) {
+            return [
+                'id' => $person->id,
+                'first_name' => 'Andrew',
+                'last_name' => 'McLagan',
+            ];
+        })->keyBy('id');
 
         $repository = new PersonDatabaseRepository;
 
@@ -41,17 +46,21 @@ class UpdateCollectionTest extends TestCase
      */
     public function it_can_accept_arrays_when_updating()
     {
-        $peopleToUpdate = factory(Models\Person::class, 6)
-            ->create()
-            ->map(function ($person) {
-                return [
-                    'id' => $person->id,
-                    'first_name' => 'Andrew',
-                    'last_name' => 'McLagan',
-                ];
-            })
-            ->keyBy('id')
-            ->toArray();
+        $firstCount = 1;
+        $peopleToUpdate = new Collection();
+        while($firstCount <= 6) {
+            $peopleToUpdate->push((new ModelMock(Models\Person::class))->create());
+            $firstCount++;
+        }
+        $peopleToUpdate = $peopleToUpdate->map(function ($person) {
+            return [
+                'id' => $person->id,
+                'first_name' => 'Andrew',
+                'last_name' => 'McLagan',
+            ];
+        })
+        ->keyBy('id')
+        ->toArray();
 
         $repository = new PersonDatabaseRepository;
 
@@ -69,16 +78,20 @@ class UpdateCollectionTest extends TestCase
      */
     public function it_returns_all_updated_entities()
     {
-        $peopleToUpdate = factory(Models\Person::class, 6)
-            ->create()
-            ->map(function ($person) {
-                return [
-                    'id' => $person->id,
-                    'first_name' => 'Andrew',
-                    'last_name' => 'McLagan',
-                ];
-            })
-            ->keyBy('id');
+        $firstCount = 1;
+        $peopleToUpdate = new Collection();
+        while($firstCount <= 6) {
+            $peopleToUpdate->push((new ModelMock(Models\Person::class))->create());
+            $firstCount++;
+        }
+        $peopleToUpdate = $peopleToUpdate->map(function ($person) {
+            return [
+                'id' => $person->id,
+                'first_name' => 'Andrew',
+                'last_name' => 'McLagan',
+            ];
+        })
+        ->keyBy('id');
 
         $repository = new PersonDatabaseRepository;
 

@@ -5,12 +5,8 @@ namespace EthicalJobs\Storage;
 use EthicalJobs\Storage\Contracts\QueriesByParameters;
 use EthicalJobs\Storage\Contracts\Repository;
 use EthicalJobs\Utilities\Timestamp;
+use Illuminate\Support\Str;
 
-/**
- * Request criteria class
- *
- * @author Andrew McLagan <andrew@ethicaljobs.com.au>
- */
 abstract class ParameterQuery implements QueriesByParameters
 {
     /**
@@ -38,7 +34,7 @@ abstract class ParameterQuery implements QueriesByParameters
     {
         foreach ($parameters as $parameter => $value) {
 
-            $snakeCased = snake_case($parameter);
+            $snakeCased = Str::snake($parameter);
 
             if (method_exists($this, $parameter)) {
                 $this->$parameter($value);

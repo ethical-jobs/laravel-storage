@@ -4,6 +4,7 @@ namespace Tests\Integration;
 
 use EthicalJobs\Storage\CriteriaCollection;
 use Tests\Fixtures\Criteria;
+use Tests\Fixtures\Criteria\OverFifty;
 use Tests\TestCase;
 
 class CriteriaCollectionTest extends TestCase

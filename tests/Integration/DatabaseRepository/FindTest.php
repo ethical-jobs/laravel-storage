@@ -2,6 +2,7 @@
 
 namespace Tests\Integration\Repositories\Database;
 
+use Tests\Fixtures\ModelMock;
 use Tests\Fixtures\Models;
 use Tests\Fixtures\Repositories\PersonDatabaseRepository;
 use Tests\TestCase;
@@ -14,7 +15,11 @@ class FindTest extends TestCase
      */
     public function it_can_execute_the_query()
     {
-        $expected = factory(Models\Person::class, 10)->create();
+        $firstCount = 1;
+        while($firstCount <= 10) {
+            (new ModelMock(Models\Person::class))->create();
+            $firstCount++;
+        }
 
         $repository = new PersonDatabaseRepository;
 

@@ -2,11 +2,6 @@
 
 namespace EthicalJobs\Storage\Contracts;
 
-/**
- * Criteria interface
- *
- * @author Andrew McLagan <andrew@ethicaljobs.com.au>
- */
 interface Criteria
 {
     /**

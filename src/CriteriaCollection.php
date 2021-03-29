@@ -2,23 +2,26 @@
 
 namespace EthicalJobs\Storage;
 
-/**
- * Collection of criteria
- *
- * @author Andrew McLagan <andrew@ethicaljobs.com.au>
- */
 class CriteriaCollection extends Collection
 {
     /**
      * Push a criteria class
      *
-     * @param string $criteria
+     * Unclear what the purpose of this is, why it doesn't push but instead puts or why it was made a dependency.
+     *
+     * @TODO Remove dependency on this and potentially entire package
+     *
+     * @param  mixed  $values [optional]
      * @return $this
      */
-    public function push($criteria)
+    public function push(...$values)
     {
-        $instance = new $criteria;
+        foreach ($values as $value) {
+            $instance = new $value;
 
-        return $this->put($criteria, $instance);
+            $this->put($value, $instance);
+        }
+
+        return $this;
     }
 }

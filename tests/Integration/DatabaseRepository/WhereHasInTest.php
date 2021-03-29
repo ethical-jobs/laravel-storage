@@ -2,6 +2,8 @@
 
 namespace Tests\Integration\Repositories\Database;
 
+use Illuminate\Support\Collection;
+use Tests\Fixtures\ModelMock;
 use Tests\Fixtures\Models;
 use Tests\Fixtures\Repositories\FamilyDatabaseRepository;
 use Tests\TestCase;
@@ -27,17 +29,20 @@ class WhereHasInTest extends TestCase
      */
     public function it_can_query_relationship_values()
     {
-        $trumps = factory(Models\Family::class)->create();
+        $trumps = (new ModelMock(Models\Family::class))->create();
+        $obamas = (new ModelMock(Models\Family::class))->create();
 
-        factory(Models\Person::class, 7)->create([
-            'family_id' => $trumps->id,
-        ]);
+        $firstCount = 1;
+        while($firstCount <= 7) {
+            (new ModelMock(Models\Person::class))->create(['family_id' => $trumps->id]);
+            $firstCount++;
+        }
 
-        $obamas = factory(Models\Family::class)->create();
-
-        factory(Models\Person::class, 4)->create([
-            'family_id' => $obamas->id,
-        ]);
+        $secondCount = 1;
+        while($secondCount <= 4) {
+            (new ModelMock(Models\Person::class))->create(['family_id' => $obamas->id]);
+            $secondCount++;
+        }
 
         $randomTrumps = $trumps->people
             ->random(2)
@@ -66,24 +71,24 @@ class WhereHasInTest extends TestCase
      */
     public function it_can_query_relationship_values_with_other_fields()
     {
-        $trumps = factory(Models\Family::class)->create();
+        $trumps = (new ModelMock(Models\Family::class))->create();
 
-        factory(Models\Person::class)->create([
+        (new ModelMock(Models\Person::class))->create([
             'family_id' => $trumps->id,
             'age' => 75,
         ]);
-        factory(Models\Person::class)->create([
+        (new ModelMock(Models\Person::class))->create([
             'family_id' => $trumps->id,
             'age' => 42,
         ]);
 
-        $obamas = factory(Models\Family::class)->create();
+        $obamas = (new ModelMock(Models\Family::class))->create();
 
-        factory(Models\Person::class)->create([
+        (new ModelMock(Models\Person::class))->create([
             'family_id' => $obamas->id,
             'age' => 32,
         ]);
-        factory(Models\Person::class)->create([
+        (new ModelMock(Models\Person::class))->create([
             'family_id' => $obamas->id,
             'age' => 8,
         ]);

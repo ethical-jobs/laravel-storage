@@ -2,11 +2,6 @@
 
 namespace EthicalJobs\Storage\Contracts;
 
-/**
- * Adds response hydration functionality
- *
- * @author Andrew McLagan <andrew@ethicaljobs.com.au>
- */
 interface HydratesResults
 {
     /**
