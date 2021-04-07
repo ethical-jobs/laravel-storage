@@ -4,11 +4,6 @@ namespace EthicalJobs\Storage;
 
 use EthicalJobs\Storage\Contracts\Hydrator;
 
-/**
- * Adds response hydration functionality
- *
- * @author Andrew McLagan <andrew@ethicaljobs.com.au>
- */
 trait HydratesResults
 {
     /**

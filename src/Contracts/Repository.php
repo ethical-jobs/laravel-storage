@@ -2,11 +2,6 @@
 
 namespace EthicalJobs\Storage\Contracts;
 
-/**
- * Repository contract
- *
- * @author Andrew McLagan <andrew@ethicaljobs.com.au>
- */
 interface Repository
 {
     /**

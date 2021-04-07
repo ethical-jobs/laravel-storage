@@ -3,15 +3,12 @@
 namespace EthicalJobs\Storage;
 
 use EthicalJobs\Storage\Contracts;
+use EthicalJobs\Storage\HasCriteria;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
-/**
- * Database repository
- *
- * @author Andrew McLagan <andrew@ethicaljobs.com.au>
- */
 abstract class DatabaseRepository implements Contracts\Repository, Contracts\HasCriteria
 {
     use HasCriteria;
@@ -104,7 +101,7 @@ abstract class DatabaseRepository implements Contracts\Repository, Contracts\Has
         $fields = explode('.', $relation);
 
         $this->query->whereHas($fields[0], function ($query) use ($relation, $values) {
-            $query->whereIn(snake_case($relation), $values);
+            $query->whereIn(Str::snake($relation), $values);
         });
 
         return $this;

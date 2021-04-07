@@ -2,6 +2,7 @@
 
 namespace Tests\Integration\ParameterQuery;
 
+use Tests\Fixtures\ModelMock;
 use Tests\Fixtures\Models;
 use Tests\Fixtures\ParameterQueries\PersonParameterQuery;
 use Tests\Fixtures\Repositories\PersonDatabaseRepository;
@@ -15,22 +16,22 @@ class SearchTest extends TestCase
      */
     public function it_maps_a_search_parameter()
     {
-        factory(Models\Person::class)->create([
+        (new ModelMock(Models\Person::class))->create([
             'first_name' => 'Sari',
             'last_name' => 'Korin Kisilevsky',
         ]);
 
-        factory(Models\Person::class)->create([
+        (new ModelMock(Models\Person::class))->create([
             'first_name' => 'Werdna',
             'last_name' => 'Ssor Nagalcm',
         ]);
 
-        factory(Models\Person::class)->create([
+        (new ModelMock(Models\Person::class))->create([
             'first_name' => 'Divad',
             'last_name' => 'ttocs Nagalcm',
         ]);
 
-        factory(Models\Person::class)->create([
+        (new ModelMock(Models\Person::class))->create([
             'first_name' => 'ydnas',
             'last_name' => 'gerg Nagalcm',
         ]);

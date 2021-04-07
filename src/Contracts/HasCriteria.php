@@ -4,11 +4,6 @@ namespace EthicalJobs\Storage\Contracts;
 
 use EthicalJobs\Storage\CriteriaCollection;
 
-/**
- * Has criteria interface
- *
- * @author Andrew McLagan <andrew@ethicaljobs.com.au>
- */
 interface HasCriteria
 {
     /**

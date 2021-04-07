@@ -4,6 +4,7 @@ namespace Tests\Integration\Repositories\Database;
 
 use EthicalJobs\Storage\CriteriaCollection;
 use Tests\Fixtures\Criteria;
+use Tests\Fixtures\ModelMock;
 use Tests\Fixtures\Models;
 use Tests\Fixtures\Repositories\PersonDatabaseRepository;
 use Tests\TestCase;
@@ -64,11 +65,12 @@ class CriteriaTest extends TestCase
      */
     public function it_can_apply_criteria()
     {
-        factory(Models\Person::class, 5)
-            ->create(['age' => 29]);
-
-        factory(Models\Person::class, 5)
-            ->create(['age' => 55]);
+        $firstCount = 1;
+        while($firstCount <= 5) {
+            (new ModelMock(Models\Person::class))->create(['age' => 29]);
+            (new ModelMock(Models\Person::class))->create(['age' => 55]);
+            $firstCount++;
+        }
 
         $repository = new PersonDatabaseRepository;
 

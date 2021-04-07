@@ -2,6 +2,7 @@
 
 namespace Tests\Integration\ParameterQuery;
 
+use Tests\Fixtures\ModelMock;
 use Tests\Fixtures\Models;
 use Tests\Fixtures\ParameterQueries\PersonParameterQuery;
 use Tests\Fixtures\Repositories\PersonDatabaseRepository;
@@ -28,12 +29,12 @@ class ParameterQueryTest extends TestCase
      */
     public function it_queries_by_parameters()
     {
-        $expectedPerson = factory(Models\Person::class)->create([
+        $expectedPerson = (new ModelMock(Models\Person::class))->create([
             'age' => 65,
             'email' => 'andrew@ethicaljobs.com.au',
         ]);
 
-        factory(Models\Person::class)->create([
+        (new ModelMock(Models\Person::class))->create([
             'age' => 45,
             'email' => 'andrew@ethicaljobs.com.au',
         ]);
@@ -57,11 +58,11 @@ class ParameterQueryTest extends TestCase
      */
     public function it_can_call_snake_or_camel_case_param_funcs()
     {
-        factory(Models\Person::class)->create([
+        (new ModelMock(Models\Person::class))->create([
             'last_name' => 'mclagan',
         ]);
 
-        factory(Models\Person::class)->create([
+        (new ModelMock(Models\Person::class))->create([
             'last_name' => 'kisilevsky',
         ]);
 

@@ -2,6 +2,7 @@
 
 namespace Tests\Integration\Repositories\Database;
 
+use Tests\Fixtures\ModelMock;
 use Tests\Fixtures\Models;
 use Tests\Fixtures\Repositories\PersonDatabaseRepository;
 use Tests\TestCase;
@@ -14,7 +15,7 @@ class UpdateTest extends TestCase
      */
     public function it_can_update_an_entity_and_return_it()
     {
-        $person = factory(Models\Person::class)->create();
+        $person = (new ModelMock(Models\Person::class))->create();
 
         $repository = new PersonDatabaseRepository;
 

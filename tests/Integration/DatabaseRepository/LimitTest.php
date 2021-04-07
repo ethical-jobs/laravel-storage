@@ -2,6 +2,7 @@
 
 namespace Tests\Integration\Repositories\Database;
 
+use Tests\Fixtures\ModelMock;
 use Tests\Fixtures\Models;
 use Tests\Fixtures\Repositories\PersonDatabaseRepository;
 use Tests\TestCase;
@@ -27,7 +28,11 @@ class LimitTest extends TestCase
      */
     public function it_can_add_a_where_query()
     {
-        factory(Models\Person::class, 20)->create();
+        $firstCount = 1;
+        while($firstCount <= 20) {
+            (new ModelMock(Models\Person::class))->create();
+            $firstCount++;
+        }
 
         $repository = new PersonDatabaseRepository;
 

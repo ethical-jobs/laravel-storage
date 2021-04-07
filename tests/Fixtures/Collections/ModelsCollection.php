@@ -5,11 +5,6 @@ namespace Tests\Fixtures\Collections;
 use EthicalJobs\Storage\Collection;
 use Tests\Fixtures\Models;
 
-/**
- * Collections test fixture
- *
- * @author Andrew McLagan <andrew@ethicaljobs.com.au>
- */
 class ModelsCollection extends Collection
 {
     /**

@@ -2,14 +2,12 @@ name: PHPUnit suite
 
 on:
   push:
-    branches: [ master ]
     paths:
       - 'src/**'
       - 'tests/**'
       - 'phpunit.xml'
       - 'composer.*'
   pull_request:
-    branches: [ master ]
     paths:
       - 'src/**'
       - 'tests/**'
@@ -19,12 +17,8 @@ on:
 jobs:
   phpunit-tests:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        php: [ 7.3 ]
 
-    name: PHPUnit (PHP ${{ matrix.php }})
+    name: PHPUnit (PHP 7.3)
 
     steps:
       - name: Checkout code
@@ -33,7 +27,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php }}
+          php-version: 7.3
           extensions: dom, curl, libxml, mbstring, zip
           tools: composer:v2
           coverage: none

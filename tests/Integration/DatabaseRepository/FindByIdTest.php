@@ -2,6 +2,7 @@
 
 namespace Tests\Integration\Repositories\Database;
 
+use Tests\Fixtures\ModelMock;
 use Tests\Fixtures\Models;
 use Tests\Fixtures\Repositories\PersonDatabaseRepository;
 use Tests\TestCase;
@@ -14,7 +15,7 @@ class FindByIdTest extends TestCase
      */
     public function it_returns_a_model_if_one_is_passed_in()
     {
-        $person = factory(Models\Person::class)->create();
+        $person = (new ModelMock(Models\Person::class))->create();
 
         $repository = new PersonDatabaseRepository;
 
@@ -30,7 +31,7 @@ class FindByIdTest extends TestCase
      */
     public function it_can_find_by_id()
     {
-        $person = factory(Models\Person::class)->create();
+        $person = (new ModelMock(Models\Person::class))->create();
 
         $repository = new PersonDatabaseRepository;
 

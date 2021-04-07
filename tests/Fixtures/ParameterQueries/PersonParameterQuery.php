@@ -4,11 +4,6 @@ namespace Tests\Fixtures\ParameterQueries;
 
 use EthicalJobs\Storage\ParameterQuery;
 
-/**
- * Parameter query test fixture.
- *
- * @author Andrew McLagan <andrew@ethicaljobs.com.au>
- */
 class PersonParameterQuery extends ParameterQuery
 {
     /**

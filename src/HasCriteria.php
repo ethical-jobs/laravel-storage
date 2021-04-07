@@ -2,11 +2,6 @@
 
 namespace EthicalJobs\Storage;
 
-/**
- * Non specific criteria functionality
- *
- * @author Andrew McLagan <andrew@ethicaljobs.com.au>
- */
 trait HasCriteria
 {
     /**

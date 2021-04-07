@@ -3,6 +3,7 @@
 namespace Tests\Integration\ParameterQuery;
 
 use Carbon\Carbon;
+use Tests\Fixtures\ModelMock;
 use Tests\Fixtures\Models;
 use Tests\Fixtures\ParameterQueries\PersonParameterQuery;
 use Tests\Fixtures\Repositories\PersonDatabaseRepository;
@@ -16,22 +17,22 @@ class DateToTest extends TestCase
      */
     public function it_maps_an_dateFrom_parameter()
     {
-        factory(Models\Person::class)->create([
+        (new ModelMock(Models\Person::class))->create([
             'first_name' => 'iraS',
             'created_at' => Carbon::now()->addDays(5),
         ]);
 
-        factory(Models\Person::class)->create([
+        (new ModelMock(Models\Person::class))->create([
             'first_name' => 'Werdna',
             'created_at' => Carbon::now()->addDays(5),
         ]);
 
-        factory(Models\Person::class)->create([
+        (new ModelMock(Models\Person::class))->create([
             'first_name' => 'Divad',
             'created_at' => Carbon::now()->subDays(3),
         ]);
 
-        factory(Models\Person::class)->create([
+        (new ModelMock(Models\Person::class))->create([
             'first_name' => 'ydnas',
             'created_at' => Carbon::now()->subDays(3),
         ]);

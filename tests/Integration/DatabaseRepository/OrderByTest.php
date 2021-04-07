@@ -2,6 +2,7 @@
 
 namespace Tests\Integration\Repositories\Database;
 
+use Tests\Fixtures\ModelMock;
 use Tests\Fixtures\Models;
 use Tests\Fixtures\Repositories\PersonDatabaseRepository;
 use Tests\TestCase;
@@ -28,11 +29,11 @@ class OrderByTest extends TestCase
      */
     public function it_can_add_an_OrderBy_query()
     {
-        factory(Models\Person::class)->create(['age' => 15]);
-        factory(Models\Person::class)->create(['age' => 15]);
-        factory(Models\Person::class)->create(['age' => 31]);
-        factory(Models\Person::class)->create(['age' => 70]);
-        factory(Models\Person::class)->create(['age' => 60]);
+        (new ModelMock(Models\Person::class))->create(['age' => 15]);
+        (new ModelMock(Models\Person::class))->create(['age' => 15]);
+        (new ModelMock(Models\Person::class))->create(['age' => 31]);
+        (new ModelMock(Models\Person::class))->create(['age' => 70]);
+        (new ModelMock(Models\Person::class))->create(['age' => 60]);
 
         $repository = new PersonDatabaseRepository;
 
