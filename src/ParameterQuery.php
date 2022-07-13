@@ -2,6 +2,7 @@
 
 namespace EthicalJobs\Storage;
 
+use Carbon\Carbon;
 use EthicalJobs\Storage\Contracts\QueriesByParameters;
 use EthicalJobs\Storage\Contracts\Repository;
 use EthicalJobs\Utilities\Timestamp;
@@ -107,7 +108,7 @@ abstract class ParameterQuery implements QueriesByParameters
      */
     public function dateFrom($value)
     {
-        $this->repository->where('created_at', '>=', Timestamp::parse($value));
+        $this->repository->where('created_at', '>=', Carbon::parse($value));
     }
 
     /**
@@ -118,6 +119,6 @@ abstract class ParameterQuery implements QueriesByParameters
      */
     public function dateTo($value)
     {
-        $this->repository->where('created_at', '<=', Timestamp::parse($value));
+        $this->repository->where('created_at', '<=', Carbon::parse($value));
     }
 }
