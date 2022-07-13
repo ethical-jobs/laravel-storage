@@ -1,7 +1,8 @@
 
 ## Compatibility
 
- - `v2.*` - Laravel 8.1 or higher
+ - `v3.*` - Laravel 8 or higher, php 8.1 or higher
+ - `v2.*` - Laravel 8 or higher
  - `v1.*` - Laravel 5.6 to 5.9. Laravel 7 support unknown
 
 ## Storage Concepts:
