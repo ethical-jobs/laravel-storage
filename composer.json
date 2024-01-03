@@ -6,6 +6,7 @@
     "php": "^7.4",
     "ethical-jobs/utilities": "^1.0",
     "illuminate/support": "^8.34",
+    "laravel/legacy-factories": "^1.1",
     "ext-json": "*"
   },
   "require-dev": {
