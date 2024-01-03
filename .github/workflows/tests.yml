@@ -18,7 +18,7 @@ jobs:
   phpunit-tests:
     runs-on: ubuntu-latest
 
-    name: PHPUnit (PHP 7.3)
+    name: PHPUnit (PHP 7.4)
 
     steps:
       - name: Checkout code
@@ -27,7 +27,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.3
+          php-version: 7.4
           extensions: dom, curl, libxml, mbstring, zip
           tools: composer:v2
           coverage: none
